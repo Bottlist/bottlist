@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run test",
+      "command": "cd front && yarn test",
+      "type": "shell",
+      "group": "test"
+    }
+  ]
+}

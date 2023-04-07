@@ -19,6 +19,9 @@ const theme = createTheme({
     },
   },
   palette: {
+    background: {
+      default: '#EAE8E1',
+    },
     primary: {
       main: '#D0EF9D',
     },

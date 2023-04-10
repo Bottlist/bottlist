@@ -23,10 +23,10 @@ const theme = createTheme({
       default: '#EAE8E1',
     },
     primary: {
-      main: '#D0EF9D',
+      main: '#D9D9D9',
     },
-    info: {
-      main: '#00FF00',
+    secondary: {
+      main: '#FFFFFF',
     },
   },
 });

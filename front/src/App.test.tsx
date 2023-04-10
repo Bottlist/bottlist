@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { Index } from './pages/Index';
+import { BrowserRouter } from 'react-router-dom';
 import '@testing-library/jest-dom';
 
 it('should render the title', () => {
-  render(<Index />);
+  render(
+    <BrowserRouter>
+      <Index />
+    </BrowserRouter>
+  );
   const title = screen.getByText('Bottlist');
   expect(title).toBeInTheDocument();
 });

@@ -6,7 +6,8 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import App from './App';
 import { Index } from './pages/Index';
 import './index.css';
-import { Pick } from './pages/Pick';
+import { PickUser } from './pages/PickUser';
+import { PickLogin } from './pages/PickLogin';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -22,8 +23,12 @@ const router = createBrowserRouter([
         element: <Index />,
       },
       {
-        path: 'pick',
-        element: <Pick />,
+        path: 'pick-user',
+        element: <PickUser />,
+      },
+      {
+        path: 'pick-login',
+        element: <PickLogin />,
       },
     ],
   },

@@ -9,7 +9,7 @@ export function Index() {
       alignItems={'center'}
       justifyContent={'center'}
       minHeight={'100vh'}
-      onClick={() => navigate('pick')}
+      onClick={() => navigate('/pick-user')}
     >
       <Grid item>
         <Typography variant="h1">Bottlist</Typography>

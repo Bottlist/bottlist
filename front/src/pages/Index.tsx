@@ -1,19 +1,12 @@
-import { Grid, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { VerticalCenter } from '../components/VerticalCenter';
 
 export function Index() {
   const navigate = useNavigate();
   return (
-    <Grid
-      container
-      alignItems={'center'}
-      justifyContent={'center'}
-      minHeight={'100vh'}
-      onClick={() => navigate('/pick-user')}
-    >
-      <Grid item>
-        <Typography variant="h1">Bottlist</Typography>
-      </Grid>
-    </Grid>
+    <VerticalCenter onClick={() => navigate('/pick-user')}>
+      <Typography variant="h1">Bottlist</Typography>
+    </VerticalCenter>
   );
 }

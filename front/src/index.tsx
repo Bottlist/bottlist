@@ -8,6 +8,7 @@ import { Index } from './pages/Index';
 import './index.css';
 import { PickUser } from './pages/PickUser';
 import { PickLogin } from './pages/PickLogin';
+import { Login } from './pages/Login';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
       {
         path: 'pick-login',
         element: <PickLogin />,
+      },
+      {
+        path: 'login',
+        element: <Login />,
       },
     ],
   },

@@ -4,7 +4,7 @@ export function PickLogin() {
   return (
     <Choices
       items={[
-        { text: 'ログイン' },
+        { text: 'ログイン', link: '/login' },
         {
           text: '新規登録',
         },

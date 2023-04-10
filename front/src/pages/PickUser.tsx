@@ -1,8 +1,8 @@
-import { Choices } from '../components/Choices';
+import { ChoicesLayout } from '../components/ChoicesLayout';
 
 export function PickUser() {
   return (
-    <Choices
+    <ChoicesLayout
       items={[
         { text: 'お客様', link: '/pick-login' },
         {

@@ -2,7 +2,7 @@ import { Button, Container, Grid, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-export function Choices(props: {
+export function ChoicesLayout(props: {
   items: {
     text: string;
     link?: string;

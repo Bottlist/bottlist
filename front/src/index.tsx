@@ -9,6 +9,7 @@ import './index.css';
 import { PickUser } from './pages/PickUser';
 import { PickLogin } from './pages/PickLogin';
 import { Login } from './pages/Login';
+import { Register } from './pages/Register';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: 'login',
         element: <Login />,
+      },
+      {
+        path: 'register',
+        element: <Register />,
       },
     ],
   },

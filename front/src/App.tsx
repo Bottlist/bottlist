@@ -1,5 +1,7 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { Outlet } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const theme = createTheme({
   components: {
@@ -34,8 +36,10 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Outlet />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CssBaseline />
+        <Outlet />
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }

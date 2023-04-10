@@ -1,12 +1,13 @@
-import { Choices } from '../components/Choices';
+import { ChoicesLayout } from '../components/ChoicesLayout';
 
 export function PickLogin() {
   return (
-    <Choices
+    <ChoicesLayout
       items={[
         { text: 'ログイン', link: '/login' },
         {
           text: '新規登録',
+          link: '/register',
         },
       ]}
     />

@@ -1,15 +1,16 @@
+import App from './App';
+import './index.css';
+import { Index } from './pages/Index';
+import { Login } from './pages/Login';
+import { PickLogin } from './pages/PickLogin';
+import { PickUser } from './pages/PickUser';
+import { Register } from './pages/Register';
+import { Top } from './pages/Top';
+import reportWebVitals from './reportWebVitals';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import reportWebVitals from './reportWebVitals';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-import App from './App';
-import { Index } from './pages/Index';
-import './index.css';
-import { PickUser } from './pages/PickUser';
-import { PickLogin } from './pages/PickLogin';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'top',
+        element: <Top />,
       },
     ],
   },

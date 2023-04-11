@@ -1,5 +1,6 @@
-import { Stack, Typography, Paper, Container } from '@mui/material';
+import { Logo } from './Logo';
 import { VerticalCenter } from './VerticalCenter';
+import { Stack, Paper, Container } from '@mui/material';
 import { ReactNode } from 'react';
 
 export const CenterLayout = (props: {
@@ -10,7 +11,7 @@ export const CenterLayout = (props: {
   return (
     <VerticalCenter>
       <Stack spacing={props.spacing ?? 5} marginTop={3}>
-        <Typography variant="h4">BOTTLIST</Typography>
+        <Logo />
         <Container>
           <Paper>
             <Container>{props.children}</Container>

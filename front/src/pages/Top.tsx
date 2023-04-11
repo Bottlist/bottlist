@@ -1,3 +1,4 @@
+import { Logo } from '../components/Logo';
 import {
   Box,
   Button,
@@ -25,7 +26,7 @@ export const Top = () => (
     <Grid item flexGrow={1}>
       <Container>
         <Stack direction="row" justifyContent="space-between">
-          <Typography variant="h4">BOTTLIST</Typography>
+          <Logo />
           <Box>
             <TextField select label="表示順▼" defaultValue="default">
               <MenuItem value="default">表示順▼</MenuItem>

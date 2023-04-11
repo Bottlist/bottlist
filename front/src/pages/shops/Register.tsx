@@ -1,19 +1,26 @@
-import { Box, Button, Stack, Typography } from '@mui/material';
-
-import { CenterLayout } from '../components/CenterLayout';
-import * as yup from 'yup';
-import { useForm, FormProvider } from 'react-hook-form';
+import { CenterLayout } from '../../components/CenterLayout';
+import { DatePicker } from '../../components/DatePicker';
+import { TextField } from '../../components/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField } from '../components/TextField';
-import { DatePicker } from '../components/DatePicker';
+import { Box, Button, Stack, Typography } from '@mui/material';
+import { useForm, FormProvider } from 'react-hook-form';
+import * as yup from 'yup';
 
 const schema = yup
   .object({
     name: yup.string().required(),
     furigana: yup.string().required(),
-    nickname: yup.string().required(),
-    birthdate: yup.string().required(),
+    owner: yup
+      .object({
+        name: yup.string().required(),
+        furigana: yup.string().required(),
+      })
+      .required(),
     email: yup.string().required(),
+    landline: yup.string().required(),
+    mobile: yup.string().required(),
+    dueDate: yup.string().required(),
+    businessHours: yup.string().required(),
     password: yup.string().required(),
     passwordConfirmation: yup
       .string()
@@ -39,14 +46,15 @@ export const Register = () => {
         <form onSubmit={methods.handleSubmit(submit)}>
           <Stack spacing={1} paddingY={2} alignItems="center">
             <Typography variant="h5">新規登録</Typography>
-            <TextField placeholder="名前" _key="name" />
+            <TextField placeholder="店名" _key="name" />
             <TextField placeholder="ふりがな" _key="furigana" />
-            <TextField
-              placeholder="ボトルネーム・ニックネーム"
-              _key="nickname"
-            />
-            <DatePicker label="生年月日" _key="birthdate" control={control} />
+            <TextField placeholder="代表者名" _key="owner.name" />
+            <TextField placeholder="ふりがな" _key="owner.furigana" />
             <TextField placeholder="メールアドレス" _key="email" />
+            <TextField placeholder="TEL（店）" _key="landline" />
+            <TextField placeholder="TEL（携帯）" _key="mobile" />
+            <TextField placeholder="ボトルキープ期限" _key="dueDate" />
+            <TextField placeholder="営業日時" _key=" businessHours" />
             <TextField placeholder="パスワード" _key="password" />
             <TextField
               placeholder="パスワード（確認）"

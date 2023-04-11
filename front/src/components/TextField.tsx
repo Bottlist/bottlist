@@ -1,7 +1,9 @@
 import { TextFieldProps, TextField as MuiTextField } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
+import { FieldValues, Path, useFormContext } from 'react-hook-form';
 
-export const TextField = (props: TextFieldProps & { _key: string }) => {
+export const TextField = (
+  props: TextFieldProps & { _key: Path<FieldValues> }
+) => {
   const {
     register,
     getValues,

@@ -4,9 +4,10 @@ import { Index } from './pages/Index';
 import { Login } from './pages/Login';
 import { PickLogin } from './pages/PickLogin';
 import { PickUser } from './pages/PickUser';
-import { Register } from './pages/Register';
 import { Top } from './pages/Top';
 import { bottleRouter } from './pages/bottles/router';
+import { shopsRouter } from './pages/shops/router';
+import { usersRouter } from './pages/users/router';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import React from 'react';
@@ -39,12 +40,16 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: 'register',
-        element: <Register />,
-      },
-      {
         path: 'top',
         element: <Top />,
+      },
+      {
+        path: 'users',
+        children: usersRouter,
+      },
+      {
+        path: 'shops',
+        children: shopsRouter,
       },
       {
         path: 'bottle',

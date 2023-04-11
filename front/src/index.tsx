@@ -6,7 +6,7 @@ import { PickLogin } from './pages/PickLogin';
 import { PickUser } from './pages/PickUser';
 import { Register } from './pages/Register';
 import { Top } from './pages/Top';
-import { Update } from './pages/Update';
+import { bottleRouter } from './pages/bottles/router';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import React from 'react';
@@ -46,7 +46,10 @@ const router = createBrowserRouter([
         path: 'top',
         element: <Top />,
       },
-      { path: 'update', element: <Update /> },
+      {
+        path: 'bottle',
+        children: bottleRouter,
+      },
     ],
   },
 ]);

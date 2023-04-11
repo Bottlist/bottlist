@@ -1,16 +1,10 @@
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { Outlet } from 'react-router-dom';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Outlet } from 'react-router-dom';
 
 const theme = createTheme({
   components: {
-    MuiTypography: {
-      defaultProps: {
-        align: 'center',
-        justifySelf: 'center',
-      },
-    },
     MuiTextField: {
       defaultProps: { sx: { width: '100%' } },
     },

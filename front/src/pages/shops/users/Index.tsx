@@ -1,4 +1,4 @@
-import { Logo } from '../../components/Logo';
+import { Logo } from '../../../components/Logo';
 import {
   Button,
   Card,
@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 
-export const UserList = () => {
+export const Index = () => {
   return (
     <Container>
       <Stack spacing={3}>

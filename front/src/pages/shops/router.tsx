@@ -1,6 +1,7 @@
 import { Register } from './Register';
 import { Top } from './Top';
-import { UserList } from './UserList';
+import { Index } from './users/Index';
+import { View } from './users/View';
 
 export const shopsRouter = [
   {
@@ -13,6 +14,10 @@ export const shopsRouter = [
   },
   {
     path: 'users',
-    element: <UserList />,
+    element: <Index />,
+  },
+  {
+    path: 'users/view',
+    element: <View />,
   },
 ];

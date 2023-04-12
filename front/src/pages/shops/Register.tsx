@@ -1,5 +1,4 @@
 import { CenterLayout } from '../../components/CenterLayout';
-import { DatePicker } from '../../components/DatePicker';
 import { TextField } from '../../components/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Stack, Typography } from '@mui/material';
@@ -34,7 +33,6 @@ export const Register = () => {
   const methods = useForm<FormType>({
     resolver: yupResolver(schema),
   });
-  const { control } = methods;
 
   const submit = () => {
     console.log('TBD');

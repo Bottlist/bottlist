@@ -1,5 +1,6 @@
 import { Register } from './Register';
 import { Top } from './Top';
+import { UserList } from './UserList';
 
 export const shopsRouter = [
   {
@@ -9,5 +10,9 @@ export const shopsRouter = [
   {
     path: '',
     element: <Top />,
+  },
+  {
+    path: 'users',
+    element: <UserList />,
   },
 ];

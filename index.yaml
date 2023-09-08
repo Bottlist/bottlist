@@ -1,0 +1,658 @@
+openapi: 3.1.0
+x-stoplight:
+  id: f52bf4frzrkva
+info:
+  title: index
+  version: "1.0"
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /login:
+    post:
+      summary: ""
+      operationId: post-login
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: om39hf5c8g0x8
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: vrt4y1f3rzcpg
+                password:
+                  type: string
+                  x-stoplight:
+                    id: rvjm38alpq0h3
+              required:
+                - email
+                - password
+        description: ""
+  /password/reset/link:
+    post:
+      summary: ""
+      operationId: post-password-reset
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: hh6jatqjr9acv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  x-stoplight:
+                    id: x9qrvpg6xxqdh
+              required:
+                - email
+    parameters: []
+  /users:
+    post:
+      summary: ""
+      operationId: post-users
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: pu3bepj4qzxu7
+      description: 新規お客様登録
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/user"
+                - type: object
+                  x-stoplight:
+                    id: vfoafewoj5vel
+                  properties:
+                    password:
+                      type: string
+                      x-stoplight:
+                        id: kk0x0iuhefznk
+                    password_confirm:
+                      type: string
+                      x-stoplight:
+                        id: rnf2pgzrg4s4i
+                  required:
+                    - password
+                    - password_confirm
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+      parameters: []
+    get:
+      summary: ""
+      operationId: get-users
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    x-stoplight:
+                      id: q0m23tssx6kws
+                    items:
+                      x-stoplight:
+                        id: 9okkznppjbvtb
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          x-stoplight:
+                            id: 2jgee0um8zn5v
+                        name:
+                          type: string
+                          x-stoplight:
+                            id: bcmhsz4mi9ymy
+                        img:
+                          type: string
+                          x-stoplight:
+                            id: e4f96ahq98ocr
+                      required:
+                        - id
+                        - name
+                        - img
+                required:
+                  - users
+      x-stoplight:
+        id: lwp6rmgqvg7lt
+  /bottles:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      operationId: get-bottles
+      x-stoplight:
+        id: 8t6rzxw01dcr7
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bottles:
+                  type: array
+                  x-stoplight:
+                    id: eqk4c2t9y6d12
+                  items:
+                    x-stoplight:
+                      id: 8e4h9dnddm7ch
+                    allOf:
+                      - $ref: "#/components/schemas/bottle"
+                        x-stoplight:
+                          id: a88etr405dqb5
+                      - type: object
+                        properties:
+                          expires_at:
+                            type: string
+                            x-stoplight:
+                              id: tngrwumrs4k6k
+                            format: date
+                          amount:
+                            type: number
+                            x-stoplight:
+                              id: byfw1fk69mbme
+                            format: float
+                          status:
+                            x-stoplight:
+                              id: i3la6u1srpwd1
+                            required:
+                              - status
+                            type: object
+                            properties:
+                              status:
+                                x-stoplight:
+                                  id: cq6wxcgmoj3ie
+                                enum:
+                                  - approved
+                                  - rejected
+                                  - pending
+                              reason:
+                                type: string
+                                x-stoplight:
+                                  id: kf6g8bjyu0ycg
+                                description: 差し戻し理由
+                          shop:
+                            type: object
+                            x-stoplight:
+                              id: 1k4sz1cwbkhrg
+                            required:
+                              - name
+                              - id
+                            properties:
+                              name:
+                                type: string
+                                x-stoplight:
+                                  id: fuc5yphieo63b
+                              id:
+                                type: string
+                                x-stoplight:
+                                  id: 8w3y5frydikt0
+                          id:
+                            type: string
+                            x-stoplight:
+                              id: jjf4dfpkozlcy
+                        required:
+                          - expires_at
+                          - amount
+                          - status
+                          - shop
+                          - id
+              required:
+                - bottles
+    post:
+      summary: ""
+      operationId: post-bottles
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: 1whwpd0wzoal1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bottles:
+                  type: array
+                  x-stoplight:
+                    id: kd28b966onaui
+                  items:
+                    x-stoplight:
+                      id: dqx6v0kixnuc8
+                    allOf:
+                      - $ref: "#/components/schemas/bottle"
+                      - type: object
+                        x-stoplight:
+                          id: m96jtr434y38j
+                        properties:
+                          shop_id:
+                            type: string
+                            x-stoplight:
+                              id: frl8sbszftwk3
+                          opened_at:
+                            type: string
+                            x-stoplight:
+                              id: xe6x4wxq9eew0
+                            format: date
+                        required:
+                          - shop_id
+                          - opened_at
+              required:
+                - bottles
+          application/xml:
+            schema:
+              type: object
+              properties:
+                "":
+                  type: string
+                  x-stoplight:
+                    id: kaokt6lrajyz1
+        description: ""
+      description: ボトル申請
+  /shops:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shops:
+                    type: array
+                    x-stoplight:
+                      id: jgitg28dl2fd4
+                    items:
+                      x-stoplight:
+                        id: w7iuu5v6lzka5
+                      type: object
+                      properties:
+                        lat:
+                          type: string
+                          x-stoplight:
+                            id: 2u92he1lvavtx
+                        lng:
+                          type: string
+                          x-stoplight:
+                            id: fpgw6n8vr7j7v
+                        name:
+                          type: string
+                          x-stoplight:
+                            id: ng37w48r2n0j0
+                        id:
+                          type: string
+                          x-stoplight:
+                            id: 4llcbe4khn71g
+                      required:
+                        - lat
+                        - lng
+                        - name
+                        - id
+                required:
+                  - shops
+      operationId: get-shops
+      x-stoplight:
+        id: 5uye2w9ox3ck3
+    put:
+      summary: ""
+      operationId: put-shops
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: ea0v6ddu2aax6
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/shop"
+  /me:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/user"
+                  - type: object
+                    x-stoplight:
+                      id: 2urz7topyjdfp
+                    properties:
+                      img:
+                        type: string
+                        x-stoplight:
+                          id: pooj71crpq3lj
+                        format: uri
+      operationId: get-mypage
+      x-stoplight:
+        id: 18uku0368qp7h
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    parameters: []
+    put:
+      summary: ""
+      operationId: put-me
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: xkpqrd8fck1v5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                img:
+                  type: string
+                  x-stoplight:
+                    id: 39c2nsjn8uokf
+                  description: dataURL
+              required:
+                - img
+  "/bottles/{id}":
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    delete:
+      summary: ""
+      operationId: delete-bottles-id
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: jad9uceagrqtl
+    put:
+      summary: ""
+      operationId: put-bottles-id
+      responses:
+        "200":
+          description: OK
+      x-stoplight:
+        id: 207snyxjbwofz
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/bottle"
+                  x-stoplight:
+                    id: mlum1bd86n1f6
+                - type: object
+                  x-stoplight:
+                    id: b3fyyz2q0wn3k
+                  properties:
+                    amount:
+                      type: number
+                      x-stoplight:
+                        id: cwoahesggwm4z
+                      format: float
+    get:
+      summary: ""
+      operationId: get-bottles-id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/bottle"
+                  - type: object
+                    x-stoplight:
+                      id: pd1aqhpc5x764
+                    properties:
+                      updated_at:
+                        type: string
+                        x-stoplight:
+                          id: base4snuvl18p
+                        format: date
+                      updated_by:
+                        x-stoplight:
+                          id: z64vsg4fgoh0y
+                        enum:
+                          - shop
+                          - user
+                      amount:
+                        type: number
+                        x-stoplight:
+                          id: 2t2d7lcp7da4s
+                        format: float
+                      shop:
+                        type: object
+                        x-stoplight:
+                          id: ylwzq0t2m4o62
+                        required:
+                          - name
+                          - address
+                          - phone
+                          - eigyouzikan???
+                        properties:
+                          name:
+                            type: string
+                            x-stoplight:
+                              id: ve4qv807hsioe
+                          address:
+                            type: string
+                            x-stoplight:
+                              id: cfhoewl2jci2i
+                          phone:
+                            type: string
+                            x-stoplight:
+                              id: xpj11c4a22ukj
+                          eigyouzikan???:
+                            type: string
+                            x-stoplight:
+                              id: 8f1y9ucngyj91
+                    required:
+                      - updated_at
+                      - updated_by
+                      - amount
+                      - shop
+      x-stoplight:
+        id: ybljwlancr5kn
+  "/users/{id}":
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    x-stoplight:
+                      id: j6akee4r0pcm6
+                  img:
+                    type: string
+                    x-stoplight:
+                      id: 2ekgreadvbg2z
+                  birthdate:
+                    type: string
+                    x-stoplight:
+                      id: 9yvwub9mdycp6
+                    format: date
+                  bottles:
+                    type: array
+                    x-stoplight:
+                      id: 2kxfkqui9assd
+                    items:
+                      x-stoplight:
+                        id: wmg2nhahoiy2q
+                      allOf:
+                        - $ref: "#/components/schemas/bottle"
+                        - type: object
+                          x-stoplight:
+                            id: qermp2jh64398
+                          properties:
+                            shop_name:
+                              type: string
+                              x-stoplight:
+                                id: kj301e66nn6rt
+                            amount:
+                              type: number
+                              x-stoplight:
+                                id: blq8rt60x36xh
+                              format: float
+                            expires_at:
+                              type: string
+                              x-stoplight:
+                                id: vwlvadkmslobe
+                              format: date
+                          required:
+                            - shop_name
+                            - amount
+                            - expires_at
+                required:
+                  - name
+                  - img
+                  - birthdate
+                  - bottles
+      operationId: get-users-id
+      x-stoplight:
+        id: en2uxiiupe7jo
+components:
+  schemas:
+    user:
+      type: object
+      x-stoplight:
+        id: 59dc3b4ca1ef1
+      title: user
+      description: お客様
+      properties:
+        family_name:
+          type: string
+          x-stoplight:
+            id: zxtusyu9bznw2
+        family_name_kana:
+          type: string
+          x-stoplight:
+            id: eav92rsbymw3o
+        last_name:
+          type: string
+          x-stoplight:
+            id: iwclaahqowjfv
+        last_name_kana:
+          type: string
+          x-stoplight:
+            id: n5p4j399o9gim
+        nickname:
+          type: string
+          x-stoplight:
+            id: tzo3ju56292uc
+        birthdate:
+          type: string
+          x-stoplight:
+            id: a24kqwak2cphz
+          format: date
+        email:
+          type: string
+          x-stoplight:
+            id: 594yhirtmgjlb
+          format: email
+      required:
+        - family_name
+        - family_name_kana
+        - last_name
+        - last_name_kana
+        - nickname
+        - birthdate
+        - email
+    bottle:
+      title: bottle
+      x-stoplight:
+        id: tl9syl3j918sh
+      type: object
+      properties:
+        type:
+          x-stoplight:
+            id: o674ywgkmruf1
+          enum:
+            - whisky
+            - shochu
+            - brandy
+        name:
+          type: string
+          x-stoplight:
+            id: xs29a1y7buv1m
+    shop:
+      title: shop
+      x-stoplight:
+        id: rzvmyuossrktf
+      type: object
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: zgqi6771dwy3a
+        name_kana:
+          type: string
+          x-stoplight:
+            id: u9f1eap0sujfu
+        email:
+          type: string
+          x-stoplight:
+            id: ikeahvd18hdgb
+        phone:
+          type: string
+          x-stoplight:
+            id: shq5t3lbx4mxb
+        owner:
+          type: object
+          x-stoplight:
+            id: w2q0gwgivx6gg
+          properties:
+            name:
+              type: string
+              x-stoplight:
+                id: ny2hu8wedteq5
+            name_kana:
+              type: string
+              x-stoplight:
+                id: gdfom4qylye0j
+            phone:
+              type: string
+              x-stoplight:
+                id: i3tgtuhlrj9bo

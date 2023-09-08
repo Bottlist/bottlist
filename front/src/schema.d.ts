@@ -3,48 +3,47 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
-  "/login": {
-    post: operations["post-login"];
+  '/login': {
+    post: operations['post-login'];
   };
-  "/password/reset/link": {
-    post: operations["post-password-reset"];
+  '/password/reset/link': {
+    post: operations['post-password-reset'];
   };
-  "/users": {
-    get: operations["get-users"];
+  '/users': {
+    get: operations['get-users'];
     /** @description 新規お客様登録 */
-    post: operations["post-users"];
+    post: operations['post-users'];
   };
-  "/bottles": {
+  '/bottles': {
     /** Your GET endpoint */
-    get: operations["get-bottles"];
+    get: operations['get-bottles'];
     /** @description ボトル申請 */
-    post: operations["post-bottles"];
+    post: operations['post-bottles'];
   };
-  "/shops": {
+  '/shops': {
     /** Your GET endpoint */
-    get: operations["get-shops"];
-    put: operations["put-shops"];
+    get: operations['get-shops'];
+    put: operations['put-shops'];
   };
-  "/me": {
+  '/me': {
     /** Your GET endpoint */
-    get: operations["get-mypage"];
-    put: operations["put-me"];
+    get: operations['get-mypage'];
+    put: operations['put-me'];
   };
-  "/bottles/{id}": {
-    get: operations["get-bottles-id"];
-    put: operations["put-bottles-id"];
-    delete: operations["delete-bottles-id"];
+  '/bottles/{id}': {
+    get: operations['get-bottles-id'];
+    put: operations['put-bottles-id'];
+    delete: operations['delete-bottles-id'];
     parameters: {
       path: {
         id: string;
       };
     };
   };
-  "/users/{id}": {
+  '/users/{id}': {
     /** Your GET endpoint */
-    get: operations["get-users-id"];
+    get: operations['get-users-id'];
     parameters: {
       path: {
         id: string;
@@ -75,7 +74,7 @@ export interface components {
     /** bottle */
     bottle: {
       /** @enum {unknown} */
-      type?: "whisky" | "shochu" | "brandy";
+      type?: 'whisky' | 'shochu' | 'brandy';
       name?: string;
     };
     /** shop */
@@ -103,11 +102,10 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-
-  "post-login": {
+  'post-login': {
     requestBody?: {
       content: {
-        "application/json": {
+        'application/json': {
           email: string;
           password: string;
         };
@@ -120,10 +118,10 @@ export interface operations {
       };
     };
   };
-  "post-password-reset": {
+  'post-password-reset': {
     requestBody?: {
       content: {
-        "application/json": {
+        'application/json': {
           email: string;
         };
       };
@@ -135,31 +133,31 @@ export interface operations {
       };
     };
   };
-  "get-users": {
+  'get-users': {
     responses: {
       /** @description OK */
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             users: {
-                id: string;
-                name: string;
-                img: string;
-              }[];
+              id: string;
+              name: string;
+              img: string;
+            }[];
           };
         };
       };
     };
   };
   /** @description 新規お客様登録 */
-  "post-users": {
+  'post-users': {
     requestBody?: {
       content: {
-        "application/json": components["schemas"]["user"] & {
+        'application/json': components['schemas']['user'] & {
           password: string;
           password_confirm: string;
         };
-        "application/xml": Record<string, never>;
+        'application/xml': Record<string, never>;
       };
     };
     responses: {
@@ -170,44 +168,44 @@ export interface operations {
     };
   };
   /** Your GET endpoint */
-  "get-bottles": {
+  'get-bottles': {
     requestBody?: {
       content: {
-        "application/json": {
-          bottles: (components["schemas"]["bottle"] & ({
-              /** Format: date */
-              expires_at: string;
-              /** Format: float */
-              amount: number;
-              status: {
-                /** @enum {unknown} */
-                status: "approved" | "rejected" | "pending";
-                /** @description 差し戻し理由 */
-                reason?: string;
-              };
-              shop: {
-                name: string;
-                id: string;
-              };
+        'application/json': {
+          bottles: (components['schemas']['bottle'] & {
+            /** Format: date */
+            expires_at: string;
+            /** Format: float */
+            amount: number;
+            status: {
+              /** @enum {unknown} */
+              status: 'approved' | 'rejected' | 'pending';
+              /** @description 差し戻し理由 */
+              reason?: string;
+            };
+            shop: {
+              name: string;
               id: string;
-            }))[];
+            };
+            id: string;
+          })[];
         };
       };
     };
   };
   /** @description ボトル申請 */
-  "post-bottles": {
+  'post-bottles': {
     requestBody?: {
       content: {
-        "application/json": {
-          bottles: (components["schemas"]["bottle"] & {
-              shop_id: string;
-              /** Format: date */
-              opened_at: string;
-            })[];
+        'application/json': {
+          bottles: (components['schemas']['bottle'] & {
+            shop_id: string;
+            /** Format: date */
+            opened_at: string;
+          })[];
         };
-        "application/xml": {
-          ""?: string;
+        'application/xml': {
+          ''?: string;
         };
       };
     };
@@ -219,27 +217,27 @@ export interface operations {
     };
   };
   /** Your GET endpoint */
-  "get-shops": {
+  'get-shops': {
     responses: {
       /** @description OK */
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             shops: {
-                lat: string;
-                lng: string;
-                name: string;
-                id: string;
-              }[];
+              lat: string;
+              lng: string;
+              name: string;
+              id: string;
+            }[];
           };
         };
       };
     };
   };
-  "put-shops": {
+  'put-shops': {
     requestBody?: {
       content: {
-        "application/json": components["schemas"]["shop"];
+        'application/json': components['schemas']['shop'];
       };
     };
     responses: {
@@ -250,17 +248,17 @@ export interface operations {
     };
   };
   /** Your GET endpoint */
-  "get-mypage": {
+  'get-mypage': {
     requestBody?: {
       content: {
-        "application/json": Record<string, never>;
+        'application/json': Record<string, never>;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "application/json": components["schemas"]["user"] & {
+          'application/json': components['schemas']['user'] & {
             /** Format: uri */
             img?: string;
           };
@@ -268,10 +266,10 @@ export interface operations {
       };
     };
   };
-  "put-me": {
+  'put-me': {
     requestBody?: {
       content: {
-        "application/json": {
+        'application/json': {
           /** @description dataURL */
           img: string;
         };
@@ -284,7 +282,7 @@ export interface operations {
       };
     };
   };
-  "get-bottles-id": {
+  'get-bottles-id': {
     parameters: {
       path: {
         id: string;
@@ -294,25 +292,25 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "application/json": components["schemas"]["bottle"] & ({
+          'application/json': components['schemas']['bottle'] & {
             /** Format: date */
             updated_at: string;
             /** @enum {unknown} */
-            updated_by: "shop" | "user";
+            updated_by: 'shop' | 'user';
             /** Format: float */
             amount: number;
             shop: {
               name: string;
               address: string;
               phone: string;
-              "eigyouzikan???": string;
+              'eigyouzikan???': string;
             };
-          });
+          };
         };
       };
     };
   };
-  "put-bottles-id": {
+  'put-bottles-id': {
     parameters: {
       path: {
         id: string;
@@ -320,7 +318,7 @@ export interface operations {
     };
     requestBody?: {
       content: {
-        "application/json": components["schemas"]["bottle"] & {
+        'application/json': components['schemas']['bottle'] & {
           /** Format: float */
           amount?: number;
         };
@@ -333,7 +331,7 @@ export interface operations {
       };
     };
   };
-  "delete-bottles-id": {
+  'delete-bottles-id': {
     parameters: {
       path: {
         id: string;
@@ -347,7 +345,7 @@ export interface operations {
     };
   };
   /** Your GET endpoint */
-  "get-users-id": {
+  'get-users-id': {
     parameters: {
       path: {
         id: string;
@@ -357,18 +355,18 @@ export interface operations {
       /** @description OK */
       200: {
         content: {
-          "application/json": {
+          'application/json': {
             name: string;
             img: string;
             /** Format: date */
             birthdate: string;
-            bottles: (components["schemas"]["bottle"] & {
-                shop_name: string;
-                /** Format: float */
-                amount: number;
-                /** Format: date */
-                expires_at: string;
-              })[];
+            bottles: (components['schemas']['bottle'] & {
+              shop_name: string;
+              /** Format: float */
+              amount: number;
+              /** Format: date */
+              expires_at: string;
+            })[];
           };
         };
       };

@@ -1,6 +1,7 @@
-import { Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { ReactNode } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
+import { Logo } from './Logo';
 
 export function ChoicesLayout(props: {
   items: {
@@ -9,34 +10,44 @@ export function ChoicesLayout(props: {
   }[];
 }) {
   return (
-    <Container>
-      <Grid
-        container
-        alignItems={'center'}
-        justifyContent={'space-evenly'}
-        minHeight={'100vh'}
-        direction={'column'}
+    <>
+      <Box
+        sx={{
+          position: 'relative',
+          top: 165,
+          marginX: 'auto',
+          width: 'fit-content',
+        }}
       >
-        {props.items.map((item, i) => (
-          <Grid item width="100%" key={i}>
-            <PickButton link={item.link}>{item.text}</PickButton>
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+        <Logo />
+      </Box>
+      {props.items.map((item, i) => (
+        <Box
+          key={i}
+          sx={{
+            position: 'relative',
+            top: 438 + (55 + 60) * i,
+            left: 57,
+            width: 'fit-content',
+          }}
+        >
+          <PickButton link={item.link}>{item.text}</PickButton>
+        </Box>
+      ))}
+    </>
   );
 }
 
-const PickButton = (props: { children: ReactNode; link?: string }) => {
+const PickButton = (props: { children: string; link?: string }) => {
   const { children, link } = props;
   return (
     <Button
       color="secondary"
       fullWidth
-      sx={{ padding: 2 }}
+      sx={{ padding: 2, borderRadius: 30, height: 60, width: 280 }}
       {...(link && { component: RouterLink, to: link })}
     >
-      <Typography variant="h3" letterSpacing={20}>
+      <Typography variant="h4" letterSpacing={20}>
         {children}
       </Typography>
     </Button>

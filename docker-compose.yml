@@ -24,6 +24,7 @@ services:
       - ./backend/app:/app
     ports:
       - 4000:4000
+    tty: true
     depends_on:
       - db
 
@@ -34,7 +35,7 @@ services:
     environment:
       MYSQL_DATABASE: bottlist
       MYSQL_ROOT_PASSWORD: docker
-      MYSQL_USER: root
+      MYSQL_USER: bottlist
       MYSQL_PASSWORD: docker
       TZ: "Asia/Tokyo"
     volumes:

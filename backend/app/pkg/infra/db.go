@@ -3,6 +3,7 @@ package infra
 import (
 	"fmt"
 	"github.com/Bottlist/bottlist/pkg/config"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jmoiron/sqlx"
 )
 

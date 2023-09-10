@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/Bottlist/bottlist/pkg/infra"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -10,6 +12,14 @@ import (
 func main() {
 	// インスタンスを作成
 	e := echo.New()
+
+	db := infra.NewMySQLConnector()
+	defer func() {
+		err := db.Conn.Close()
+		if err != nil {
+			panic(fmt.Sprintf("DB connection close failed: %v", err))
+		}
+	}()
 
 	// ミドルウェアを設定
 	e.Use(middleware.Logger())

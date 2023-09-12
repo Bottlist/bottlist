@@ -41,7 +41,6 @@ export const Top = () => {
         direction="column"
         justifyContent="space-between"
         alignItems="center"
-        minHeight={'100vh'}
         paddingY={3}
       >
         <Grid item flexGrow={1}>
@@ -87,7 +86,7 @@ export const Top = () => {
         </Grid>
       </Grid>
       <Divider />
-      <Typography variant="h2">申請中・差戻しボトル一覧</Typography>
+      <Typography variant="h6">申請中・差戻しボトル一覧</Typography>
       {data
         ?.filter((b) => b.status.status !== 'approved')
         .map((bottle) => (

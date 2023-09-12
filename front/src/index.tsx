@@ -1,4 +1,3 @@
-import App from './App';
 import './index.css';
 import { Index } from './pages/Index';
 import { Login } from './pages/Login';
@@ -13,6 +12,10 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -21,7 +24,6 @@ const root = ReactDOM.createRoot(
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
     children: [
       {
         path: '',
@@ -59,9 +61,42 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme({
+  components: {
+    MuiTextField: {
+      defaultProps: { sx: { width: '100%' } },
+    },
+    MuiButton: {
+      defaultProps: {
+        variant: 'contained',
+      },
+    },
+  },
+  palette: {
+    background: {
+      default: '#EAE8E1',
+    },
+    primary: {
+      main: '#D9D9D9',
+    },
+    secondary: {
+      main: '#FFFFFF',
+    },
+  },
+});
+
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <QueryClientProvider client={queryClient}>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </LocalizationProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 

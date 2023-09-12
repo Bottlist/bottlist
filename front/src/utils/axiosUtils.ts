@@ -5,7 +5,7 @@ import { ResponseData } from './schemaHelper';
 
 export type AxiosConfigWrapper<
   Path extends schemaHelper.UrlPaths,
-  Method extends schemaHelper.HttpMethods
+  Method extends schemaHelper.HttpMethods,
 > = {
   url: Path;
   method: Method & schemaHelper.HttpMethodsFilteredByPath<Path>;
@@ -17,7 +17,7 @@ const client = axios.create({ baseURL: process.env.REACT_APP_API_URL });
 
 export function request<
   Path extends schemaHelper.UrlPaths,
-  Method extends schemaHelper.HttpMethods
+  Method extends schemaHelper.HttpMethods,
 >(config: AxiosConfigWrapper<Path, Method>) {
   return client.request<
     schemaHelper.ResponseData<Path, Method>,
@@ -57,6 +57,17 @@ mock.onGet('/bottles').reply<ResponseData<'/bottles', 'get'>>(200, {
       status: { status: 'rejected', reason: 'string' },
       shop: { name: 'string', id: 'string' },
       id: '3',
+    },
+  ],
+});
+mock.onGet('/shops').reply<ResponseData<'/shops', 'get'>>(200, {
+  shops: [
+    {
+      lat: 34.75,
+      lng: 137.75,
+      name: 'BEBER',
+      id: 'string',
+      address: '浜松市中区本城町',
     },
   ],
 });

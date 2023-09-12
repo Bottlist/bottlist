@@ -227,10 +227,11 @@ export interface operations {
         content: {
           'application/json': {
             shops: {
-              lat: string;
-              lng: string;
+              lat: number;
+              lng: number;
               name: string;
               id: string;
+              address: string;
             }[];
           };
         };

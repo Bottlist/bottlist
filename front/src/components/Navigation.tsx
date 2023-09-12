@@ -10,12 +10,15 @@ const MyLink = (props: { href: string } & Omit<LinkProps, 'to'>) => (
 );
 
 export const Navigation = () => (
-  <BottomNavigation showLabels>
+  <BottomNavigation
+    showLabels
+    sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+  >
     <BottomNavigationAction
       icon={<HomeRoundedIcon />}
       label="ホーム"
       LinkComponent={MyLink}
-      href="/"
+      href="/top"
     />
     <BottomNavigationAction
       label="ボトル追加"

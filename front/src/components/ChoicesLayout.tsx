@@ -1,5 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { Box, Button, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import { Logo } from './Logo';
 

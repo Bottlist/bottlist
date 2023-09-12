@@ -17,6 +17,7 @@ import {
 import { request } from '../../utils/axiosUtils';
 import { useQuery } from '@tanstack/react-query';
 import { components } from '../../schema';
+import { Navigation } from '../../components/Navigation';
 
 const IMAGES: Record<components['schemas']['bottle']['type'], string> = {
   brandy: 'brandy.png',
@@ -97,6 +98,7 @@ export const Top = () => {
             <Typography>{bottle.expires_at}</Typography>
           </Paper>
         ))}
+      <Navigation />
     </Stack>
   );
 };

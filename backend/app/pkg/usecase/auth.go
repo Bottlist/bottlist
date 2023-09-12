@@ -1,11 +1,20 @@
 package usecase
 
 type AuthUsecase interface {
-}
-
-type auth struct {
+	CreateProvisionalUser(*CreateProvisionalUserInput) error
 }
 
 func NewAuthUsecase() AuthUsecase {
-	return &auth{}
+	return &authUsecase{}
+}
+
+type authUsecase struct {
+}
+
+type CreateProvisionalUserInput struct {
+}
+
+func (a *authUsecase) CreateProvisionalUser(input *CreateProvisionalUserInput) error {
+
+	return nil
 }

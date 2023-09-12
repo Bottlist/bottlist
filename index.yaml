@@ -152,8 +152,6 @@ paths:
                     x-stoplight:
                       id: eqk4c2t9y6d12
                     items:
-                      x-stoplight:
-                        id: 8e4h9dnddm7ch
                       allOf:
                         - $ref: '#/components/schemas/bottle'
                           x-stoplight:
@@ -173,9 +171,9 @@ paths:
                             status:
                               x-stoplight:
                                 id: i3la6u1srpwd1
+                              type: object
                               required:
                                 - status
-                              type: object
                               properties:
                                 status:
                                   x-stoplight:
@@ -184,6 +182,7 @@ paths:
                                     - approved
                                     - rejected
                                     - pending
+                                  type: string
                                 reason:
                                   type: string
                                   x-stoplight:
@@ -215,6 +214,8 @@ paths:
                             - status
                             - shop
                             - id
+                required:
+                  - bottles
     post:
       summary: ''
       operationId: post-bottles
@@ -613,10 +614,14 @@ components:
             - whisky
             - shochu
             - brandy
+          type: string
         name:
           type: string
           x-stoplight:
             id: xs29a1y7buv1m
+      required:
+        - type
+        - name
     shop:
       title: shop
       x-stoplight:
@@ -643,6 +648,10 @@ components:
           type: object
           x-stoplight:
             id: w2q0gwgivx6gg
+          required:
+            - name
+            - name_kana
+            - phone
           properties:
             name:
               type: string
@@ -656,3 +665,9 @@ components:
               type: string
               x-stoplight:
                 id: i3tgtuhlrj9bo
+      required:
+        - name
+        - name_kana
+        - email
+        - phone
+        - owner

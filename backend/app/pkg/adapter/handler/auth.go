@@ -3,16 +3,28 @@ package handler
 import (
 	"github.com/Bottlist/bottlist/pkg/usecase"
 	"github.com/labstack/echo/v4"
+	"net/http"
 )
 
-func NewAuthHandler(authUsecase *usecase.AuthUsecase) *AuthHandler {
-	return &AuthHandler{authUsecase: authUsecase}
+type AuthHandler interface {
+	PostProvisionalSignup(c echo.Context) error
 }
 
-type AuthHandler struct {
+func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
+	return &authHandler{authUsecase: authUsecase}
+}
+
+type authHandler struct {
 	authUsecase usecase.AuthUsecase
 }
 
-func (a *AuthHandler) ProvisionalSignup(c echo.Context) error {
+type PostProvisionalSignupRequest struct {
+}
+
+func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
+	req := PostProvisionalSignupRequest{}
+	if err := c.Bind(&req); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err)
+	}
 	return nil
 }

@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import * as schemaHelper from './schemaHelper';
 import MockAdapter from 'axios-mock-adapter';
+import { ResponseData } from './schemaHelper';
 
 export type AxiosConfigWrapper<
   Path extends schemaHelper.UrlPaths,
@@ -28,3 +29,34 @@ export function request<
 const mock = new MockAdapter(client);
 
 mock.onPost('/login').reply(200);
+mock.onGet('/bottles').reply<ResponseData<'/bottles', 'get'>>(200, {
+  bottles: [
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: { status: 'approved', reason: 'string' },
+      shop: { name: 'string', id: 'string' },
+      id: '1',
+    },
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: { status: 'pending', reason: 'string' },
+      shop: { name: 'string', id: 'string' },
+      id: '2',
+    },
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: { status: 'rejected', reason: 'string' },
+      shop: { name: 'string', id: 'string' },
+      id: '3',
+    },
+  ],
+});

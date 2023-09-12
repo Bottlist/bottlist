@@ -73,20 +73,20 @@ export interface components {
     };
     /** bottle */
     bottle: {
-      /** @enum {unknown} */
-      type?: 'whisky' | 'shochu' | 'brandy';
-      name?: string;
+      /** @enum {string} */
+      type: 'whisky' | 'shochu' | 'brandy';
+      name: string;
     };
     /** shop */
     shop: {
-      name?: string;
-      name_kana?: string;
-      email?: string;
-      phone?: string;
-      owner?: {
-        name?: string;
-        name_kana?: string;
-        phone?: string;
+      name: string;
+      name_kana: string;
+      email: string;
+      phone: string;
+      owner: {
+        name: string;
+        name_kana: string;
+        phone: string;
       };
     };
   };
@@ -169,26 +169,29 @@ export interface operations {
   };
   /** Your GET endpoint */
   'get-bottles': {
-    requestBody?: {
-      content: {
-        'application/json': {
-          bottles: (components['schemas']['bottle'] & {
-            /** Format: date */
-            expires_at: string;
-            /** Format: float */
-            amount: number;
-            status: {
-              /** @enum {unknown} */
-              status: 'approved' | 'rejected' | 'pending';
-              /** @description 差し戻し理由 */
-              reason?: string;
-            };
-            shop: {
-              name: string;
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          'application/json': {
+            bottles: (components['schemas']['bottle'] & {
+              /** Format: date */
+              expires_at: string;
+              /** Format: float */
+              amount: number;
+              status: {
+                /** @enum {string} */
+                status: 'approved' | 'rejected' | 'pending';
+                /** @description 差し戻し理由 */
+                reason?: string;
+              };
+              shop: {
+                name: string;
+                id: string;
+              };
               id: string;
-            };
-            id: string;
-          })[];
+            })[];
+          };
         };
       };
     };

@@ -7,6 +7,7 @@ import (
 type appConfig struct {
 	HTTPInfo  *HTTPInfo
 	MySQLInfo *MysqlInfo
+	RedisInfo *RedisInfo
 }
 
 type HTTPInfo struct {
@@ -19,6 +20,11 @@ type MysqlInfo struct {
 	MySQLPassWord string
 	MySQLHost     string
 	MySQLPort     string
+}
+
+type RedisInfo struct {
+	RedisHost string
+	RedisPort string
 }
 
 func LoadConfig() *appConfig {
@@ -42,9 +48,18 @@ func LoadConfig() *appConfig {
 		MySQLPort:     mysqlPort,
 	}
 
+	redisHost := os.Getenv("REDIS_HOST")
+	redisPort := os.Getenv("REDIS_PORT")
+
+	redisInfo := &RedisInfo{
+		RedisHost: redisHost,
+		RedisPort: redisPort,
+	}
+
 	conf := appConfig{
 		MySQLInfo: dbInfo,
 		HTTPInfo:  httpInfo,
+		RedisInfo: redisInfo,
 	}
 
 	return &conf

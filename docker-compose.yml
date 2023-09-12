@@ -42,6 +42,12 @@ services:
       - ./db/data:/var/lib/mysql #データ永続化
       - ./db/sql:/docker-entrypoint-initdb.d #起動時sqlフォルダ内のsqlファイルを実行
 
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
+
   phpmyadmin:
     image: phpmyadmin #fpmやalpineタグは別途httpサーバが必要
     environment:

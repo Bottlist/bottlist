@@ -71,3 +71,16 @@ mock.onGet('/shops').reply<ResponseData<'/shops', 'get'>>(200, {
     },
   ],
 });
+mock.onGet('/me').reply<ResponseData<'/me', 'get'>>(200, {
+  family_name: 'string',
+  family_name_kana: 'string',
+  last_name: 'string',
+  last_name_kana: 'string',
+  nickname: 'string',
+  birthdate: '2019-08-24',
+  email: 'user@example.com',
+  img: 'http://example.com',
+});
+mock
+  .onPost('/password/reset/link')
+  .reply<ResponseData<'/password/reset/link', 'post'>>(200);

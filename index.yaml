@@ -289,11 +289,11 @@ paths:
                       type: object
                       properties:
                         lat:
-                          type: string
+                          type: number
                           x-stoplight:
                             id: 2u92he1lvavtx
                         lng:
-                          type: string
+                          type: number
                           x-stoplight:
                             id: fpgw6n8vr7j7v
                         name:
@@ -304,13 +304,25 @@ paths:
                           type: string
                           x-stoplight:
                             id: 4llcbe4khn71g
+                        address:
+                          type: string
                       required:
                         - lat
                         - lng
                         - name
                         - id
+                        - address
                 required:
                   - shops
+              examples:
+                Example 1:
+                  value:
+                    shops:
+                      - lat: 0
+                        lng: 0
+                        name: string
+                        id: string
+                        address: string
       operationId: get-shops
       x-stoplight:
         id: 5uye2w9ox3ck3

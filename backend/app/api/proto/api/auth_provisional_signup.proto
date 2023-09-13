@@ -1,0 +1,23 @@
+syntax = "proto3";
+package api;
+
+option go_package = "github.com/Bottlist/bottlist/api/go";
+
+
+import "buf/validate/validate.proto";
+
+message PostAuthProvisionalSignupRequest {
+  string mail = 1 [(buf.validate.oneof).required = true];
+  string first_name = 2 [(validate.rules).required = true, (validate.rules).string = { min_len: 1 }];
+  string last_name = 3 [(validate.rules).required = true, (validate.rules).string = { min_len: 1 }];
+  string first_name_hira = 4 [(validate.rules).required = true, (validate.rules).string = { min_len: 1 }];
+  string last_name_hira = 5 [(validate.rules).required = true, (validate.rules).string = { min_len: 1 }];
+  string screen_name = 6 [(validate.rules).required = true, (validate.rules).string = { min_len: 1 }];
+  string birthday = 7 [(validate.rules).required = true, (validate.rules).string = { min_len: 10 }];
+  string password = 8 [(validate.rules).required = true, (validate.rules).string = { min_len: 8 }];
+  string password_confirm = 9 [(validate.rules).required = true, (validate.rules).string = { min_len: 8 }];
+}
+
+message PostAuthProvisionalSignupResponse {
+
+}

@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `users`(
     `id` serial PRIMARY KEY,
-    `mail` VARCHAR(128) UNIQUE NOT NULL,
+    `email` VARCHAR(128) UNIQUE NOT NULL,
     `first_name` VARCHAR(128) NOT NULL,
     `last_name` VARCHAR(128) NOT NULL,
     `first_name_hira` VARCHAR(128) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `users`(
 
 CREATE TABLE IF NOT EXISTS `provisional_users` (
     `id` serial PRIMARY KEY,
-    `mail` VARCHAR(128) UNIQUE NOT NULL,
+    `email` VARCHAR(128) UNIQUE NOT NULL,
     `first_name` VARCHAR(128) NOT NULL,
     `last_name` VARCHAR(128) NOT NULL,
     `first_name_hira` VARCHAR(128) NOT NULL,

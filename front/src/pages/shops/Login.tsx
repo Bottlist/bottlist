@@ -1,10 +1,10 @@
 import { Box, Button, Stack } from '@mui/material';
-import { CenterLayout } from '../components/CenterLayout';
+import { CenterLayout } from '../../components/CenterLayout';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
-import { request } from '../utils/axiosUtils';
-import { TextField } from '../components/TextField';
+import { request } from '../../utils/axiosUtils';
+import { TextField } from '../../components/TextField';
 import { useNavigate } from 'react-router';
 
 const schema = yup

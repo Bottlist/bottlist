@@ -1,4 +1,4 @@
-import { ChoicesLayout } from '../components/ChoicesLayout';
+import { ChoicesLayout } from '../../components/ChoicesLayout';
 
 export function PickLogin() {
   return (

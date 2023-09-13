@@ -1,7 +1,7 @@
 import './index.css';
 import { Index } from './pages/Index';
-import { Login } from './pages/Login';
-import { PickLogin } from './pages/PickLogin';
+import { Login } from './pages/users/Login';
+import { PickLogin } from './pages/users/PickLogin';
 import { PickUser } from './pages/PickUser';
 import { bottleRouter } from './pages/bottles/router';
 import { shopsRouter } from './pages/shops/router';
@@ -32,10 +32,6 @@ const router = createBrowserRouter([
       {
         path: 'pick-user',
         element: <PickUser />,
-      },
-      {
-        path: 'pick-login',
-        element: <PickLogin />,
       },
       {
         path: 'login',

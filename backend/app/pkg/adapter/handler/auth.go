@@ -19,6 +19,15 @@ type authHandler struct {
 }
 
 type PostProvisionalSignupRequest struct {
+	Email           string `json:"email"`
+	FirstName       string `json:"first_name"`
+	LastName        string `json:"last_name"`
+	FirstNameHira   string `json:"first_name_hira"`
+	LastNameHira    string `json:"last_name_hira"`
+	ScreenName      string `json:"screen_name"`
+	Birthday        string `json:"birthday"`
+	Password        string `json:"password"`
+	PasswordConfirm string `json:"password_confirm"`
 }
 
 func (a *authHandler) PostProvisionalSignup(c echo.Context) error {

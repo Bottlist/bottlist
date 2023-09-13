@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  grpc-go:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: "server-grpc"
+    volumes:
+      - .:/practice-grpc
+    tty: true
+    

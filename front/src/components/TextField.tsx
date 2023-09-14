@@ -17,7 +17,7 @@ export const TextField = <T extends FieldValues>(
       {...register(_key)}
       defaultValue={getValues(_key)}
       error={!!errors[_key]}
-      helperText={errors[_key]?.message?.toString()}
+      helperText={errors[_key]?.message?.toString() ?? props.helperText}
     />
   );
 };

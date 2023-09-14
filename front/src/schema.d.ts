@@ -4,8 +4,11 @@
  */
 
 export interface paths {
-  '/login': {
+  '/auth/login': {
     post: operations['post-login'];
+  };
+  '/auth/signup': {
+    post: operations['post-auth-signup'];
   };
   '/password/reset/link': {
     post: operations['post-password-reset'];
@@ -61,13 +64,13 @@ export interface components {
      * @description お客様
      */
     user: {
-      family_name: string;
-      family_name_kana: string;
+      first_name: string;
+      first_name_huri: string;
       last_name: string;
-      last_name_kana: string;
-      nickname: string;
+      last_name_huri: string;
+      screen_name: string;
       /** Format: date */
-      birthdate: string;
+      birthday: string;
       /** Format: email */
       email: string;
     };
@@ -108,6 +111,24 @@ export interface operations {
         'application/json': {
           email: string;
           password: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  'post-auth-signup': {
+    requestBody?: {
+      content: {
+        'application/json': {
+          ''?: components['schemas']['user'];
+        } & {
+          password: string;
+          password_confirm: string;
         };
       };
     };

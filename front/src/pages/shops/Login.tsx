@@ -25,7 +25,7 @@ export const Login = () => {
 
   const onSubmit = methods.handleSubmit(({ email, password }) =>
     request({
-      url: '/login',
+      url: '/auth/login',
       method: 'post',
       data: { email, password },
     }).then(() => navigate('/top'))

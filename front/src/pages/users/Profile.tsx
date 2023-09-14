@@ -45,7 +45,7 @@ export const Profile = () => {
         <Logo />
         <Box {...getRootProps()}>
           <input {...getInputProps()} />
-          <Avatar alt={data?.nickname} src={data?.img} />
+          <Avatar alt={data?.screen_name} src={data?.img} />
         </Box>
         <TableContainer component={Paper}>
           <Table>
@@ -54,14 +54,14 @@ export const Profile = () => {
                 <TableCell component="th" scope="row">
                   ふりがな
                 </TableCell>
-                <TableCell>{data?.family_name_kana}</TableCell>
-                <TableCell>{data?.last_name_kana}</TableCell>
+                <TableCell>{data?.first_name_huri}</TableCell>
+                <TableCell>{data?.last_name_huri}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">
                   名前
                 </TableCell>
-                <TableCell>{data?.family_name}</TableCell>
+                <TableCell>{data?.first_name}</TableCell>
                 <TableCell>{data?.last_name}</TableCell>
               </TableRow>
               <TableRow>
@@ -70,13 +70,13 @@ export const Profile = () => {
                   <br />
                   ニックネーム
                 </TableCell>
-                <TableCell colSpan={2}>{data?.nickname}</TableCell>
+                <TableCell colSpan={2}>{data?.screen_name}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">
                   生年月日
                 </TableCell>
-                <TableCell colSpan={2}>{data?.birthdate}</TableCell>
+                <TableCell colSpan={2}>{data?.birthday}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell component="th" scope="row">

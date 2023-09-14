@@ -8,6 +8,7 @@ import (
 var DefaultAppSet = wire.NewSet(
 	DefaultUsecaseSet,
 	DefaultHandlerSet,
+	DefaultInfraSet,
 	NewApp,
 )
 

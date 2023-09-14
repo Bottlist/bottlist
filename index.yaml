@@ -358,7 +358,7 @@ paths:
                               type: string
                               enum:
                                 - pending
-                                - rejected
+                                - approved
                           required:
                             - expires_at
                             - amount

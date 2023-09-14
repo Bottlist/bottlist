@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/Bottlist/bottlist/api/gen"
 	"github.com/Bottlist/bottlist/pkg/usecase"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -18,22 +19,31 @@ type authHandler struct {
 	authUsecase usecase.AuthUsecase
 }
 
-type PostProvisionalSignupRequest struct {
-	Email           string `json:"email"`
-	FirstName       string `json:"first_name"`
-	LastName        string `json:"last_name"`
-	FirstNameHira   string `json:"first_name_hira"`
-	LastNameHira    string `json:"last_name_hira"`
-	ScreenName      string `json:"screen_name"`
-	Birthday        string `json:"birthday"`
-	Password        string `json:"password"`
-	PasswordConfirm string `json:"password_confirm"`
-}
-
 func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
-	req := PostProvisionalSignupRequest{}
-	if err := c.Bind(&req); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err)
+	ctx := c.Request().Context()
+
+	var req gen.PostAuthProvisionalSignupRequest
+	err := c.Bind(&req)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestのBindに失敗しました：", err)
 	}
-	return nil
+	if err := req.Validate(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
+	}
+	createProvisionalUserInput := &usecase.CreateProvisionalUserInput{
+		Email:           req.Email,
+		FirstName:       req.FirstName,
+		LastName:        req.LastName,
+		FirstNameHira:   req.FirstNameHira,
+		LastNameHira:    req.LastNameHira,
+		ScreenName:      req.ScreenName,
+		Birthday:        req.Birthday,
+		Password:        req.Password,
+		PasswordConfirm: req.PasswordConfirm,
+	}
+	if err := a.authUsecase.CreateProvisionalUser(ctx, createProvisionalUserInput); err != nil {
+		return err
+	}
+	res := &gen.PostAuthProvisionalSignupResponse{}
+	return c.JSON(http.StatusOK, res)
 }

@@ -8,14 +8,20 @@ package di
 
 import (
 	"github.com/Bottlist/bottlist/cmd/di/provider"
+	"github.com/Bottlist/bottlist/external/mysql"
 	"github.com/Bottlist/bottlist/pkg/adapter/handler"
+	"github.com/Bottlist/bottlist/pkg/domain/repository"
+	"github.com/Bottlist/bottlist/pkg/domain/service"
 	"github.com/Bottlist/bottlist/pkg/usecase"
 )
 
 // Injectors from wire.go:
 
 func InitializeApp() (*provider.App, error) {
-	authUsecase := usecase.NewAuthUsecase()
+	connector := mysql.NewMySQLConnector()
+	authRepository := repository.NewAuthRepository(connector)
+	authservice := service.NewAuthservice(authRepository)
+	authUsecase := usecase.NewAuthUsecase(authservice)
 	authHandler := handler.NewAuthHandler(authUsecase)
 	app := provider.NewApp(authHandler)
 	return app, nil

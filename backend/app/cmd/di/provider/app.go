@@ -9,6 +9,7 @@ var DefaultAppSet = wire.NewSet(
 	DefaultUsecaseSet,
 	DefaultHandlerSet,
 	DefaultInfraSet,
+	DefaultServiceSet,
 	NewApp,
 )
 

@@ -7,7 +7,7 @@ info:
 servers:
   - url: 'http://localhost:3000'
 paths:
-  /login:
+  /auth/login:
     post:
       summary: ''
       operationId: post-login
@@ -34,6 +34,37 @@ paths:
                 - email
                 - password
         description: ''
+      tags:
+        - auth
+    parameters: []
+  /auth/signup:
+    post:
+      summary: ''
+      operationId: post-auth-signup
+      responses:
+        '200':
+          description: OK
+          headers: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - properties:
+                    '':
+                      $ref: '#/components/schemas/user'
+                - properties:
+                    password:
+                      type: string
+                    password_confirm:
+                      type: string
+                  required:
+                    - password
+                    - password_confirm
+              type: object
+      description: ''
+      tags:
+        - auth
   /password/reset/link:
     post:
       summary: ''
@@ -575,11 +606,11 @@ components:
       title: user
       description: お客様
       properties:
-        family_name:
+        first_name:
           type: string
           x-stoplight:
             id: zxtusyu9bznw2
-        family_name_kana:
+        first_name_huri:
           type: string
           x-stoplight:
             id: eav92rsbymw3o
@@ -587,15 +618,15 @@ components:
           type: string
           x-stoplight:
             id: iwclaahqowjfv
-        last_name_kana:
+        last_name_huri:
           type: string
           x-stoplight:
             id: n5p4j399o9gim
-        nickname:
+        screen_name:
           type: string
           x-stoplight:
             id: tzo3ju56292uc
-        birthdate:
+        birthday:
           type: string
           x-stoplight:
             id: a24kqwak2cphz
@@ -606,12 +637,12 @@ components:
             id: 594yhirtmgjlb
           format: email
       required:
-        - family_name
-        - family_name_kana
+        - first_name
+        - first_name_huri
         - last_name
-        - last_name_kana
-        - nickname
-        - birthdate
+        - last_name_huri
+        - screen_name
+        - birthday
         - email
     bottle:
       title: bottle

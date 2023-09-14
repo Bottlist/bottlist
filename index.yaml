@@ -44,6 +44,7 @@ paths:
       responses:
         '200':
           description: OK
+          headers: {}
       requestBody:
         content:
           application/json:
@@ -259,6 +260,7 @@ paths:
                             - id
                 required:
                   - bottles
+      description: ユーザが自分のキープボトル一覧を取得するときに使う
     post:
       summary: ''
       operationId: post-bottles
@@ -310,6 +312,63 @@ paths:
                     id: kaokt6lrajyz1
         description: ''
       description: ボトル申請
+  /shops/bottles:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      operationId: get-shops-bottles
+      x-stoplight:
+        id: 8t6rzxw01dcr7
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  bottles:
+                    type: array
+                    x-stoplight:
+                      id: eqk4c2t9y6d12
+                    items:
+                      allOf:
+                        - $ref: '#/components/schemas/bottle'
+                          x-stoplight:
+                            id: a88etr405dqb5
+                        - type: object
+                          properties:
+                            expires_at:
+                              type: string
+                              x-stoplight:
+                                id: tngrwumrs4k6k
+                              format: date
+                            amount:
+                              type: number
+                              x-stoplight:
+                                id: byfw1fk69mbme
+                              format: float
+                            id:
+                              type: string
+                              x-stoplight:
+                                id: jjf4dfpkozlcy
+                            username:
+                              type: string
+                            status:
+                              type: string
+                              enum:
+                                - pending
+                                - rejected
+                          required:
+                            - expires_at
+                            - amount
+                            - id
+                            - username
+                            - status
+                required:
+                  - bottles
+      description: 店舗がキープボトル一覧を取得するときに使う
+    parameters: []
   /shops:
     get:
       summary: Your GET endpoint
@@ -617,6 +676,7 @@ components:
         id: 59dc3b4ca1ef1
       title: user
       description: お客様
+      examples: []
       properties:
         first_name:
           type: string

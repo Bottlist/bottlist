@@ -1,4 +1,4 @@
-import { PickLogin } from '../users/PickLogin';
+import { PickLogin } from './PickLogin';
 import { Register } from './Register';
 import { Top } from './Top';
 import { Index } from './users/Index';

@@ -44,7 +44,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers: {}
       requestBody:
         content:
           application/json:
@@ -62,6 +61,19 @@ paths:
                     - password
                     - password_confirm
               type: object
+            examples:
+              Example 1:
+                value:
+                  '':
+                    first_name: string
+                    first_name_huri: string
+                    last_name: string
+                    last_name_huri: string
+                    screen_name: string
+                    birthday: '2019-08-24'
+                    email: user@example.com
+                  password: string
+                  password_confirm: string
       description: ''
       tags:
         - auth
@@ -631,6 +643,7 @@ components:
           x-stoplight:
             id: a24kqwak2cphz
           format: date
+          example: '2019-08-24'
         email:
           type: string
           x-stoplight:

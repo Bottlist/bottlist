@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
-import { Navigation } from '../../../components/Navigation';
+import { Navigation } from '../../users/components/Navigation';
 import { Outlet } from 'react-router-dom';
 import { Logo } from '../../../components/Logo';
 import { Stack } from '@mui/material';

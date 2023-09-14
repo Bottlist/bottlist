@@ -19,10 +19,20 @@ export interface paths {
     post: operations['post-users'];
   };
   '/bottles': {
-    /** Your GET endpoint */
+    /**
+     * Your GET endpoint
+     * @description ユーザが自分のキープボトル一覧を取得するときに使う
+     */
     get: operations['get-bottles'];
     /** @description ボトル申請 */
     post: operations['post-bottles'];
+  };
+  '/shops/bottles': {
+    /**
+     * Your GET endpoint
+     * @description 店舗がキープボトル一覧を取得するときに使う
+     */
+    get: operations['get-shops-bottles'];
   };
   '/shops': {
     /** Your GET endpoint */
@@ -69,7 +79,10 @@ export interface components {
       last_name: string;
       last_name_huri: string;
       screen_name: string;
-      /** Format: date */
+      /**
+       * Format: date
+       * @example 2019-08-24
+       */
       birthday: string;
       /** Format: email */
       email: string;
@@ -188,7 +201,10 @@ export interface operations {
       };
     };
   };
-  /** Your GET endpoint */
+  /**
+   * Your GET endpoint
+   * @description ユーザが自分のキープボトル一覧を取得するときに使う
+   */
   'get-bottles': {
     responses: {
       /** @description OK */
@@ -237,6 +253,31 @@ export interface operations {
       /** @description OK */
       200: {
         content: never;
+      };
+    };
+  };
+  /**
+   * Your GET endpoint
+   * @description 店舗がキープボトル一覧を取得するときに使う
+   */
+  'get-shops-bottles': {
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          'application/json': {
+            bottles: (components['schemas']['bottle'] & {
+              /** Format: date */
+              expires_at: string;
+              /** Format: float */
+              amount: number;
+              id: string;
+              username: string;
+              /** @enum {string} */
+              status: 'pending' | 'approved';
+            })[];
+          };
+        };
       };
     };
   };
@@ -343,9 +384,12 @@ export interface operations {
     };
     requestBody?: {
       content: {
-        'application/json': components['schemas']['bottle'] & {
+        'application/json': {
           /** Format: float */
           amount?: number;
+          /** @enum {string} */
+          status?: 'approved' | 'rejected';
+          reason?: string;
         };
       };
     };

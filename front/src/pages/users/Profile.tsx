@@ -16,7 +16,7 @@ import { Logo } from '../../components/Logo';
 import { request } from '../../utils/axiosUtils';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import { Navigation } from '../../components/Navigation';
+import { Navigation } from './components/Navigation';
 import { useDropzone } from 'react-dropzone';
 
 export const Profile = () => {

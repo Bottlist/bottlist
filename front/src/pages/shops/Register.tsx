@@ -1,14 +1,7 @@
 import { CenterLayout } from '../../components/CenterLayout';
 import { TextField as UntypedTextField } from '../../components/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Box,
-  Button,
-  InputAdornment,
-  Stack,
-  Typography,
-  TextField as MuiTextField,
-} from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 

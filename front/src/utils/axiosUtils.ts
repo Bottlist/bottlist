@@ -84,3 +84,34 @@ mock.onGet('/me').reply<ResponseData<'/me', 'get'>>(200, {
 mock
   .onPost('/password/reset/link')
   .reply<ResponseData<'/password/reset/link', 'post'>>(200);
+mock.onGet('/shops/bottles').reply<ResponseData<'/shops/bottles', 'get'>>(200, {
+  bottles: [
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: 'pending',
+      id: '1',
+      username: 'user',
+    },
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: 'pending',
+      id: '2',
+      username: 'user',
+    },
+    {
+      type: 'whisky',
+      name: 'string',
+      expires_at: '2019-08-24',
+      amount: 0.4,
+      status: 'approved',
+      id: '3',
+      username: 'user',
+    },
+  ],
+});

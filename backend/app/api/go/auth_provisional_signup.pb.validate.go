@@ -41,9 +41,9 @@ func (m *PostAuthProvisionalSignupRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetMail()) < 1 {
+	if utf8.RuneCountInString(m.GetEmail()) < 1 {
 		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "Mail",
+			field:  "Email",
 			reason: "value length must be at least 1 runes",
 		}
 	}

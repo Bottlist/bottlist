@@ -88,13 +88,13 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	if err != nil {
 		return err
 	}
+	// TODO urlを正規のものにする
 	body := registration_mail_body(token, expiredAt)
 	mails := []string{email}
 	err = a.mailClient.SendMail(mails, "title", body)
 	if err != nil {
 		return err
 	}
-
 	return nil
 }
 
@@ -102,7 +102,6 @@ func registration_mail_body(url string, validateTime time.Time) string {
 	expiredAt := validateTime.Format("2006-01-02 15:04:05")
 	return fmt.Sprintf(
 		`
-
     bottlist に仮登録いただきありがとうございます。
 
     ユーザー登録手続きはまだ完了しておりません。

@@ -62,16 +62,16 @@ func (m *PostAuthProvisionalSignupRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetFirstNameHira()) < 1 {
+	if utf8.RuneCountInString(m.GetFirstNameHuri()) < 1 {
 		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "FirstNameHira",
+			field:  "FirstNameHuri",
 			reason: "value length must be at least 1 runes",
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetLastNameHira()) < 1 {
+	if utf8.RuneCountInString(m.GetLastNameHuri()) < 1 {
 		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "LastNameHira",
+			field:  "LastNameHuri",
 			reason: "value length must be at least 1 runes",
 		}
 	}

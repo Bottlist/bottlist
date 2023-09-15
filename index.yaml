@@ -176,6 +176,7 @@ paths:
                   - users
       x-stoplight:
         id: lwp6rmgqvg7lt
+      description: 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する
   /bottles:
     get:
       summary: Your GET endpoint

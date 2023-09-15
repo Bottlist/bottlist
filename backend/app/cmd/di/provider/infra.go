@@ -1,6 +1,7 @@
 package provider
 
 import (
+	"github.com/Bottlist/bottlist/external/mail"
 	"github.com/Bottlist/bottlist/external/mysql"
 	"github.com/Bottlist/bottlist/external/redis"
 	"github.com/Bottlist/bottlist/pkg/domain/repository"
@@ -10,6 +11,7 @@ import (
 var DefaultInfraSet = wire.NewSet(
 	mysql.NewMySQLConnector,
 	redis.NewRedisConnector,
+	mail.NewMailClient,
 	repository.NewSessionRepository,
 	repository.NewAuthRepository,
 )

@@ -8,6 +8,7 @@ package di
 
 import (
 	"github.com/Bottlist/bottlist/cmd/di/provider"
+	"github.com/Bottlist/bottlist/external/mail"
 	"github.com/Bottlist/bottlist/external/mysql"
 	"github.com/Bottlist/bottlist/pkg/adapter/handler"
 	"github.com/Bottlist/bottlist/pkg/domain/repository"
@@ -21,7 +22,8 @@ func InitializeApp() (*provider.App, error) {
 	connector := mysql.NewMySQLConnector()
 	authRepository := repository.NewAuthRepository(connector)
 	authservice := service.NewAuthservice(authRepository)
-	authUsecase := usecase.NewAuthUsecase(authservice)
+	client := mail.NewMailClient()
+	authUsecase := usecase.NewAuthUsecase(authservice, authRepository, client)
 	authHandler := handler.NewAuthHandler(authUsecase)
 	app := provider.NewApp(authHandler)
 	return app, nil

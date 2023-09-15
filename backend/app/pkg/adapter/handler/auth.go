@@ -4,6 +4,7 @@ import (
 	"github.com/Bottlist/bottlist/api/gen"
 	"github.com/Bottlist/bottlist/pkg/usecase"
 	"github.com/labstack/echo/v4"
+	"log"
 	"net/http"
 )
 
@@ -27,6 +28,7 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestのBindに失敗しました：", err)
 	}
+	log.Println(req)
 	if err := req.Validate(); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
 	}

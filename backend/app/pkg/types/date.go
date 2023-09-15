@@ -3,7 +3,6 @@ package types
 import (
 	"database/sql/driver"
 	"encoding/json"
-	"strings"
 	"time"
 )
 
@@ -13,8 +12,8 @@ func (d Date) MarshalJSON() ([]byte, error) {
 	return json.Marshal(time.Time(d).Format("2006-01-02"))
 }
 
-func (d *Date) UnmarshalJSON(b []byte) error {
-	t, err := time.Parse("2006-01-02", strings.Trim(string(b), `"`))
+func (d *Date) UnmarshalJSON(s string) error {
+	t, err := time.Parse("2006-01-02", s)
 	*d = Date(t)
 	return err
 }

@@ -60,6 +60,5 @@ type CreateProvisionalUser struct {
 	Birthday      types.Date `db:"birthday" json:"birthday"`
 	Password      string     `db:"password" json:"-"`
 	Token         string     `db:"token" json:"token"`
-	CreatedAt     time.Time  `db:"created_at" json:"created_at"`
 	ExpiredAt     time.Time  `db:"expired_at" json:"expired_at"`
 }

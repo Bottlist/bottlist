@@ -24,11 +24,13 @@ func main() {
 	// ミドルウェアを設定
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 
 	app, _ := di.InitializeApp()
 
 	// ルートを設定
 	router.NewAuthRouter(e, app.AuthHandler).Router()
+	router.NewHelloRouter(e).Router()
 
 	// サーバーをポート番号1323で起動
 	e.Logger.Fatal(e.Start(":4000"))

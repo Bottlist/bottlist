@@ -33,6 +33,16 @@ docker_proto:
 generate_proto:
 	sh scripts/gen_proto.sh
 
+
+# migration関係
+.PHONY: migrate
+migrate:
+	docker container exec api sh -c '(migrate -path external/mysql/migrations -database="mysql://bottlist:docker@tcp(db:3306)/bottlist?multiStatements=true" up)'
+
+.PHONY: migrate_down
+migrate_down:
+	docker container exec api sh -c '(migrate -path external/mysql/migrations -database="mysql://bottlist:docker@tcp(db:3306)/bottlist?multiStatements=true" down)'
+
 # wireによる自動生成
 .PHONY: wire
 wire:
@@ -51,3 +61,4 @@ install:
 	go install github.com/gogo/protobuf/protoc-gen-gofast@v1.3.2
 	go install github.com/envoyproxy/protoc-gen-validate@v0.6.1
 	go install github.com/google/wire/cmd/wire@v0.5.0
+	go install -tags mysql github.com/golang-migrate/migrate/v4/cmd/migrate@latest

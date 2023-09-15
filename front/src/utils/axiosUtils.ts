@@ -115,3 +115,22 @@ mock.onGet('/shops/bottles').reply<ResponseData<'/shops/bottles', 'get'>>(200, {
     },
   ],
 });
+mock.onGet('/users').reply<ResponseData<'/users', 'get'>>(200, {
+  users: [
+    { id: 'string', name: 'string', img: 'string', birthday: '2019-08-24' },
+  ],
+});
+mock.onGet('/users/1').reply<ResponseData<'/users/{id}', 'get'>>(200, {
+  name: 'string',
+  img: 'string',
+  birthdate: '2019-08-24',
+  bottles: [
+    {
+      amount: 0.4,
+      name: 'string',
+      shop_name: 'string',
+      type: 'whisky',
+      expires_at: '2019-08-24',
+    },
+  ],
+});

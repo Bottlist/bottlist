@@ -14,6 +14,7 @@ export interface paths {
     post: operations['post-password-reset'];
   };
   '/users': {
+    /** @description 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する */
     get: operations['get-users'];
     /** @description 新規お客様登録 */
     post: operations['post-users'];
@@ -167,6 +168,7 @@ export interface operations {
       };
     };
   };
+  /** @description 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する */
   'get-users': {
     responses: {
       /** @description OK */
@@ -177,6 +179,11 @@ export interface operations {
               id: string;
               name: string;
               img: string;
+              /**
+               * Format: date
+               * @example 2019-12-13
+               */
+              birthday: string;
             }[];
           };
         };

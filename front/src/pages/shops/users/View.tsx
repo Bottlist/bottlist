@@ -1,6 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
 import { BottleCard } from '../../../components/BottleCard';
 import { Logo } from '../../../components/Logo';
 import {
+  Avatar,
   Box,
   Button,
   Container,
@@ -9,25 +11,35 @@ import {
   Stack,
   Typography,
 } from '@mui/material';
+import { request } from '../../../utils/axiosUtils';
+import { useParams } from 'react-router';
 
 export const View = () => {
+  const { id } = useParams();
+  const { data } = useQuery({
+    queryKey: ['users'],
+    queryFn: () =>
+      request({
+        url: `/users/${id}` as '/users/{id}',
+        method: 'get',
+      }).then((r) => r.data),
+  });
   return (
     <Container>
       <Stack>
         <Logo />
         <Grid container spacing={4}>
           <Grid item xs={4}>
-            <img
-              src="https://www.yomeishu-online.jp/yomeishu-online_wp/wp-content/uploads/2020/08/herb_set700x300_p01.jpg"
-              width="100%"
-            />
+            <Avatar src={data?.img} />
           </Grid>
           <Grid item xs={8}>
             <Stack textAlign="center" spacing={2}>
               <Paper>
                 <Typography variant="h4" margin={2}>
-                  飯山 なぎ 様
+                  {data?.name} 様
                 </Typography>
+                <Typography>生年月日</Typography>
+                <Typography>{data?.birthdate}</Typography>
               </Paper>
               <Box>
                 <Button color="secondary">メッセージ</Button>
@@ -38,9 +50,15 @@ export const View = () => {
         <Typography>キープボトル一覧</Typography>
         <Paper>
           <Container>
-            <BottleCard upperText="白洲 300年" lowerText="開封日: 23/03/02">
-              <Button>編集</Button>
-            </BottleCard>
+            {data?.bottles.map((bottle) => (
+              <BottleCard
+                key={bottle.name}
+                upperText={bottle.shop_name + ' ' + bottle.name}
+                lowerText={bottle.expires_at + 'まで'}
+              >
+                <Button>編集</Button>
+              </BottleCard>
+            ))}
           </Container>
         </Paper>
       </Stack>

@@ -22,7 +22,7 @@ export const shopsRouter = [
     element: <Index />,
   },
   {
-    path: 'users/view',
+    path: 'users/:id',
     element: <View />,
   },
 ];

@@ -3,6 +3,7 @@ import { Register } from './Register';
 import { Top } from './Top';
 import { Index } from './users/Index';
 import { View } from './users/View';
+import { Settings } from './Settings';
 
 export const shopsRouter = [
   {
@@ -24,5 +25,9 @@ export const shopsRouter = [
   {
     path: 'users/:id',
     element: <View />,
+  },
+  {
+    path: 'settings',
+    element: <Settings />,
   },
 ];

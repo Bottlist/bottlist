@@ -30,7 +30,7 @@ export const Navigation = () => (
       label="設定"
       icon={<SettingsIcon />}
       LinkComponent={MyLink}
-      href="/users/profile"
+      href="/shops/settings"
     />
   </BottomNavigation>
 );

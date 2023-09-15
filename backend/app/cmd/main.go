@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-
-	"github.com/Bottlist/bottlist/pkg/infra"
+	"github.com/Bottlist/bottlist/cmd/di"
+	"github.com/Bottlist/bottlist/external/mysql"
+	"github.com/Bottlist/bottlist/pkg/adapter/router"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -13,7 +13,7 @@ func main() {
 	// インスタンスを作成
 	e := echo.New()
 
-	db := infra.NewMySQLConnector()
+	db := mysql.NewMySQLConnector()
 	defer func() {
 		err := db.Conn.Close()
 		if err != nil {
@@ -24,15 +24,14 @@ func main() {
 	// ミドルウェアを設定
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
+
+	app, _ := di.InitializeApp()
 
 	// ルートを設定
-	e.GET("/", hello) // ローカル環境の場合、http://localhost:1323/ にGETアクセスされるとhelloハンドラーを実行する
+	router.NewAuthRouter(e, app.AuthHandler).Router()
+	router.NewHelloRouter(e).Router()
 
 	// サーバーをポート番号1323で起動
 	e.Logger.Fatal(e.Start(":4000"))
-}
-
-// ハンドラーを定義
-func hello(c echo.Context) error {
-	return c.String(http.StatusOK, "Hello, World!")
 }

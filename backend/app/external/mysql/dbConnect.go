@@ -1,4 +1,4 @@
-package infra
+package mysql
 
 import (
 	"fmt"
@@ -9,11 +9,11 @@ import (
 
 const driverName = "mysql"
 
-type MySQLConnector struct {
+type Connector struct {
 	Conn *sqlx.DB
 }
 
-func NewMySQLConnector() *MySQLConnector {
+func NewMySQLConnector() *Connector {
 	conf := config.LoadConfig()
 
 	dsn := mysqlConnInfo(*conf.MySQLInfo)
@@ -22,7 +22,7 @@ func NewMySQLConnector() *MySQLConnector {
 		panic(err)
 	}
 
-	return &MySQLConnector{
+	return &Connector{
 		Conn: conn,
 	}
 }

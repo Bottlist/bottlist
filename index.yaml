@@ -7,7 +7,7 @@ info:
 servers:
   - url: 'http://localhost:4000'
 paths:
-  /auth/login:
+  /auth/login/user:
     post:
       summary: ''
       operationId: post-login
@@ -36,8 +36,9 @@ paths:
         description: ''
       tags:
         - auth
+      description: 顧客のログイン用エンドポイント
     parameters: []
-  /auth/signup:
+  /auth/signup/user:
     post:
       summary: ''
       operationId: post-auth-signup
@@ -75,10 +76,63 @@ paths:
                     email: user@example.com
                   password: string
                   password_confirm: string
-      description: ''
+      description: 顧客の新規登録
       tags:
         - auth
-  /password/reset/link:
+    get:
+      summary: ''
+      operationId: get-auth-signup
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          required: true
+      tags:
+        - auth
+      description: 顧客のメールアドレスのリンクのtokenを送り本登録する
+    parameters: []
+  /auth/signup/shop:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - auth
+      responses:
+        '200':
+          description: OK
+      operationId: get-auth-signup-shop
+      description: 店のメールアドレスのリンクのtokenを送り本登録する
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          required: true
+    post:
+      summary: ''
+      operationId: post-auth-signup-shop
+      responses:
+        '200':
+          description: OK
+      tags:
+        - auth
+      description: 店の新規登録
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/bottle'
+                - type: object
+                  properties:
+                    password:
+                      type: string
+                    password_confirm:
+                      type: string
+  /auth/password/reset/link:
     post:
       summary: ''
       operationId: post-password-reset
@@ -100,42 +154,21 @@ paths:
               required:
                 - email
     parameters: []
-  /users:
-    post:
+    get:
       summary: ''
-      operationId: post-users
+      operationId: get-auth-password-reset-link
       responses:
         '200':
           description: OK
-      x-stoplight:
-        id: pu3bepj4qzxu7
-      description: 新規お客様登録
-      requestBody:
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: '#/components/schemas/user'
-                - type: object
-                  x-stoplight:
-                    id: vfoafewoj5vel
-                  properties:
-                    password:
-                      type: string
-                      x-stoplight:
-                        id: kk0x0iuhefznk
-                    password_confirm:
-                      type: string
-                      x-stoplight:
-                        id: rnf2pgzrg4s4i
-                  required:
-                    - password
-                    - password_confirm
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-      parameters: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: token
+          required: true
+      tags:
+        - auth
+  /users:
     get:
       summary: ''
       operationId: get-users
@@ -168,24 +201,12 @@ paths:
                           type: string
                           x-stoplight:
                             id: e4f96ahq98ocr
-                        birthday:
-                          type: string
-                          format: date
-                          example: '2019-12-13'
                       required:
                         - id
                         - name
                         - img
-                        - birthday
                 required:
                   - users
-              examples:
-                Example 1:
-                  value:
-                    users:
-                      - id: string
-                        name: string
-                        img: string
       x-stoplight:
         id: lwp6rmgqvg7lt
       description: 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する

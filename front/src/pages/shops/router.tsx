@@ -1,9 +1,15 @@
+import { PickLogin } from './PickLogin';
 import { Register } from './Register';
 import { Top } from './Top';
 import { Index } from './users/Index';
 import { View } from './users/View';
+import { Settings } from './Settings';
 
 export const shopsRouter = [
+  {
+    path: 'pick-login',
+    element: <PickLogin />,
+  },
   {
     path: 'register',
     element: <Register />,
@@ -17,7 +23,11 @@ export const shopsRouter = [
     element: <Index />,
   },
   {
-    path: 'users/view',
+    path: 'users/:id',
     element: <View />,
+  },
+  {
+    path: 'settings',
+    element: <Settings />,
   },
 ];

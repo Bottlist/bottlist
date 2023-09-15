@@ -1,14 +1,14 @@
 import { TextFieldProps, TextField as MuiTextField } from '@mui/material';
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
 
-export const TextField = (
-  props: TextFieldProps & { _key: Path<FieldValues> }
+export const TextField = <T extends FieldValues>(
+  props: TextFieldProps & { _key: Path<T> }
 ) => {
   const {
     register,
     getValues,
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<T>();
   const { _key } = props;
 
   return (
@@ -17,7 +17,7 @@ export const TextField = (
       {...register(_key)}
       defaultValue={getValues(_key)}
       error={!!errors[_key]}
-      helperText={errors[_key]?.message?.toString()}
+      helperText={errors[_key]?.message?.toString() ?? props.helperText}
     />
   );
 };

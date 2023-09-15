@@ -1,4 +1,4 @@
-import { ChoicesLayout } from '../components/ChoicesLayout';
+import { ChoicesLayout } from '../../components/ChoicesLayout';
 
 export function PickLogin() {
   return (
@@ -7,7 +7,7 @@ export function PickLogin() {
         { text: 'ログイン', link: '/login' },
         {
           text: '新規登録',
-          link: '/register',
+          link: '/users/register',
         },
       ]}
     />

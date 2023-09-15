@@ -522,11 +522,7 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/bottle'
-                  x-stoplight:
-                    id: mlum1bd86n1f6
-                - type: object
-                  x-stoplight:
+                - x-stoplight:
                     id: b3fyyz2q0wn3k
                   properties:
                     amount:
@@ -534,6 +530,14 @@ paths:
                       x-stoplight:
                         id: cwoahesggwm4z
                       format: float
+                    status:
+                      type: string
+                      enum:
+                        - approved
+                        - rejected
+                    reason:
+                      type: string
+              type: object
     get:
       summary: ''
       operationId: get-bottles-id

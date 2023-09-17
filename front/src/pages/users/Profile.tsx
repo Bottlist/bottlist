@@ -99,7 +99,7 @@ export const Profile = () => {
           <Button
             onClick={() =>
               request({
-                url: '/password/reset/link',
+                url: '/auth/password/reset/link',
                 method: 'post',
                 data: { email: data?.email },
               }).finally(() => setOpen(false))

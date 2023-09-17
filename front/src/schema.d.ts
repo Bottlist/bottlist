@@ -4,20 +4,32 @@
  */
 
 export interface paths {
-  '/auth/login': {
+  '/auth/login/user': {
+    /** @description 顧客のログイン用エンドポイント */
     post: operations['post-login'];
   };
-  '/auth/signup': {
+  '/auth/signup/user': {
+    /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する */
+    get: operations['get-auth-signup'];
+    /** @description 顧客の新規登録 */
     post: operations['post-auth-signup'];
   };
-  '/password/reset/link': {
+  '/auth/signup/shop': {
+    /**
+     * Your GET endpoint
+     * @description 店のメールアドレスのリンクのtokenを送り本登録する
+     */
+    get: operations['get-auth-signup-shop'];
+    /** @description 店の新規登録 */
+    post: operations['post-auth-signup-shop'];
+  };
+  '/auth/password/reset/link': {
+    get: operations['get-auth-password-reset-link'];
     post: operations['post-password-reset'];
   };
   '/users': {
     /** @description 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する */
     get: operations['get-users'];
-    /** @description 新規お客様登録 */
-    post: operations['post-users'];
   };
   '/bottles': {
     /**
@@ -119,6 +131,7 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
+  /** @description 顧客のログイン用エンドポイント */
   'post-login': {
     requestBody?: {
       content: {
@@ -135,6 +148,21 @@ export interface operations {
       };
     };
   };
+  /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する */
+  'get-auth-signup': {
+    parameters: {
+      query: {
+        token: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  /** @description 顧客の新規登録 */
   'post-auth-signup': {
     requestBody?: {
       content: {
@@ -144,6 +172,53 @@ export interface operations {
           password: string;
           password_confirm: string;
         };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  /**
+   * Your GET endpoint
+   * @description 店のメールアドレスのリンクのtokenを送り本登録する
+   */
+  'get-auth-signup-shop': {
+    parameters: {
+      query: {
+        token: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  /** @description 店の新規登録 */
+  'post-auth-signup-shop': {
+    requestBody?: {
+      content: {
+        'application/json': components['schemas']['bottle'] & {
+          password?: string;
+          password_confirm?: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  'get-auth-password-reset-link': {
+    parameters: {
+      query: {
+        token: string;
       };
     };
     responses: {
@@ -181,30 +256,12 @@ export interface operations {
               img: string;
               /**
                * Format: date
-               * @example 2019-12-13
+               * @example 2019-12-31
                */
               birthday: string;
             }[];
           };
         };
-      };
-    };
-  };
-  /** @description 新規お客様登録 */
-  'post-users': {
-    requestBody?: {
-      content: {
-        'application/json': components['schemas']['user'] & {
-          password: string;
-          password_confirm: string;
-        };
-        'application/xml': Record<string, never>;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: never;
       };
     };
   };

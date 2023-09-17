@@ -82,8 +82,8 @@ mock.onGet('/me').reply<ResponseData<'/me', 'get'>>(200, {
   img: 'http://example.com',
 });
 mock
-  .onPost('/password/reset/link')
-  .reply<ResponseData<'/password/reset/link', 'post'>>(200);
+  .onPost('/auth/password/reset/link')
+  .reply<ResponseData<'/auth/password/reset/link', 'post'>>(200);
 mock.onGet('/shops/bottles').reply<ResponseData<'/shops/bottles', 'get'>>(200, {
   bottles: [
     {

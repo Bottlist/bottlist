@@ -201,10 +201,15 @@ paths:
                           type: string
                           x-stoplight:
                             id: e4f96ahq98ocr
+                        birthday:
+                          type: string
+                          format: date
+                          example: '2019-12-31'
                       required:
                         - id
                         - name
                         - img
+                        - birthday
                 required:
                   - users
       x-stoplight:

@@ -4,9 +4,10 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { request } from '../../utils/axiosUtils';
-import { TextField } from '../../components/TextField';
 import { useNavigate } from 'react-router';
 import { Button } from '../../components/Button';
+import { GrayTextField } from '../../components/GrayTextField';
+import { Button as RawButton } from '@mui/base/Button';
 
 const schema = yup
   .object({
@@ -16,7 +17,7 @@ const schema = yup
   .required();
 type FormType = yup.InferType<typeof schema>;
 
-const TypedTextField = TextField<FormType>;
+const TextField = GrayTextField<FormType>;
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -37,8 +38,8 @@ export const Login = () => {
       <FormProvider {...methods}>
         <form onSubmit={onSubmit}>
           <Stack spacing={5} paddingY={5} alignItems="center">
-            <TypedTextField _key="email" placeholder="E-mail Address" />
-            <TypedTextField _key="password" placeholder="password" />
+            <TextField _key="email" label="メールアドレス" />
+            <TextField _key="password" label="パスワード" />
             <Box>
               <Button type="submit">ログイン</Button>
             </Box>
@@ -51,6 +52,14 @@ export const Login = () => {
 
 const Footer = (
   <Box marginTop={5}>
-    {/* <Button color="secondary">Lost your password?</Button> */}
+    <RawButton
+      style={{
+        appearance: 'none',
+        backgroundColor: 'transparent',
+        border: 'none',
+      }}
+    >
+      パスワードをお忘れの方は こちら
+    </RawButton>
   </Box>
 );

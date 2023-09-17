@@ -1,7 +1,7 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link } from './Link';
 
 export const BigButton = (props: { children: string; link: string }) => (
-  <RouterLink
+  <Link
     to={props.link}
     style={{
       width: 280,
@@ -12,12 +12,10 @@ export const BigButton = (props: { children: string; link: string }) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      textDecoration: 'none',
       letterSpacing: 20,
       fontSize: 32,
-      color: 'black',
     }}
   >
     {props.children}
-  </RouterLink>
+  </Link>
 );

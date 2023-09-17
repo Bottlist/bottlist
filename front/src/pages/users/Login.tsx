@@ -1,4 +1,4 @@
-import { Box, Button, Stack } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { CenterLayout } from '../../components/CenterLayout';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,6 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { request } from '../../utils/axiosUtils';
 import { TextField } from '../../components/TextField';
 import { useNavigate } from 'react-router';
+import { Button } from '../../components/Button';
 
 const schema = yup
   .object({
@@ -50,6 +51,6 @@ export const Login = () => {
 
 const Footer = (
   <Box marginTop={5}>
-    <Button color="secondary">Lost your password?</Button>
+    {/* <Button color="secondary">Lost your password?</Button> */}
   </Box>
 );

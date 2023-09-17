@@ -4,7 +4,6 @@ import (
 	"github.com/Bottlist/bottlist/api/gen"
 	"github.com/Bottlist/bottlist/pkg/usecase"
 	"github.com/labstack/echo/v4"
-	"log"
 	"net/http"
 )
 
@@ -28,7 +27,6 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestのBindに失敗しました：", err)
 	}
-	log.Println(req)
 	if err := req.Validate(); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
 	}
@@ -47,5 +45,24 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 		return err
 	}
 	res := &gen.PostAuthProvisionalSignupResponse{}
+	return c.JSON(http.StatusOK, res)
+}
+
+func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	var req gen.GetAuthSignupUserRequest
+	token := c.Param("token")
+	req.Token = token
+	if err := req.Validate(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
+	}
+	createUserInput := &usecase.CreateUserInput{
+		req.Token,
+	}
+	if err := a.authUsecase.CreateUser(ctx, createUserInput); err != nil {
+		return err
+	}
+	res := &gen.GetAuthSignupUserResponse{}
 	return c.JSON(http.StatusOK, res)
 }

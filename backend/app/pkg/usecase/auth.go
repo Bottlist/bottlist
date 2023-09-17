@@ -102,17 +102,17 @@ func registration_mail_body(url string, validateTime time.Time) string {
 	expiredAt := validateTime.Format("2006-01-02 15:04:05")
 	return fmt.Sprintf(
 		`
-    bottlist に仮登録いただきありがとうございます。
+bottlist に仮登録いただきありがとうございます。
 
-    ユーザー登録手続きはまだ完了しておりません。
-    以下のURLにアクセスして、ユーザー登録の完了をお願いいたします。
-    %s
+ユーザー登録手続きはまだ完了しておりません。
+以下のURLにアクセスして、ユーザー登録の完了をお願いいたします。
+%s
 
-    本URLは  まで有効です。
-    有効期限経過後は再度メールアドレス登録から行ってください。
+本URLは %s まで有効です。
+有効期限経過後は再度メールアドレス登録から行ってください。
 
 
-    coResty 運営チーム`,
+bottlist 運営チーム`,
 		url,
 		expiredAt,
 	)

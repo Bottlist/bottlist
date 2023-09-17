@@ -33,13 +33,13 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
 	}
 	createProvisionalUserInput := &usecase.CreateProvisionalUserInput{
-		Email:           req.Email,
-		FirstName:       req.FirstName,
-		LastName:        req.LastName,
-		FirstNameHira:   req.FirstNameHuri,
-		LastNameHira:    req.LastNameHuri,
-		ScreenName:      req.ScreenName,
-		Birthday:        req.Birthday,
+		Email:           req.User.Email,
+		FirstName:       req.User.FirstName,
+		LastName:        req.User.LastName,
+		FirstNameHira:   req.User.FirstNameHuri,
+		LastNameHira:    req.User.LastNameHuri,
+		ScreenName:      req.User.ScreenName,
+		Birthday:        req.User.Birthday,
 		Password:        req.Password,
 		PasswordConfirm: req.PasswordConfirm,
 	}

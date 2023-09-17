@@ -6,7 +6,7 @@ option go_package = "/gen";
 
 import "validate/validate.proto";
 
-message PostAuthProvisionalSignupRequest {
+message User {
   string email = 1 [(validate.rules).string.min_len = 1];
   string first_name = 2 [(validate.rules).string.min_len = 1];
   string last_name = 3 [(validate.rules).string.min_len = 1];
@@ -14,8 +14,12 @@ message PostAuthProvisionalSignupRequest {
   string last_name_huri = 5 [(validate.rules).string.min_len = 1];
   string screen_name = 6 [(validate.rules).string.min_len = 1];
   string birthday = 7 [(validate.rules).string.min_len = 10];
-  string password = 8 [(validate.rules).string.min_len = 8];
-  string password_confirm = 9 [(validate.rules).string.min_len = 8];
+}
+
+message PostAuthProvisionalSignupRequest {
+  User user = 1;
+  string password = 2 [(validate.rules).string.min_len = 8];
+  string password_confirm = 3 [(validate.rules).string.min_len = 8];
 }
 
 message PostAuthProvisionalSignupResponse {

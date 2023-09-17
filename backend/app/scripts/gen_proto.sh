@@ -2,8 +2,8 @@
 
 set -e
 
-rm -rf api/go
-mkdir -p api/go
+rm -rf api/gen
+mkdir -p api/gen
 
 for dir in `find api/proto/api -type d`; do
 	count=`find $dir -maxdepth 1 -name *.proto| wc -l`

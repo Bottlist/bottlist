@@ -33,6 +33,119 @@ var (
 	_ = anypb.Any{}
 )
 
+// Validate checks the field values on User with the rules defined in the proto
+// definition for this message. If any rules are violated, an error is returned.
+func (m *User) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetEmail()) < 1 {
+		return UserValidationError{
+			field:  "Email",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetFirstName()) < 1 {
+		return UserValidationError{
+			field:  "FirstName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetLastName()) < 1 {
+		return UserValidationError{
+			field:  "LastName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetFirstNameHuri()) < 1 {
+		return UserValidationError{
+			field:  "FirstNameHuri",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetLastNameHuri()) < 1 {
+		return UserValidationError{
+			field:  "LastNameHuri",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetScreenName()) < 1 {
+		return UserValidationError{
+			field:  "ScreenName",
+			reason: "value length must be at least 1 runes",
+		}
+	}
+
+	if utf8.RuneCountInString(m.GetBirthday()) < 10 {
+		return UserValidationError{
+			field:  "Birthday",
+			reason: "value length must be at least 10 runes",
+		}
+	}
+
+	return nil
+}
+
+// UserValidationError is the validation error returned by User.Validate if the
+// designated constraints aren't met.
+type UserValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UserValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UserValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UserValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UserValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UserValidationError) ErrorName() string { return "UserValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UserValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUser.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UserValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UserValidationError{}
+
 // Validate checks the field values on PostAuthProvisionalSignupRequest with
 // the rules defined in the proto definition for this message. If any rules
 // are violated, an error is returned.
@@ -41,52 +154,13 @@ func (m *PostAuthProvisionalSignupRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetEmail()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "Email",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetFirstName()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "FirstName",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetLastName()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "LastName",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetFirstNameHuri()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "FirstNameHuri",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetLastNameHuri()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "LastNameHuri",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetScreenName()) < 1 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "ScreenName",
-			reason: "value length must be at least 1 runes",
-		}
-	}
-
-	if utf8.RuneCountInString(m.GetBirthday()) < 10 {
-		return PostAuthProvisionalSignupRequestValidationError{
-			field:  "Birthday",
-			reason: "value length must be at least 10 runes",
+	if v, ok := interface{}(m.GetUser()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return PostAuthProvisionalSignupRequestValidationError{
+				field:  "User",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
 		}
 	}
 

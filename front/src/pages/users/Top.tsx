@@ -18,12 +18,8 @@ import { request } from '../../utils/axiosUtils';
 import { useQuery } from '@tanstack/react-query';
 import { components } from '../../schema';
 import { Navigation } from './components/Navigation';
-
-const IMAGES: Record<components['schemas']['bottle']['type'], string> = {
-  brandy: 'brandy.png',
-  shochu: 'shochu.png',
-  whisky: 'Whiske.png',
-};
+import { BigBottleCard } from '../../components/BigBottleCard';
+import dayjs from 'dayjs';
 
 export const Top = () => {
   const { data } = useQuery({
@@ -56,21 +52,14 @@ export const Top = () => {
             {data
               ?.filter((b) => b.status.status === 'approved')
               .map((bottle) => (
-                <Card key={bottle.id}>
-                  <Grid container>
-                    <Grid item xs={5}>
-                      <CardMedia component="img" image={IMAGES[bottle.type]} />
-                    </Grid>
-                    <Grid item xs={7}>
-                      <CardContent>
-                        <Typography>{bottle.shop.name}</Typography>
-                        <Typography variant="h6">{bottle.name}</Typography>
-                        <Divider />
-                        <Typography>{bottle.expires_at}</Typography>
-                      </CardContent>
-                    </Grid>
-                  </Grid>
-                </Card>
+                <BigBottleCard
+                  key={bottle.id}
+                  type={bottle.type}
+                  name={bottle.name}
+                  shopName={bottle.shop.name}
+                  expires_at={dayjs(bottle.expires_at)}
+                  amount={bottle.amount}
+                />
               ))}
           </Container>
         </Grid>

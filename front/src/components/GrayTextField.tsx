@@ -4,8 +4,9 @@ import { FieldValues, Path, useFormContext } from 'react-hook-form';
 
 export const GrayTextField = <T extends FieldValues>(props: {
   _key: Path<T>;
-  label: string;
   helperText?: string;
+  label: string;
+  alignLabel?: 'left' | 'center';
 }) => {
   const {
     register,
@@ -14,7 +15,9 @@ export const GrayTextField = <T extends FieldValues>(props: {
   const { _key } = props;
   return (
     <FormControl error={!!errors[_key]}>
-      <label style={{ fontSize: 13 }}>{props.label}</label>
+      <label style={{ fontSize: 13, textAlign: props.alignLabel ?? 'left' }}>
+        {props.label}
+      </label>
       <Input
         {...register(_key)}
         slotProps={{

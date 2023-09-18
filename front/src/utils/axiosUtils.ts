@@ -28,7 +28,7 @@ export function request<
 
 const mock = new MockAdapter(client);
 
-mock.onPost('/login').reply(200);
+mock.onPost('/auth/login/user').reply(200);
 mock.onGet('/bottles').reply<ResponseData<'/bottles', 'get'>>(200, {
   bottles: [
     {

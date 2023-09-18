@@ -1,8 +1,8 @@
 import { Modal, Paper, Typography } from '@mui/material';
-import { request } from '../../utils/axiosUtils';
+import { request } from '../utils/axiosUtils';
 import * as yup from 'yup';
-import { Button } from '../../components/Button';
-import { GrayTextField } from '../../components/GrayTextField';
+import { Button } from './Button';
+import { GrayTextField } from './GrayTextField';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';

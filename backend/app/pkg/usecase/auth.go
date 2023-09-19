@@ -16,6 +16,7 @@ import (
 
 type AuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
+	CreateUser(ctx context.Context, input *CreateUserInput) error
 }
 
 func NewAuthUsecase(authService service.Authservice, authRepository repository.AuthRepository, mailClient *mail.Client) AuthUsecase {
@@ -61,7 +62,11 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	}
 
 	token := utils.NewUUID()
-	expiredAt := time.Now().Add(1 * time.Hour)
+	jst, err := time.LoadLocation("Asia/Tokyo")
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	expiredAt := time.Now().In(jst).Add(1 * time.Hour)
 	birth := types.Date{}
 	err = birth.UnmarshalJSON(input.Birthday)
 	if err != nil {
@@ -93,7 +98,7 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	mails := []string{email}
 	err = a.mailClient.SendMail(mails, "title", body)
 	if err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
 	return nil
 }
@@ -116,4 +121,36 @@ bottlist 運営チーム`,
 		url,
 		expiredAt,
 	)
+}
+
+type CreateUserInput struct {
+	Token string
+}
+
+func (a *authUsecase) CreateUser(ctx context.Context, input *CreateUserInput) error {
+	provisionalUser, err := a.authService.CheckToken(input.Token)
+	if err != nil {
+		return err
+	}
+	user := &model.UserCreate{
+		Email:         provisionalUser.Email,
+		FirstName:     provisionalUser.FirstName,
+		LastName:      provisionalUser.LastName,
+		FirstNameHira: provisionalUser.FirstNameHira,
+		LastNameHira:  provisionalUser.LastNameHira,
+		ScreenName:    provisionalUser.ScreenName,
+		Birthday:      provisionalUser.Birthday,
+		Password:      provisionalUser.Password,
+		Image:         "default",
+	}
+	err = a.authRepository.InsertUser(user)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+	err = a.authRepository.DeleteProvisionalUser(provisionalUser.ID)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+
+	return nil
 }

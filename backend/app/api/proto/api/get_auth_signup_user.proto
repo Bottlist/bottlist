@@ -1,0 +1,15 @@
+syntax = "proto3";
+package api;
+
+option go_package = "/gen";
+
+
+import "validate/validate.proto";
+
+message GetAuthSignupUserRequest {
+    string token = 1 [(validate.rules).string.min_len = 1];
+}
+  
+message GetAuthSignupUserResponse {
+  
+}

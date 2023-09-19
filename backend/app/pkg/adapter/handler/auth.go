@@ -53,7 +53,7 @@ func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	var req gen.GetAuthSignupUserRequest
-	token := c.Param("token")
+	token := c.QueryParam("token")
 	req.Token = token
 	if err := req.Validate(); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)

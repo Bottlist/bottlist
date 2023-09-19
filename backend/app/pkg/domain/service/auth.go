@@ -57,7 +57,7 @@ func (a *authService) CheckEmailRegister(email string) error {
 func (a *authService) CheckToken(token string) (*model.ProvisionalUser, error) {
 	user, err := a.authRepository.GetProvisionalUserByToken(token)
 	if err != nil {
-		return nil, echo.NewHTTPError(http.StatusBadRequest, "不正なリクエストです")
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
 	}
 	now, err := getNowTime()
 	if err != nil {

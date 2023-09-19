@@ -9,6 +9,7 @@ import (
 
 type AuthHandler interface {
 	PostProvisionalSignup(c echo.Context) error
+	GetProvisionalSignup(c echo.Context) error
 }
 
 func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {

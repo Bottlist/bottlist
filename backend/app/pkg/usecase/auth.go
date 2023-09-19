@@ -98,17 +98,8 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	mails := []string{email}
 	err = a.mailClient.SendMail(mails, "title", body)
 	if err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-	return nil
-}
-
-type CreateUserInput struct {
-	Token string
-}
-
-func (a *authUsecase) CreateUser(ctx context.Context, input *CreateUserInput) error {
-
 	return nil
 }
 
@@ -130,4 +121,36 @@ bottlist 運営チーム`,
 		url,
 		expiredAt,
 	)
+}
+
+type CreateUserInput struct {
+	Token string
+}
+
+func (a *authUsecase) CreateUser(ctx context.Context, input *CreateUserInput) error {
+	provisionalUser, err := a.authService.CheckToken(input.Token)
+	if err != nil {
+		return err
+	}
+	user := &model.UserCreate{
+		Email:         provisionalUser.Email,
+		FirstName:     provisionalUser.FirstName,
+		LastName:      provisionalUser.LastName,
+		FirstNameHira: provisionalUser.FirstNameHira,
+		LastNameHira:  provisionalUser.LastNameHira,
+		ScreenName:    provisionalUser.ScreenName,
+		Birthday:      provisionalUser.Birthday,
+		Password:      provisionalUser.Password,
+		Image:         "default",
+	}
+	err = a.authRepository.InsertUser(user)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+	err = a.authRepository.DeleteProvisionalUser(provisionalUser.ID)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+
+	return nil
 }

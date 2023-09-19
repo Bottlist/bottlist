@@ -25,5 +25,5 @@ type authRouter struct {
 
 func (h *authRouter) Router() {
 	h.e.POST("/signup/user", h.authHandler.PostProvisionalSignup)
-	h.e.GET("/signup/user:token", h.authHandler.PostProvisionalSignup)
+	h.e.GET("/signup/user:token", h.authHandler.GetProvisionalSignup)
 }

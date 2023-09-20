@@ -7,7 +7,7 @@ info:
 servers:
   - url: 'http://localhost:4000'
 paths:
-  /auth/login/user:
+  /api/auth/login/user:
     post:
       summary: ''
       operationId: post-login
@@ -38,7 +38,7 @@ paths:
         - auth
       description: 顧客のログイン用エンドポイント
     parameters: []
-  /auth/signup/user:
+  /api/auth/signup/user:
     post:
       summary: ''
       operationId: post-auth-signup
@@ -76,7 +76,7 @@ paths:
                     email: user@example.com
                   password: string
                   password_confirm: string
-      description: 顧客の新規登録
+      description: 顧客の新規登録(実装した)
       tags:
         - auth
     get:
@@ -93,7 +93,7 @@ paths:
           required: true
       tags:
         - auth
-      description: 顧客のメールアドレスのリンクのtokenを送り本登録する
+      description: 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した)
     parameters: []
   /auth/signup/shop:
     get:

@@ -23,12 +23,13 @@ import (
 func InitializeApp() (*provider.App, error) {
 	db := mysql.NewMySQLConnector()
 	authRepository := repository.NewAuthRepository(db)
-	authservice := service.NewAuthservice(authRepository)
-	client := mail.NewMailClient()
-	authUsecase := usecase.NewAuthUsecase(authservice, authRepository, client)
+	client := redis.NewRedisConnector()
+	sessionRepository := repository.NewSessionRepository(client)
+	authservice := service.NewAuthservice(authRepository, sessionRepository)
+	mailClient := mail.NewMailClient()
+	authUsecase := usecase.NewAuthUsecase(authservice, authRepository, mailClient)
 	authHandler := handler.NewAuthHandler(authUsecase)
-	redisClient := redis.NewRedisConnector()
-	sessionMiddleware := middlewares.NewSessionMiddleware(redisClient)
+	sessionMiddleware := middlewares.NewSessionMiddleware(sessionRepository)
 	app := provider.NewApp(authHandler, sessionMiddleware, db)
 	return app, nil
 }

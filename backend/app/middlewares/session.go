@@ -1,16 +1,16 @@
 package middlewares
 
 import (
-	"github.com/go-redis/redis/v8"
+	"github.com/Bottlist/bottlist/pkg/domain/repository"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 type SessionMiddleware struct {
-	client *redis.Client
+	client repository.SessionRepository
 }
 
-func NewSessionMiddleware(client *redis.Client) *SessionMiddleware {
+func NewSessionMiddleware(client repository.SessionRepository) *SessionMiddleware {
 	return &SessionMiddleware{
 		client: client,
 	}
@@ -27,7 +27,7 @@ func (s *SessionMiddleware) Session(next echo.HandlerFunc) echo.HandlerFunc {
 				return next(c)
 			}
 		} else {
-			userId, err := s.client.Get(ctx, cookie.Value).Result()
+			userId, err := s.client.GetSession(ctx, cookie.Value)
 			if err != nil {
 				return echo.ErrUnauthorized
 			}

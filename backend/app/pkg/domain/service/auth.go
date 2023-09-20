@@ -1,13 +1,15 @@
 package service
 
 import (
+	"context"
 	"database/sql"
 	"github.com/Bottlist/bottlist/pkg/domain/model"
 	"github.com/Bottlist/bottlist/pkg/domain/repository"
+	"github.com/Bottlist/bottlist/pkg/utils"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/mail"
-	"time"
+	"strconv"
 )
 
 type Authservice interface {
@@ -15,16 +17,19 @@ type Authservice interface {
 	EmailValidator(EmailAddress string) (string, error)
 	CheckEmailRegister(email string) error
 	CheckToken(token string) (*model.ProvisionalUser, error)
+	CreateCookie(ctx context.Context, userId int) (*http.Cookie, error)
 }
 
-func NewAuthservice(authRepository repository.AuthRepository) Authservice {
+func NewAuthservice(authRepository repository.AuthRepository, sessionRepository repository.SessionRepository) Authservice {
 	return &authService{
-		authRepository: authRepository,
+		authRepository:    authRepository,
+		sessionRepository: sessionRepository,
 	}
 }
 
 type authService struct {
-	authRepository repository.AuthRepository
+	authRepository    repository.AuthRepository
+	sessionRepository repository.SessionRepository
 }
 
 func (a *authService) ComparePassword(password, passWordCompare string) error {
@@ -59,21 +64,26 @@ func (a *authService) CheckToken(token string) (*model.ProvisionalUser, error) {
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
 	}
-	now, err := getNowTime()
-	if err != nil {
-		return nil, err
-	}
+	now := utils.Now()
 	if now.After(user.ExpiredAt) {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "tokenが無効です")
 	}
 	return user, nil
 }
 
-func getNowTime() (time.Time, error) {
-	jst, err := time.LoadLocation("Asia/Tokyo")
+func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cookie, error) {
+	value := utils.NewUUID()
+	expires := utils.GetHourDuration(24)
+	cookie := new(http.Cookie)
+	cookie.Name = "session_id"
+	cookie.Value = value
+	cookie.Expires = utils.GetTimeDelay(expires)
+	cookie.Path = "/"
+	cookie.HttpOnly = true
+	err := a.sessionRepository.SetSession(ctx, value, strconv.Itoa(userId), expires)
 	if err != nil {
-		return time.Time{}, echo.NewHTTPError(http.StatusInternalServerError, err)
+		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
-	now := time.Now().In(jst)
-	return now, nil
+
+	return cookie, nil
 }

@@ -10,6 +10,7 @@ import (
 type AuthHandler interface {
 	PostProvisionalSignup(c echo.Context) error
 	GetProvisionalSignup(c echo.Context) error
+	PostAuthLoginUser(c echo.Context) error
 }
 
 func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
@@ -66,4 +67,28 @@ func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
 	}
 	res := &gen.GetAuthSignupUserResponse{}
 	return c.JSON(http.StatusOK, res)
+}
+
+func (a *authHandler) PostAuthLoginUser(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	var req gen.PostAuthLoginUserRequest
+	err := c.Bind(&req)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestのBindに失敗しました：", err)
+	}
+	if err := req.Validate(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
+	}
+
+	input := &usecase.LoginInput{
+		Email:    req.Email,
+		Password: req.Password,
+	}
+	cookie, err := a.authUsecase.Login(ctx, input)
+	if err != nil {
+		return err
+	}
+	c.SetCookie(cookie)
+	return c.NoContent(http.StatusOK)
 }

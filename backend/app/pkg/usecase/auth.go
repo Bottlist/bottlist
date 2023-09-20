@@ -14,14 +14,10 @@ import (
 	"time"
 )
 
-var (
-	jst, _   = time.LoadLocation("Asia/Tokyo")
-	lifetime = 1 * time.Hour
-)
-
 type AuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
 	CreateUser(ctx context.Context, input *CreateUserInput) error
+	Login(ctx context.Context, input *LoginInput) (*http.Cookie, error)
 }
 
 func NewAuthUsecase(authService service.Authservice, authRepository repository.AuthRepository, mailClient *mail.Client) AuthUsecase {
@@ -67,7 +63,7 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	}
 
 	token := utils.NewUUID()
-	expiredAt := time.Now().In(jst).Add(lifetime)
+	expiredAt := utils.GetTimeDelay(utils.GetHourDuration(1))
 	birth := types.Date{}
 	err = birth.UnmarshalJSON(input.Birthday)
 	if err != nil {
@@ -154,4 +150,25 @@ func (a *authUsecase) CreateUser(ctx context.Context, input *CreateUserInput) er
 	}
 
 	return nil
+}
+
+type LoginInput struct {
+	Email    string
+	Password string
+}
+
+func (a *authUsecase) Login(ctx context.Context, input *LoginInput) (*http.Cookie, error) {
+	user, err := a.authRepository.GetUserByEmail(input.Email)
+	if err != nil {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "メールアドレスまたはパスワードが違います")
+	}
+	err = utils.CompareHashAndPassword(user.Password, input.Password)
+	if err != nil {
+		return nil, echo.NewHTTPError(http.StatusBadRequest, "メールアドレスまたはパスワードが違います")
+	}
+	coolie, err := a.authService.CreateCookie(ctx, user.ID)
+	if err != nil {
+		return nil, err
+	}
+	return coolie, nil
 }

@@ -80,6 +80,8 @@ func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cooki
 	cookie.Expires = utils.GetTimeDelay(expires)
 	cookie.Path = "/"
 	cookie.HttpOnly = true
+	cookie.Secure = false
+	cookie.SameSite = http.SameSiteLaxMode
 	err := a.sessionRepository.SetSession(ctx, value, strconv.Itoa(userId), expires)
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)

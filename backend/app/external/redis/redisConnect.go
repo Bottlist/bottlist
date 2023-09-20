@@ -6,18 +6,12 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-type Connector struct {
-	Conn *redis.Client
-}
-
-func NewRedisConnector() *Connector {
+func NewRedisConnector() *redis.Client {
 	conf := config.LoadConfig()
 
 	conn := redisConnInfo(*conf.RedisInfo)
 
-	return &Connector{
-		Conn: conn,
-	}
+	return conn
 }
 
 func redisConnInfo(redisInfo config.RedisInfo) *redis.Client {

@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/Bottlist/bottlist/cmd/di"
-	"github.com/Bottlist/bottlist/external/mysql"
 	"github.com/Bottlist/bottlist/middlewares"
 	"github.com/Bottlist/bottlist/pkg/adapter/router"
 	"github.com/labstack/echo/v4"
@@ -14,9 +13,9 @@ func main() {
 	// インスタンスを作成
 	e := echo.New()
 
-	db := mysql.NewMySQLConnector()
+	app, _ := di.InitializeApp()
 	defer func() {
-		err := db.Conn.Close()
+		err := app.Db.Close()
 		if err != nil {
 			panic(fmt.Sprintf("DB connection close failed: %v", err))
 		}
@@ -27,11 +26,13 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middlewares.CORS())
 
-	app, _ := di.InitializeApp()
+	noAuth := e.Group("/api")
+	reqAuth := e.Group("/api")
+	reqAuth.Use(app.Session.Session)
 
 	// ルートを設定
-	router.NewAuthRouter(e, app.AuthHandler).Router()
-	router.NewHelloRouter(e).Router()
+	router.NewAuthRouter(noAuth, reqAuth, app.AuthHandler).Router()
+	router.NewHelloRouter(noAuth).Router()
 
 	// サーバーをポート番号1323で起動
 	e.Logger.Fatal(e.Start(":4000"))

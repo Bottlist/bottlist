@@ -10,6 +10,8 @@ import (
 	"github.com/Bottlist/bottlist/cmd/di/provider"
 	"github.com/Bottlist/bottlist/external/mail"
 	"github.com/Bottlist/bottlist/external/mysql"
+	"github.com/Bottlist/bottlist/external/redis"
+	"github.com/Bottlist/bottlist/middlewares"
 	"github.com/Bottlist/bottlist/pkg/adapter/handler"
 	"github.com/Bottlist/bottlist/pkg/domain/repository"
 	"github.com/Bottlist/bottlist/pkg/domain/service"
@@ -19,12 +21,14 @@ import (
 // Injectors from wire.go:
 
 func InitializeApp() (*provider.App, error) {
-	connector := mysql.NewMySQLConnector()
-	authRepository := repository.NewAuthRepository(connector)
+	db := mysql.NewMySQLConnector()
+	authRepository := repository.NewAuthRepository(db)
 	authservice := service.NewAuthservice(authRepository)
 	client := mail.NewMailClient()
 	authUsecase := usecase.NewAuthUsecase(authservice, authRepository, client)
 	authHandler := handler.NewAuthHandler(authUsecase)
-	app := provider.NewApp(authHandler)
+	redisClient := redis.NewRedisConnector()
+	sessionMiddleware := middlewares.NewSessionMiddleware(redisClient)
+	app := provider.NewApp(authHandler, sessionMiddleware, db)
 	return app, nil
 }

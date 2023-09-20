@@ -9,11 +9,7 @@ import (
 
 const driverName = "mysql"
 
-type Connector struct {
-	Conn *sqlx.DB
-}
-
-func NewMySQLConnector() *Connector {
+func NewMySQLConnector() *sqlx.DB {
 	conf := config.LoadConfig()
 
 	dsn := mysqlConnInfo(*conf.MySQLInfo)
@@ -22,9 +18,7 @@ func NewMySQLConnector() *Connector {
 		panic(err)
 	}
 
-	return &Connector{
-		Conn: conn,
-	}
+	return conn
 }
 
 func mysqlConnInfo(mysqlInfo config.MysqlInfo) string {

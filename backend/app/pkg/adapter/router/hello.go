@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func NewHelloRouter(e *echo.Echo) HelloRouter {
+func NewHelloRouter(e *echo.Group) HelloRouter {
 	hello := e.Group("/hello")
 	return &helloRouter{
 		e: hello,

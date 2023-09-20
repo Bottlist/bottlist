@@ -14,6 +14,11 @@ import (
 	"time"
 )
 
+var (
+	jst, _   = time.LoadLocation("Asia/Tokyo")
+	lifetime = 1 * time.Hour
+)
+
 type AuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
 	CreateUser(ctx context.Context, input *CreateUserInput) error
@@ -62,11 +67,7 @@ func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreatePr
 	}
 
 	token := utils.NewUUID()
-	jst, err := time.LoadLocation("Asia/Tokyo")
-	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err)
-	}
-	expiredAt := time.Now().In(jst).Add(1 * time.Hour)
+	expiredAt := time.Now().In(jst).Add(lifetime)
 	birth := types.Date{}
 	err = birth.UnmarshalJSON(input.Birthday)
 	if err != nil {

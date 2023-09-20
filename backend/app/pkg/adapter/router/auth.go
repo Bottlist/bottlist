@@ -5,11 +5,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func NewAuthRouter(e *echo.Echo, authHandler handler.AuthHandler) AuthRouter {
+func NewAuthRouter(e *echo.Group, reqAuth *echo.Group, authHandler handler.AuthHandler) AuthRouter {
 	auth := e.Group("/auth")
 
 	return &authRouter{
 		e:           auth,
+		reqAuth:     reqAuth,
 		authHandler: authHandler,
 	}
 }
@@ -20,6 +21,7 @@ type AuthRouter interface {
 
 type authRouter struct {
 	e           *echo.Group
+	reqAuth     *echo.Group
 	authHandler handler.AuthHandler
 }
 

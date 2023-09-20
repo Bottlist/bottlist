@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/Bottlist/bottlist/cmd/di"
 	"github.com/Bottlist/bottlist/external/mysql"
+	"github.com/Bottlist/bottlist/middlewares"
 	"github.com/Bottlist/bottlist/pkg/adapter/router"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -24,7 +25,7 @@ func main() {
 	// ミドルウェアを設定
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Use(middleware.CORS())
+	e.Use(middlewares.CORS())
 
 	app, _ := di.InitializeApp()
 

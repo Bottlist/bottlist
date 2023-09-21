@@ -36,7 +36,7 @@ paths:
         description: ''
       tags:
         - auth
-      description: 顧客のログイン用エンドポイント
+      description: 顧客のログイン用エンドポイント(実装した)
     parameters: []
   /api/auth/signup/user:
     post:

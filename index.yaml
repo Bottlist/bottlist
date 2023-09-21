@@ -95,6 +95,26 @@ paths:
         - auth
       description: 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した)
     parameters: []
+  /api/auth/login/shop:
+    post:
+      summary: ''
+      operationId: post-api-auth-login-shop
+      responses:
+        '200':
+          description: OK
+      description: お店のログイン用エンドポイント
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      tags:
+        - auth
   /auth/signup/shop:
     get:
       summary: Your GET endpoint
@@ -125,13 +145,27 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/bottle'
+                - $ref: '#/components/schemas/shop'
                 - type: object
                   properties:
                     password:
                       type: string
                     password_confirm:
                       type: string
+  /api/auth/logout:
+    post:
+      summary: ''
+      operationId: post-api-auth-logout
+      responses:
+        '200':
+          description: OK
+      parameters:
+        - schema:
+            type: string
+          in: cookie
+          name: session_id
+          required: true
+      description: ログアウト用のエンドポイント
   /auth/password/reset/link:
     post:
       summary: ''

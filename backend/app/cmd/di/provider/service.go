@@ -6,5 +6,5 @@ import (
 )
 
 var DefaultServiceSet = wire.NewSet(
-	service.NewAuthservice,
+	service.NewAuthService,
 )

@@ -31,7 +31,7 @@ func main() {
 	reqAuth.Use(app.Session.Session)
 
 	// ルートを設定
-	router.NewAuthRouter(noAuth, reqAuth, app.AuthHandler).Router()
+	router.NewAuthRouter(noAuth, reqAuth, *app.AuthHandler).Router()
 	router.NewHelloRouter(noAuth).Router()
 
 	// サーバーをポート番号1323で起動

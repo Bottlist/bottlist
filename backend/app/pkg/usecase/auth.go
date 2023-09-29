@@ -15,24 +15,24 @@ import (
 	"time"
 )
 
-type AuthUsecase interface {
+type IFAuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
 	CreateUser(ctx context.Context, input *CreateUserInput) error
 	LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error)
 	Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
-func NewAuthUsecase(authService service.Authservice, authRepository repository.AuthRepository, mailClient *mail.Client) AuthUsecase {
-	return &authUsecase{
+func NewAuthUsecase(authService *service.AuthService, authRepository *repository.AuthRepository, mailClient *mail.Client) *AuthUsecase {
+	return &AuthUsecase{
 		authService:    authService,
 		authRepository: authRepository,
 		mailClient:     mailClient,
 	}
 }
 
-type authUsecase struct {
-	authService    service.Authservice
-	authRepository repository.AuthRepository
+type AuthUsecase struct {
+	authService    service.IFAuthService
+	authRepository repository.IFAuthRepository
 	mailClient     *mail.Client
 }
 
@@ -48,7 +48,7 @@ type CreateProvisionalUserInput struct {
 	PasswordConfirm string
 }
 
-func (a *authUsecase) CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error {
+func (a *AuthUsecase) CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error {
 	email, err := a.authService.EmailValidator(input.Email)
 	if err != nil {
 		return err
@@ -126,7 +126,7 @@ type CreateUserInput struct {
 	Token string
 }
 
-func (a *authUsecase) CreateUser(ctx context.Context, input *CreateUserInput) error {
+func (a *AuthUsecase) CreateUser(ctx context.Context, input *CreateUserInput) error {
 	provisionalUser, err := a.authService.CheckToken(input.Token)
 	if err != nil {
 		return err
@@ -159,7 +159,7 @@ type LoginInput struct {
 	Password string
 }
 
-func (a *authUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error) {
+func (a *AuthUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error) {
 	user, err := a.authRepository.GetUserByEmail(input.Email)
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -178,7 +178,7 @@ func (a *authUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.C
 	return coolie, nil
 }
 
-func (a *authUsecase) Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
+func (a *AuthUsecase) Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
 	cookie, err := a.authService.DeleteCookie(ctx, cookie)
 	if err != nil {
 		return nil, err

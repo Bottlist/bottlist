@@ -7,22 +7,22 @@ import (
 	"net/http"
 )
 
-type AuthHandler interface {
+type IFAuthHandler interface {
 	GetProvisionalSignup(c echo.Context) error
 	PostProvisionalSignup(c echo.Context) error
 	PostAuthLoginUser(c echo.Context) error
 	PostLogout(c echo.Context) error
 }
 
-func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
-	return &authHandler{authUsecase: authUsecase}
+func NewAuthHandler(authUsecase *usecase.AuthUsecase) *AuthHandler {
+	return &AuthHandler{authUsecase: authUsecase}
 }
 
-type authHandler struct {
-	authUsecase usecase.AuthUsecase
+type AuthHandler struct {
+	authUsecase usecase.IFAuthUsecase
 }
 
-func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
+func (a *AuthHandler) GetProvisionalSignup(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	var req gen.GetAuthSignupUserRequest
@@ -41,7 +41,7 @@ func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
+func (a *AuthHandler) PostProvisionalSignup(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	var req gen.PostAuthProvisionalSignupRequest
@@ -70,7 +70,7 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func (a *authHandler) PostAuthLoginUser(c echo.Context) error {
+func (a *AuthHandler) PostAuthLoginUser(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	var req gen.PostAuthLoginUserRequest
@@ -94,7 +94,7 @@ func (a *authHandler) PostAuthLoginUser(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
-func (a *authHandler) PostLogout(c echo.Context) error {
+func (a *AuthHandler) PostLogout(c echo.Context) error {
 	ctx := c.Request().Context()
 	cookie, err := c.Cookie("session_id")
 	if err != nil {

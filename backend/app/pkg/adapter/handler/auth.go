@@ -8,9 +8,10 @@ import (
 )
 
 type AuthHandler interface {
-	PostProvisionalSignup(c echo.Context) error
 	GetProvisionalSignup(c echo.Context) error
+	PostProvisionalSignup(c echo.Context) error
 	PostAuthLoginUser(c echo.Context) error
+	PostLogout(c echo.Context) error
 }
 
 func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
@@ -19,6 +20,25 @@ func NewAuthHandler(authUsecase usecase.AuthUsecase) AuthHandler {
 
 type authHandler struct {
 	authUsecase usecase.AuthUsecase
+}
+
+func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
+	ctx := c.Request().Context()
+
+	var req gen.GetAuthSignupUserRequest
+	token := c.QueryParam("token")
+	req.Token = token
+	if err := req.Validate(); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
+	}
+	createUserInput := &usecase.CreateUserInput{
+		req.Token,
+	}
+	if err := a.authUsecase.CreateUser(ctx, createUserInput); err != nil {
+		return err
+	}
+	res := &gen.GetAuthSignupUserResponse{}
+	return c.JSON(http.StatusOK, res)
 }
 
 func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
@@ -50,25 +70,6 @@ func (a *authHandler) PostProvisionalSignup(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func (a *authHandler) GetProvisionalSignup(c echo.Context) error {
-	ctx := c.Request().Context()
-
-	var req gen.GetAuthSignupUserRequest
-	token := c.QueryParam("token")
-	req.Token = token
-	if err := req.Validate(); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
-	}
-	createUserInput := &usecase.CreateUserInput{
-		req.Token,
-	}
-	if err := a.authUsecase.CreateUser(ctx, createUserInput); err != nil {
-		return err
-	}
-	res := &gen.GetAuthSignupUserResponse{}
-	return c.JSON(http.StatusOK, res)
-}
-
 func (a *authHandler) PostAuthLoginUser(c echo.Context) error {
 	ctx := c.Request().Context()
 
@@ -85,10 +86,25 @@ func (a *authHandler) PostAuthLoginUser(c echo.Context) error {
 		Email:    req.Email,
 		Password: req.Password,
 	}
-	cookie, err := a.authUsecase.Login(ctx, input)
+	cookie, err := a.authUsecase.LoginUser(ctx, input)
 	if err != nil {
 		return err
 	}
 	c.SetCookie(cookie)
+	return c.NoContent(http.StatusOK)
+}
+
+func (a *authHandler) PostLogout(c echo.Context) error {
+	ctx := c.Request().Context()
+	cookie, err := c.Cookie("session_id")
+	if err != nil {
+
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+	deleteCookie, err := a.authUsecase.Logout(ctx, cookie)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError)
+	}
+	c.SetCookie(deleteCookie)
 	return c.NoContent(http.StatusOK)
 }

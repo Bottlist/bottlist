@@ -18,6 +18,7 @@ type Authservice interface {
 	CheckEmailRegister(email string) error
 	CheckToken(token string) (*model.ProvisionalUser, error)
 	CreateCookie(ctx context.Context, userId int) (*http.Cookie, error)
+	DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
 func NewAuthservice(authRepository repository.AuthRepository, sessionRepository repository.SessionRepository) Authservice {
@@ -87,5 +88,14 @@ func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cooki
 		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 
+	return cookie, nil
+}
+
+func (a *authService) DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
+	err := a.sessionRepository.DeleteSession(ctx, cookie.Value)
+	if err != nil {
+		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	cookie.MaxAge = -1
 	return cookie, nil
 }

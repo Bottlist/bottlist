@@ -22,14 +22,14 @@ func (s *SessionMiddleware) Session(next echo.HandlerFunc) echo.HandlerFunc {
 		cookie, err := c.Cookie("session_id")
 		if err != nil {
 			if err != http.ErrNoCookie {
-				return echo.ErrUnauthorized
+				return echo.NewHTTPError(http.StatusUnauthorized, err)
 			} else {
 				return next(c)
 			}
 		} else {
 			userId, err := s.client.GetSession(ctx, cookie.Value)
 			if err != nil {
-				return echo.ErrUnauthorized
+				return echo.NewHTTPError(http.StatusUnauthorized, err)
 			}
 			c.Set("user_id", userId)
 		}

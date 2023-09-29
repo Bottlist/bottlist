@@ -2,6 +2,7 @@ package usecase
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"github.com/Bottlist/bottlist/external/mail"
 	"github.com/Bottlist/bottlist/pkg/domain/model"
@@ -17,7 +18,8 @@ import (
 type AuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
 	CreateUser(ctx context.Context, input *CreateUserInput) error
-	Login(ctx context.Context, input *LoginInput) (*http.Cookie, error)
+	LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error)
+	Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
 func NewAuthUsecase(authService service.Authservice, authRepository repository.AuthRepository, mailClient *mail.Client) AuthUsecase {
@@ -157,9 +159,12 @@ type LoginInput struct {
 	Password string
 }
 
-func (a *authUsecase) Login(ctx context.Context, input *LoginInput) (*http.Cookie, error) {
+func (a *authUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error) {
 	user, err := a.authRepository.GetUserByEmail(input.Email)
 	if err != nil {
+		if err != sql.ErrNoRows {
+			return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
+		}
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "メールアドレスまたはパスワードが違います")
 	}
 	err = utils.CompareHashAndPassword(user.Password, input.Password)
@@ -171,4 +176,12 @@ func (a *authUsecase) Login(ctx context.Context, input *LoginInput) (*http.Cooki
 		return nil, err
 	}
 	return coolie, nil
+}
+
+func (a *authUsecase) Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
+	cookie, err := a.authService.DeleteCookie(ctx, cookie)
+	if err != nil {
+		return nil, err
+	}
+	return cookie, nil
 }

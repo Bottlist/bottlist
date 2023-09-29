@@ -7,6 +7,7 @@ import (
 
 func NewAuthRouter(e *echo.Group, reqAuth *echo.Group, authHandler handler.AuthHandler) AuthRouter {
 	auth := e.Group("/auth")
+	reqAuth = reqAuth.Group("/auth")
 
 	return &authRouter{
 		e:           auth,
@@ -26,7 +27,8 @@ type authRouter struct {
 }
 
 func (h *authRouter) Router() {
-	h.e.POST("/signup/user", h.authHandler.PostProvisionalSignup)
 	h.e.GET("/signup/user", h.authHandler.GetProvisionalSignup)
+	h.e.POST("/signup/user", h.authHandler.PostProvisionalSignup)
 	h.e.POST("/login/user", h.authHandler.PostAuthLoginUser)
+	h.reqAuth.POST("/logout", h.authHandler.PostLogout)
 }

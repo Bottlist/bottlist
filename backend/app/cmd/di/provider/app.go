@@ -17,7 +17,7 @@ var DefaultAppSet = wire.NewSet(
 )
 
 type App struct {
-	AuthHandler handler.IFAuthHandler
+	AuthHandler *handler.AuthHandler
 	Session     *middlewares.SessionMiddleware
 	Db          *sqlx.DB
 }

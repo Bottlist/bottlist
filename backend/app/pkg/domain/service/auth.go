@@ -12,7 +12,7 @@ import (
 	"strconv"
 )
 
-type Authservice interface {
+type IFAuthService interface {
 	ComparePassword(password, passWordCompare string) error
 	EmailValidator(EmailAddress string) (string, error)
 	CheckEmailRegister(email string) error
@@ -21,26 +21,26 @@ type Authservice interface {
 	DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
-func NewAuthservice(authRepository repository.AuthRepository, sessionRepository repository.SessionRepository) Authservice {
-	return &authService{
+func NewAuthService(authRepository *repository.AuthRepository, sessionRepository repository.SessionRepository) *AuthService {
+	return &AuthService{
 		authRepository:    authRepository,
 		sessionRepository: sessionRepository,
 	}
 }
 
-type authService struct {
-	authRepository    repository.AuthRepository
+type AuthService struct {
+	authRepository    repository.IFAuthRepository
 	sessionRepository repository.SessionRepository
 }
 
-func (a *authService) ComparePassword(password, passWordCompare string) error {
+func (a *AuthService) ComparePassword(password, passWordCompare string) error {
 	if password != passWordCompare {
 		return echo.NewHTTPError(http.StatusBadRequest, "パスワードが一致しません")
 	}
 	return nil
 }
 
-func (a *authService) EmailValidator(email string) (string, error) {
+func (a *AuthService) EmailValidator(email string) (string, error) {
 	result, b := mail.ParseAddress(email)
 	if b != nil {
 		return "", echo.NewHTTPError(http.StatusBadRequest, "メールアドレスの形式が間違っています")
@@ -48,7 +48,7 @@ func (a *authService) EmailValidator(email string) (string, error) {
 	return result.Address, nil
 }
 
-func (a *authService) CheckEmailRegister(email string) error {
+func (a *AuthService) CheckEmailRegister(email string) error {
 	_, err := a.authRepository.GetUserByEmail(email)
 	if err == nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "既に登録されているメールアドレスです")
@@ -60,7 +60,7 @@ func (a *authService) CheckEmailRegister(email string) error {
 
 	return nil
 }
-func (a *authService) CheckToken(token string) (*model.ProvisionalUser, error) {
+func (a *AuthService) CheckToken(token string) (*model.ProvisionalUser, error) {
 	user, err := a.authRepository.GetProvisionalUserByToken(token)
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "requestが不正です：", err)
@@ -72,7 +72,7 @@ func (a *authService) CheckToken(token string) (*model.ProvisionalUser, error) {
 	return user, nil
 }
 
-func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cookie, error) {
+func (a *AuthService) CreateCookie(ctx context.Context, userId int) (*http.Cookie, error) {
 	value := utils.NewUUID()
 	expires := utils.GetHourDuration(24)
 	cookie := new(http.Cookie)
@@ -91,7 +91,7 @@ func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cooki
 	return cookie, nil
 }
 
-func (a *authService) DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
+func (a *AuthService) DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
 	err := a.sessionRepository.DeleteSession(ctx, cookie.Value)
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)

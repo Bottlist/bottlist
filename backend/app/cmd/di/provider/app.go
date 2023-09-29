@@ -17,13 +17,13 @@ var DefaultAppSet = wire.NewSet(
 )
 
 type App struct {
-	AuthHandler handler.AuthHandler
+	AuthHandler handler.IFAuthHandler
 	Session     *middlewares.SessionMiddleware
 	Db          *sqlx.DB
 }
 
 func NewApp(
-	AuthHandler handler.AuthHandler,
+	AuthHandler *handler.AuthHandler,
 	Session *middlewares.SessionMiddleware,
 	Db *sqlx.DB,
 ) *App {

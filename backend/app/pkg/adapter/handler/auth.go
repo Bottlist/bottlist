@@ -98,15 +98,13 @@ func (a *authHandler) PostLogout(c echo.Context) error {
 	ctx := c.Request().Context()
 	cookie, err := c.Cookie("session_id")
 	if err != nil {
-		if err != http.ErrNoCookie {
-			return echo.ErrUnauthorized
-		}
+
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-	err = a.authUsecase.Logout(ctx, cookie.Value)
+	deleteCookie, err := a.authUsecase.Logout(ctx, cookie)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError)
 	}
-
+	c.SetCookie(deleteCookie)
 	return c.NoContent(http.StatusOK)
 }

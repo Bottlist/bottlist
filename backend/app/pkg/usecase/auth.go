@@ -19,7 +19,7 @@ type AuthUsecase interface {
 	CreateProvisionalUser(ctx context.Context, input *CreateProvisionalUserInput) error
 	CreateUser(ctx context.Context, input *CreateUserInput) error
 	LoginUser(ctx context.Context, input *LoginInput) (*http.Cookie, error)
-	Logout(ctx context.Context, session string) error
+	Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
 func NewAuthUsecase(authService service.Authservice, authRepository repository.AuthRepository, mailClient *mail.Client) AuthUsecase {
@@ -178,10 +178,10 @@ func (a *authUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.C
 	return coolie, nil
 }
 
-func (a *authUsecase) Logout(ctx context.Context, session string) error {
-	err := a.authService.DeleteCookie(ctx, session)
+func (a *authUsecase) Logout(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error) {
+	cookie, err := a.authService.DeleteCookie(ctx, cookie)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return cookie, nil
 }

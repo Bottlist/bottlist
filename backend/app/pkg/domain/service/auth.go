@@ -18,6 +18,7 @@ type Authservice interface {
 	CheckEmailRegister(email string) error
 	CheckToken(token string) (*model.ProvisionalUser, error)
 	CreateCookie(ctx context.Context, userId int) (*http.Cookie, error)
+	DeleteCookie(ctx context.Context, sessionId string) error
 }
 
 func NewAuthservice(authRepository repository.AuthRepository, sessionRepository repository.SessionRepository) Authservice {
@@ -88,4 +89,12 @@ func (a *authService) CreateCookie(ctx context.Context, userId int) (*http.Cooki
 	}
 
 	return cookie, nil
+}
+
+func (a *authService) DeleteCookie(ctx context.Context, sessionId string) error {
+	err := a.sessionRepository.DeleteSession(ctx, sessionId)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err)
+	}
+	return nil
 }

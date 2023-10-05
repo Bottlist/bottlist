@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `users`(
-    `id` serial PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `email` VARCHAR(128) UNIQUE NOT NULL,
     `first_name` VARCHAR(128) NOT NULL,
     `last_name` VARCHAR(128) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `users`(
     ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `provisional_users` (
-    `id` serial PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `email` VARCHAR(128) UNIQUE NOT NULL,
     `first_name` VARCHAR(128) NOT NULL,
     `last_name` VARCHAR(128) NOT NULL,

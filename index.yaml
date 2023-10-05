@@ -115,7 +115,7 @@ paths:
                   type: string
       tags:
         - auth
-  /auth/signup/shop:
+  /api/auth/signup/shop:
     get:
       summary: Your GET endpoint
       tags:
@@ -152,6 +152,12 @@ paths:
                       type: string
                     password_confirm:
                       type: string
+                    opening_hours:
+                      type: object
+                      properties:
+                        '':
+                          type: string
+    parameters: []
   /api/auth/logout:
     post:
       summary: ''
@@ -166,7 +172,7 @@ paths:
           name: session_id
           required: true
       description: ログアウト用のエンドポイント
-  /auth/password/reset/link:
+  /api/auth/password/reset/link:
     post:
       summary: ''
       operationId: post-password-reset
@@ -202,7 +208,7 @@ paths:
           required: true
       tags:
         - auth
-  /users:
+  /api/users:
     get:
       summary: ''
       operationId: get-users
@@ -249,7 +255,8 @@ paths:
       x-stoplight:
         id: lwp6rmgqvg7lt
       description: 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する
-  /bottles:
+    parameters: []
+  /api/bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -334,6 +341,10 @@ paths:
                 required:
                   - bottles
       description: ユーザが自分のキープボトル一覧を取得するときに使う
+      parameters:
+        - schema:
+            type: string
+          in: cookie
     post:
       summary: ''
       operationId: post-bottles
@@ -385,7 +396,8 @@ paths:
                     id: kaokt6lrajyz1
         description: ''
       description: ボトル申請
-  /shops/bottles:
+    parameters: []
+  /api/shops/bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -442,7 +454,7 @@ paths:
                   - bottles
       description: 店舗がキープボトル一覧を取得するときに使う
     parameters: []
-  /shops:
+  /api/shops:
     get:
       summary: Your GET endpoint
       tags: []
@@ -515,7 +527,8 @@ paths:
             schema:
               allOf:
                 - $ref: '#/components/schemas/shop'
-  /me:
+    parameters: []
+  /api/me:
     get:
       summary: Your GET endpoint
       tags: []
@@ -567,7 +580,7 @@ paths:
                   description: dataURL
               required:
                 - img
-  '/bottles/{id}':
+  '/api/bottles/{id}':
     parameters:
       - schema:
           type: string
@@ -675,7 +688,7 @@ paths:
                       - shop
       x-stoplight:
         id: ybljwlancr5kn
-  '/users/{id}':
+  '/api/users/{id}':
     parameters:
       - schema:
           type: string

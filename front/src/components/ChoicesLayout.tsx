@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
-import { BigButton } from './BigButton';
-import { CenterLogo } from './CenterLogo';
+import { BigButton } from './button/BigButton';
+import { CenterLogo } from './logo/CenterLogo';
 
 export function ChoicesLayout(props: {
   items: {

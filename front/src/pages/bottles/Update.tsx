@@ -1,5 +1,5 @@
 import { DatePicker } from '../../components/DatePicker';
-import { Logo } from '../../components/Logo';
+import { Logo } from '../../components/logo/Logo';
 import { TextField } from '../../components/TextField';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, Container, MenuItem, Paper, Stack } from '@mui/material';

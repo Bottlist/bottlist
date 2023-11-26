@@ -1,7 +1,7 @@
-import { Logo } from './Logo';
 import { VerticalCenter } from './VerticalCenter';
 import { Stack, Paper, Container } from '@mui/material';
 import { ReactNode } from 'react';
+import { Logo } from './logo/Logo';
 
 export const CenterLayout = (props: {
   children: ReactNode;

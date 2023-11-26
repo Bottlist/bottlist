@@ -1,6 +1,6 @@
 import { Card, Typography, Stack, Box } from '@mui/material';
 import { Dayjs } from 'dayjs';
-import { components } from '../schema';
+import { components } from '../../schema';
 
 type BottleType = components['schemas']['bottle']['type'];
 const IMAGES: Record<BottleType, string> = {

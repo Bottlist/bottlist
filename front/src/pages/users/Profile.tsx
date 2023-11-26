@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { Logo } from '../../components/Logo';
+import { Logo } from '../../components/logo/Logo';
 import { request } from '../../utils/axiosUtils';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';

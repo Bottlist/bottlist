@@ -1,7 +1,7 @@
 import { Container, Modal, Paper, Stack, Typography } from '@mui/material';
 import { request } from '../utils/axiosUtils';
 import * as yup from 'yup';
-import { Button } from './Button';
+import { Button } from './button/Button';
 import { GrayTextField } from './GrayTextField';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -47,7 +47,11 @@ export const ResetModal = (props: { onClose: () => void }) => {
                   <Button type="submit" width="fit-content">
                     送信
                   </Button>
-                  <Button type="submit" color="secondary" width="fit-content">
+                  <Button
+                    color="secondary"
+                    width="fit-content"
+                    onClick={props.onClose}
+                  >
                     戻る
                   </Button>
                 </Stack>

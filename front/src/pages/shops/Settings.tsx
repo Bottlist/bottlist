@@ -1,5 +1,5 @@
 import { Stack, Typography } from '@mui/material';
-import { Logo } from '../../components/Logo';
+import { Logo } from '../../components/logo/Logo';
 import { Navigation } from './components/Navigation';
 import { TextField as UntypedTextField } from '../../components/TextField';
 import * as yup from 'yup';

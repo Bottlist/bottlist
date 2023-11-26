@@ -8,8 +8,8 @@ import { useState } from 'react';
 import { ResetModal } from './ResetModal';
 import { request } from '../utils/axiosUtils';
 import { GrayTextField } from './GrayTextField';
-import { Button } from './Button';
-import { CenterLogo } from './CenterLogo';
+import { Button } from './button/Button';
+import { CenterLogo } from './logo/CenterLogo';
 
 const schema = yup
   .object({

@@ -1,4 +1,4 @@
-import { BottleCard } from '../../components/BottleCard';
+import { BigBottleCard } from '../../components/BigBottleCard';
 import { Logo } from '../../components/Logo';
 import {
   Button,
@@ -35,16 +35,17 @@ export const Top = () => {
           <Typography variant="h6">承認待ち</Typography>
           {pendingBottles.length > 0 ? (
             pendingBottles.map((bottle) => (
-              <BottleCard
-                key={bottle.id}
-                upperText={bottle.username}
-                lowerText={bottle.name + '\n' + bottle.expires_at}
-              >
-                <Stack>
-                  <Button onClick={() => setSelected(bottle.id)}>承認</Button>
-                  <Button>差戻し</Button>
-                </Stack>
-              </BottleCard>
+              // <BottleCard
+              //   key={bottle.id}
+              //   upperText={bottle.username}
+              //   lowerText={bottle.name + '\n' + bottle.expires_at}
+              // >
+              //   <Stack>
+              //     <Button onClick={() => setSelected(bottle.id)}>承認</Button>
+              //     <Button>差戻し</Button>
+              //   </Stack>
+              // </BottleCard>
+              <p key={bottle.id}></p>
             ))
           ) : (
             <Typography>現在申請されているボトルはございません</Typography>
@@ -53,16 +54,17 @@ export const Top = () => {
           {data
             ?.filter((b) => b.status === 'approved')
             .map((bottle) => (
-              <BottleCard
-                key={bottle.id}
-                upperText={bottle.username}
-                lowerText={bottle.name + '\n' + bottle.expires_at}
-              >
-                <Stack>
-                  <Button>承認</Button>
-                  <Button>差戻し</Button>
-                </Stack>
-              </BottleCard>
+              // <BottleCard
+              //   key={bottle.id}
+              //   upperText={bottle.username}
+              //   lowerText={bottle.name + '\n' + bottle.expires_at}
+              // >
+              //   <Stack>
+              //     <Button>承認</Button>
+              //     <Button>差戻し</Button>
+              //   </Stack>
+              // </BottleCard>
+              <p key={bottle.id}>a</p>
             ))}
         </Stack>
       </Container>

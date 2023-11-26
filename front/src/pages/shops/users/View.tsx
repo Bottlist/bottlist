@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { BottleCard } from '../../../components/BottleCard';
+import { BigBottleCard } from '../../../components/BigBottleCard';
 import { Logo } from '../../../components/Logo';
 import {
   Avatar,
@@ -51,13 +51,14 @@ export const View = () => {
         <Paper>
           <Container>
             {data?.bottles.map((bottle) => (
-              <BottleCard
-                key={bottle.name}
-                upperText={bottle.shop_name + ' ' + bottle.name}
-                lowerText={bottle.expires_at + 'まで'}
-              >
-                <Button>編集</Button>
-              </BottleCard>
+              // <BottleCard
+              //   key={bottle.name}
+              //   upperText={bottle.shop_name + ' ' + bottle.name}
+              //   lowerText={bottle.expires_at + 'まで'}
+              // >
+              //   <Button>編集</Button>
+              // </BottleCard>
+              <p key={bottle.name}>a</p>
             ))}
           </Container>
         </Paper>

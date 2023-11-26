@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, Stack } from '@mui/material';
 import { Logo } from './Logo';
 import { BigButton } from './BigButton';
 
@@ -10,29 +10,18 @@ export function ChoicesLayout(props: {
 }) {
   return (
     <>
-      <Box
-        sx={{
-          position: 'relative',
-          top: 165,
-          marginX: 'auto',
-          width: 'fit-content',
-        }}
-      >
+      <Box position="absolute" top={165} width="100%" textAlign="center">
         <Logo />
       </Box>
-      {props.items.map((item, i) => (
-        <Box
-          key={i}
-          sx={{
-            position: 'relative',
-            top: 438 + (55 + 60) * i,
-            left: 57,
-            width: 'fit-content',
-          }}
-        >
-          <BigButton link={item.link}>{item.text}</BigButton>
-        </Box>
-      ))}
+      <Box display="grid" sx={{ placeItems: 'center' }} height="100vh">
+        <Stack spacing={10} width="fit-content">
+          {props.items.map((item, i) => (
+            <BigButton key={i} link={item.link}>
+              {item.text}
+            </BigButton>
+          ))}
+        </Stack>
+      </Box>
     </>
   );
 }

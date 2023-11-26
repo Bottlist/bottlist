@@ -1,4 +1,4 @@
-import { FormControl, FormHelperText } from '@mui/material';
+import { FormControl, FormHelperText, Typography } from '@mui/material';
 import { Input } from '@mui/base/Input';
 import { FieldValues, Path, useFormContext } from 'react-hook-form';
 
@@ -15,8 +15,10 @@ export const GrayTextField = <T extends FieldValues>(props: {
   const { _key } = props;
   return (
     <FormControl error={!!errors[_key]}>
-      <label style={{ fontSize: 13, textAlign: props.alignLabel ?? 'left' }}>
-        {props.label}
+      <label>
+        <Typography fontSize={13} textAlign={props.alignLabel ?? 'left'}>
+          {props.label}
+        </Typography>
       </label>
       <Input
         {...register(_key)}

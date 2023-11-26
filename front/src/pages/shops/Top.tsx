@@ -1,4 +1,3 @@
-import { BigBottleCard } from '../../components/BigBottleCard';
 import { Logo } from '../../components/Logo';
 import {
   Button,

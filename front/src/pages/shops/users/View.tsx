@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { BigBottleCard } from '../../../components/BigBottleCard';
 import { Logo } from '../../../components/Logo';
 import {
   Avatar,

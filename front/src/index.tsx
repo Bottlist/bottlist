@@ -57,6 +57,9 @@ const router = createBrowserRouter([
 ]);
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'Yu Gothic Medium',
+  },
   components: {
     MuiTextField: {
       defaultProps: { sx: { width: '100%' } },
@@ -72,7 +75,7 @@ const theme = createTheme({
       default: '#EAE8E1',
     },
     primary: {
-      main: '#D9D9D9',
+      main: '#D27C2C',
     },
     secondary: {
       main: '#FFFFFF',

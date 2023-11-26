@@ -2,9 +2,6 @@ import { Logo } from '../../components/Logo';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
-  CardMedia,
   Container,
   Divider,
   Grid,
@@ -16,7 +13,6 @@ import {
 } from '@mui/material';
 import { request } from '../../utils/axiosUtils';
 import { useQuery } from '@tanstack/react-query';
-import { components } from '../../schema';
 import { Navigation } from './components/Navigation';
 import { BigBottleCard } from '../../components/BigBottleCard';
 import dayjs from 'dayjs';

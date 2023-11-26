@@ -1,6 +1,6 @@
 import { Box, Stack } from '@mui/material';
-import { Logo } from './Logo';
 import { BigButton } from './BigButton';
+import { CenterLogo } from './CenterLogo';
 
 export function ChoicesLayout(props: {
   items: {
@@ -10,9 +10,7 @@ export function ChoicesLayout(props: {
 }) {
   return (
     <>
-      <Box position="absolute" top={165} width="100%" textAlign="center">
-        <Logo />
-      </Box>
+      <CenterLogo />
       <Box display="grid" sx={{ placeItems: 'center' }} height="100vh">
         <Stack spacing={10} width="fit-content">
           {props.items.map((item, i) => (

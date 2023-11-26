@@ -78,7 +78,7 @@ const theme = createTheme({
       main: '#D27C2C',
     },
     secondary: {
-      main: '#FFFFFF',
+      main: '#EAE8E1',
     },
   },
 });

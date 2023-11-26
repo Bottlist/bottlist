@@ -1,10 +1,12 @@
 import { ButtonProps, Button as MuiButton } from '@mui/material';
 
-export const Button = (props: ButtonProps & { children: string }) => (
+export const Button = (
+  props: ButtonProps & { children: string; width?: string | number }
+) => (
   <MuiButton
     {...props}
     sx={{
-      width: 100,
+      width: props.width ?? 100,
       height: 30,
       borderRadius: 30,
       fontSize: 16,

@@ -1,13 +1,9 @@
 import { Card, Typography, Stack, Box } from '@mui/material';
 import { Dayjs } from 'dayjs';
 import { components } from '../../schema';
+import { Sake } from '../sake/Sake';
 
 type BottleType = components['schemas']['bottle']['type'];
-const IMAGES: Record<BottleType, string> = {
-  brandy: 'brandy.png',
-  shochu: 'shochu.png',
-  whisky: 'Whiske.png',
-};
 
 export const BigBottleCard = (props: {
   type: BottleType;
@@ -43,7 +39,7 @@ export const BigBottleCard = (props: {
           }%, #D27C2C 82.08%)`,
         }}
       >
-        <img src={IMAGES[props.type]} style={{ maxHeight: 100 }} />
+        <Sake type={props.type} />
       </Box>
       <Box>
         <Typography>{props.shopName}</Typography>

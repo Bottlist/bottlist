@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { FormType } from '.';
 import { useQuery } from '@tanstack/react-query';
 import { request } from '../../../utils/axiosUtils';
+import { BOTTLE_TYPE } from '../../../constants';
 
 export const Form = () => {
   const { control } = useFormContext<FormType>();
@@ -30,9 +31,11 @@ export const Form = () => {
     <Container>
       <Stack spacing={2}>
         <TextField label="種類選択" _key="type" select>
-          <MenuItem value="whisky">ウィスキー</MenuItem>
-          <MenuItem value="shochu">焼酎</MenuItem>
-          <MenuItem value="brandy">ブランデー</MenuItem>
+          {BOTTLE_TYPE.map((b) => (
+            <MenuItem key={b.key} value={b.key}>
+              {b.label}
+            </MenuItem>
+          ))}
         </TextField>
         <TextField placeholder="銘柄入力" _key="type" />
         {/* <TextField placeholder="店検索" _key="shop" disabled /> */}

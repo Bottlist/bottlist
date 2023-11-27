@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import { UpperLeftLogo } from '../../components/logo/UpperLeftLogo';
 import { useState } from 'react';
 import { ResponseData } from '../../utils/schemaHelper';
-import { RejectedBottleCard } from '../../components/card/SmallBottleCard';
+import { RejectedBottles } from '../../components/RejectedBottles';
 
 const KEYS = [
   { key: 'deadline', label: '期限' },
@@ -92,19 +92,7 @@ export const Top = () => {
             </Box>
           </Grid>
         </Grid>
-        <Divider>申請中・差戻しボトル一覧</Divider>
-        <Stack direction="row" spacing={4} paddingLeft="2rem" marginTop="2rem">
-          {data
-            ?.filter((b) => b.status.status !== 'approved')
-            .map((bottle) => (
-              <RejectedBottleCard
-                key={bottle.id}
-                name={bottle.name}
-                expires_at={dayjs(bottle.expires_at)}
-                shopName={bottle.shop.name}
-              />
-            ))}
-        </Stack>
+        <RejectedBottles />
         <Navigation />
       </Stack>
     </>

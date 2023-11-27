@@ -3,7 +3,7 @@ export const Logo = (props: { fontSize?: number }) => (
     style={{
       fontFamily: 'Allerta Stencil',
       fontSize: props.fontSize ?? 25,
-      width: 'fit-content',
+      display: 'inline-block',
     }}
   >
     BOTTLIS

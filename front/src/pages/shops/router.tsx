@@ -4,11 +4,16 @@ import { Top } from './Top';
 import { Index } from './users/Index';
 import { View } from './users/View';
 import { Settings } from './Settings';
+import { Login } from './Login';
 
 export const shopsRouter = [
   {
     path: 'pick-login',
     element: <PickLogin />,
+  },
+  {
+    path: 'login',
+    element: <Login />,
   },
   {
     path: 'register',

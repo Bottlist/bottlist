@@ -9,11 +9,15 @@ const IMAGES: Record<BottleType, string> = {
   shochu: shochu,
   whisky: whisky,
 };
-export const Sake = (props: { type: BottleType }) => (
+export const Sake = (props: {
+  type: BottleType;
+  width?: number | string;
+  height?: number | string;
+}) => (
   <img
     src={IMAGES[props.type]}
-    width={60}
-    height={100}
+    width={props.width ?? 60}
+    height={props.height ?? 100}
     style={{ objectFit: 'contain' }}
   />
 );

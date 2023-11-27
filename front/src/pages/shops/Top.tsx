@@ -1,17 +1,16 @@
-import { Logo } from '../../components/logo/Logo';
-import {
-  Button,
-  Container,
-  Modal,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Container, Stack, TextField, Typography } from '@mui/material';
 import { request } from '../../utils/axiosUtils';
 import { useQuery } from '@tanstack/react-query';
 import { Navigation } from './components/Navigation';
 import { useState } from 'react';
+import { UpperLeftLogo } from '../../components/logo/UpperLeftLogo';
+import { ShopBottleCard } from '../../components/card/ShopBottleCard';
+import dayjs from 'dayjs';
+import { Modal } from '../../components/Modal';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { Button } from '../../components/button/Button';
+import { Sake } from '../../components/sake/Sake';
+import { components, operations } from '../../schema';
 
 export const Top = () => {
   const { data } = useQuery({
@@ -23,90 +22,118 @@ export const Top = () => {
       }).then((r) => r.data.bottles),
   });
   const [selected, setSelected] = useState<string>();
-  const [reason, setReason] = useState('');
   const selectedBottle = data?.find((b) => b.id === selected);
   const pendingBottles = data?.filter((b) => b.status === 'pending') ?? [];
+
   return (
     <>
-      <Container>
+      <UpperLeftLogo />
+      <Container sx={{ marginTop: '120px' }}>
         <Stack spacing={3}>
-          <Logo />
           <Typography variant="h6">承認待ち</Typography>
-          {pendingBottles.length > 0 ? (
-            pendingBottles.map((bottle) => (
-              // <BottleCard
-              //   key={bottle.id}
-              //   upperText={bottle.username}
-              //   lowerText={bottle.name + '\n' + bottle.expires_at}
-              // >
-              //   <Stack>
-              //     <Button onClick={() => setSelected(bottle.id)}>承認</Button>
-              //     <Button>差戻し</Button>
-              //   </Stack>
-              // </BottleCard>
-              <p key={bottle.id}></p>
-            ))
-          ) : (
-            <Typography>現在申請されているボトルはございません</Typography>
-          )}
+          <Stack direction="row" spacing={2}>
+            {pendingBottles.length > 0 ? (
+              pendingBottles.map((bottle) => (
+                <ShopBottleCard
+                  key={bottle.id}
+                  type={bottle.type}
+                  owner={bottle.username}
+                  name={bottle.name}
+                  expires_at={dayjs(bottle.expires_at)}
+                  onClick={() => setSelected(bottle.id)}
+                />
+              ))
+            ) : (
+              <Typography>現在申請されているボトルはございません</Typography>
+            )}
+          </Stack>
           <Typography variant="h6">キープ期限</Typography>
           {data
             ?.filter((b) => b.status === 'approved')
             .map((bottle) => (
-              // <BottleCard
-              //   key={bottle.id}
-              //   upperText={bottle.username}
-              //   lowerText={bottle.name + '\n' + bottle.expires_at}
-              // >
-              //   <Stack>
-              //     <Button>承認</Button>
-              //     <Button>差戻し</Button>
-              //   </Stack>
-              // </BottleCard>
-              <p key={bottle.id}>a</p>
+              <ShopBottleCard
+                key={bottle.id}
+                type={bottle.type}
+                owner={bottle.username}
+                name={bottle.name}
+                expires_at={dayjs(bottle.expires_at)}
+                onClick={() => setSelected(bottle.id)}
+              />
             ))}
         </Stack>
       </Container>
       <Navigation />
-      <Modal open={!!selected} onClose={() => setSelected(undefined)}>
-        <Paper>
-          <Typography>名前</Typography>
-          <Typography>{selectedBottle?.username}</Typography>
-          <Typography>キープボトル</Typography>
-          <Typography>{selectedBottle?.name}</Typography>
-          <Typography>申請日</Typography>
-          <Typography>{selectedBottle?.expires_at}</Typography>
-          <Button
-            onClick={() =>
-              request({
-                url: '/bottles/{id}',
-                params: { id: selectedBottle?.id },
-                method: 'put',
-                data: { status: 'approved' },
-              }).finally(() => setSelected(undefined))
-            }
-          >
-            承認
-          </Button>
+      {selectedBottle && (
+        <SelectedBottleModal
+          open={!!selected}
+          onClose={() => setSelected(undefined)}
+          bottle={selectedBottle}
+        />
+      )}
+    </>
+  );
+};
+
+const SelectedBottleModal = (props: {
+  bottle: operations['get-shops-bottles']['responses'][200]['content']['application/json']['bottles'][number];
+  open: boolean;
+  onClose: () => void;
+}) => {
+  const { bottle } = props;
+  const [reason, setReason] = useState('');
+  return (
+    <Modal open={props.open} onClose={props.onClose} width="320px">
+      <ArrowBackIosNewIcon sx={{ position: 'absolute' }} />
+      <Stack alignItems="center" padding="20px" spacing={2}>
+        <Stack direction="row">
+          <Sake type={bottle.type} height="150px" width="auto" />
+          <Box>
+            <Typography fontSize={10}>ニックネーム</Typography>
+            <Typography>{bottle.username}</Typography>
+            <Typography fontSize={10}>名前</Typography>
+            <Typography>{bottle.username}</Typography>
+            <Typography fontSize={10}>キープボトル</Typography>
+            <Typography>{bottle.name}</Typography>
+            <Typography fontSize={10}>申請日</Typography>
+            <Typography>{bottle.expires_at}</Typography>
+          </Box>
+        </Stack>
+        <Button
+          onClick={() =>
+            request({
+              url: '/bottles/{id}',
+              params: { id: bottle?.id },
+              method: 'put',
+              data: { status: 'approved' },
+            }).finally(props.onClose)
+          }
+        >
+          承認
+        </Button>
+        <Box width="255px">
           <TextField
             multiline
             label="差戻し理由入力（必須）"
             onChange={(e) => setReason(e.target.value)}
           />
+        </Box>
+        <Box textAlign="end" width="100%">
           <Button
+            color="secondary"
+            width="fit-content"
             onClick={() =>
               request({
                 url: '/bottles/{id}',
-                params: { id: selectedBottle?.id },
+                params: { id: bottle?.id },
                 method: 'put',
                 data: { status: 'rejected', reason },
-              }).finally(() => setSelected(undefined))
+              }).finally(props.onClose)
             }
           >
             差戻し
           </Button>
-        </Paper>
-      </Modal>
-    </>
+        </Box>
+      </Stack>
+    </Modal>
   );
 };

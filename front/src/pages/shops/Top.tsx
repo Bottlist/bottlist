@@ -10,7 +10,7 @@ import { Modal } from '../../components/Modal';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { Button } from '../../components/button/Button';
 import { Sake } from '../../components/sake/Sake';
-import { components, operations } from '../../schema';
+import { operations } from '../../schema';
 
 export const Top = () => {
   const { data } = useQuery({

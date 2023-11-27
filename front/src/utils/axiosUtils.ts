@@ -118,6 +118,7 @@ mock.onGet('/shops/bottles').reply<ResponseData<'/shops/bottles', 'get'>>(200, {
 mock.onGet('/users').reply<ResponseData<'/users', 'get'>>(200, {
   users: [
     { id: 'string', name: 'string', img: 'string', birthday: '2019-08-24' },
+    { id: 'string2', name: 'string', img: 'string', birthday: '2019-08-24' },
   ],
 });
 mock.onGet('/users/1').reply<ResponseData<'/users/{id}', 'get'>>(200, {

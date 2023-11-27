@@ -10,12 +10,12 @@ const NAVIGATIONS = [
     href: '/shops',
   },
   {
-    label: 'ボトル追加',
+    label: '顧客様一覧',
     icon: <SwitchAccountIcon fontSize="large" />,
     href: '/shops/users',
   },
   {
-    label: 'アカウント',
+    label: '設定',
     icon: <SettingsIcon fontSize="large" />,
     href: '/shops/settings',
   },

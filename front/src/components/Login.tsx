@@ -1,15 +1,15 @@
-import { Box, Container, Paper, Stack, Typography } from '@mui/material';
+import { Box, Container, Paper, Stack } from '@mui/material';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { Button as RawButton } from '@mui/base/Button';
 import { useState } from 'react';
 import { ResetModal } from './ResetModal';
 import { request } from '../utils/axiosUtils';
 import { GrayTextField } from './GrayTextField';
 import { Button } from './button/Button';
 import { CenterLogo } from './logo/CenterLogo';
+import { PasswordResetButton } from './button/PasswordResetButton';
 
 const schema = yup
   .object({
@@ -57,21 +57,7 @@ export const Login = () => {
                 </form>
               </FormProvider>
             </Paper>
-            <Box textAlign="end">
-              <Typography display="inline">パスワードをお忘れの方は</Typography>
-              <RawButton
-                style={{
-                  appearance: 'none',
-                  backgroundColor: 'transparent',
-                  border: 'none',
-                }}
-                onClick={() => setOpen(true)}
-              >
-                <Typography sx={{ textDecorationLine: 'underline' }}>
-                  こちら
-                </Typography>
-              </RawButton>
-            </Box>
+            <PasswordResetButton onClick={() => setOpen(true)} />
           </Stack>
         </Container>
       </Box>

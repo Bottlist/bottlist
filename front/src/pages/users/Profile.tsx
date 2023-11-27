@@ -2,22 +2,32 @@ import {
   Avatar,
   Box,
   Button,
+  Container,
   Modal,
   Paper,
   Stack,
   Table,
   TableBody,
   TableCell,
+  TableCellProps,
   TableContainer,
   TableRow,
   Typography,
 } from '@mui/material';
-import { Logo } from '../../components/logo/Logo';
 import { request } from '../../utils/axiosUtils';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { Navigation } from './components/Navigation';
 import { useDropzone } from 'react-dropzone';
+import { UpperLeftLogo } from '../../components/logo/UpperLeftLogo';
+import { PasswordResetButton } from '../../components/button/PasswordResetButton';
+
+const Td = (props: TableCellProps) => (
+  <TableCell sx={{ borderColor: '#555555' }} {...props} />
+);
+const Th = (props: TableCellProps) => (
+  <TableCell {...props} component="th" scope="row" sx={{ border: 'none' }} />
+);
 
 export const Profile = () => {
   const queryClient = useQueryClient();
@@ -29,7 +39,8 @@ export const Profile = () => {
         method: 'get',
       }).then((r) => r.data),
   });
-  const [open, setOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isDoneModalOpen, setIsDoneModalOpen] = useState(false);
   const { getRootProps, getInputProps } = useDropzone({
     accept: { 'image/png': ['.png'] },
     onDrop: (acceptedFiles) => {
@@ -41,74 +52,135 @@ export const Profile = () => {
   if (!data) return null;
   return (
     <>
-      <Stack>
-        <Logo />
-        <Box {...getRootProps()}>
-          <input {...getInputProps()} />
-          <Avatar alt={data?.screen_name} src={data?.img} />
-        </Box>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableBody>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  ふりがな
-                </TableCell>
-                <TableCell>{data?.first_name_huri}</TableCell>
-                <TableCell>{data?.last_name_huri}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  名前
-                </TableCell>
-                <TableCell>{data?.first_name}</TableCell>
-                <TableCell>{data?.last_name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  ボトルネーム
-                  <br />
-                  ニックネーム
-                </TableCell>
-                <TableCell colSpan={2}>{data?.screen_name}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  生年月日
-                </TableCell>
-                <TableCell colSpan={2}>{data?.birthday}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  メールアドレス
-                </TableCell>
-                <TableCell colSpan={2}>{data?.email}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Button onClick={() => setOpen(true)}>
-          パスワードの変更はこちらから
-        </Button>
-        <Navigation />
-      </Stack>
-      <Modal open={open} onClose={() => setOpen(false)}>
-        <Paper>
-          <Typography>下記の新しいメールアドレスに情報を送信します</Typography>
-          <Typography>{data?.email}</Typography>
-          <Button
-            onClick={() =>
-              request({
-                url: '/auth/password/reset/link',
-                method: 'post',
-                data: { email: data?.email },
-              }).finally(() => setOpen(false))
-            }
-          >
-            はい
-          </Button>
-          <Button onClick={() => setOpen(false)}>いいえ</Button>
-        </Paper>
+      <UpperLeftLogo />
+      <Container>
+        <Stack spacing={3} marginTop="93px">
+          <Box {...getRootProps()}>
+            <input {...getInputProps()} />
+            <Avatar
+              alt={data?.screen_name}
+              src={data?.img}
+              sx={{ width: 180, height: 180, marginX: 'auto' }}
+            />
+          </Box>
+          <Container>
+            <TableContainer
+              sx={{
+                borderTop: '1px solid #555555',
+                borderBottom: '1px solid #555555',
+              }}
+            >
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <Th>ふりがな</Th>
+                    <Td>{data?.first_name_huri}</Td>
+                    <Td>{data?.last_name_huri}</Td>
+                  </TableRow>
+                  <TableRow>
+                    <Th>名前</Th>
+                    <Td>{data?.first_name}</Td>
+                    <Td>{data?.last_name}</Td>
+                  </TableRow>
+                  <TableRow>
+                    <Th>
+                      ボトルネーム
+                      <br />
+                      ニックネーム
+                    </Th>
+                    <Td colSpan={2}>{data?.screen_name}</Td>
+                  </TableRow>
+                  <TableRow>
+                    <Th>生年月日</Th>
+                    <Td colSpan={2}>{data?.birthday}</Td>
+                  </TableRow>
+                  <TableRow>
+                    <Th>メールアドレス</Th>
+                    <Td sx={{}} colSpan={2}>
+                      {data?.email}
+                    </Td>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Container>
+          <PasswordResetButton onClick={() => setIsConfirmModalOpen(true)} />
+        </Stack>
+      </Container>
+      <Navigation />
+      <Modal
+        open={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        sx={{ top: '50%' }}
+      >
+        <Container sx={{ transform: 'translate(0%, -50%)' }}>
+          <Paper>
+            <Stack
+              textAlign="center"
+              spacing={5}
+              paddingY="2rem"
+              alignItems="center"
+            >
+              <Typography>
+                下記の新しいメールアドレスに
+                <br />
+                情報を送信します
+              </Typography>
+              <Typography
+                sx={{ backgroundColor: '#EEEEEE' }}
+                width="fit-content"
+                paddingX="40px"
+                paddingY="16px"
+              >
+                {data?.email}
+              </Typography>
+              <Stack direction="row" justifyContent="space-evenly" width="100%">
+                <Button
+                  onClick={() =>
+                    request({
+                      url: '/auth/password/reset/link',
+                      method: 'post',
+                      data: { email: data?.email },
+                    }).finally(
+                      () => (
+                        setIsConfirmModalOpen(false), setIsDoneModalOpen(true)
+                      )
+                    )
+                  }
+                >
+                  はい
+                </Button>
+                <Button
+                  onClick={() => setIsConfirmModalOpen(false)}
+                  color="secondary"
+                >
+                  いいえ
+                </Button>
+              </Stack>
+            </Stack>
+          </Paper>
+        </Container>
+      </Modal>
+      <Modal
+        open={isDoneModalOpen}
+        onClose={() => setIsDoneModalOpen(false)}
+        sx={{ top: '50%' }}
+      >
+        <Container sx={{ transform: 'translate(0%, -50%)' }}>
+          <Paper sx={{ padding: '42px' }}>
+            <Stack spacing={5}>
+              <Typography textAlign="center">メールを送信しました</Typography>
+              <Box textAlign="end">
+                <Button
+                  color="secondary"
+                  onClick={() => setIsDoneModalOpen(false)}
+                >
+                  戻る
+                </Button>
+              </Box>
+            </Stack>
+          </Paper>
+        </Container>
       </Modal>
     </>
   );

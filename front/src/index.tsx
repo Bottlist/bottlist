@@ -1,10 +1,8 @@
 import './index.css';
 import { Index } from './pages/Index';
-import { Login } from './pages/users/Login';
 import { PickUser } from './pages/PickUser';
 import { bottleRouter } from './pages/bottles/router';
 import { shopsRouter } from './pages/shops/router';
-import { Top } from './pages/users/Top';
 import { usersRouter } from './pages/users/router';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
@@ -31,14 +29,6 @@ const router = createBrowserRouter([
       {
         path: 'pick-user',
         element: <PickUser />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'top',
-        element: <Top />,
       },
       {
         path: 'users',

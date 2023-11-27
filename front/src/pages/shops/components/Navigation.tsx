@@ -1,36 +1,24 @@
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SwitchAccountIcon from '@mui/icons-material/SwitchAccount';
 import SettingsIcon from '@mui/icons-material/Settings';
-import { Link, LinkProps } from 'react-router-dom';
+import { Navigation as Base } from '../../../components/Navigation';
 
-/** react-router-dom's Link component doesn't work well with BottomNavigation by default, create thin wrapper here */
-const MyLink = (props: { href: string } & Omit<LinkProps, 'to'>) => (
-  <Link to={props.href} {...props} />
-);
+const NAVIGATIONS = [
+  {
+    label: 'ホーム',
+    icon: <HomeRoundedIcon fontSize="large" />,
+    href: '/shops',
+  },
+  {
+    label: 'ボトル追加',
+    icon: <SwitchAccountIcon fontSize="large" />,
+    href: '/shops/users',
+  },
+  {
+    label: 'アカウント',
+    icon: <SettingsIcon fontSize="large" />,
+    href: '/shops/settings',
+  },
+];
 
-export const Navigation = () => (
-  <BottomNavigation
-    showLabels
-    sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-  >
-    <BottomNavigationAction
-      icon={<HomeRoundedIcon />}
-      label="ホーム"
-      LinkComponent={MyLink}
-      href="/shops"
-    />
-    <BottomNavigationAction
-      label="顧客様一覧"
-      icon={<SwitchAccountIcon />}
-      LinkComponent={MyLink}
-      href="/shops/users"
-    />
-    <BottomNavigationAction
-      label="設定"
-      icon={<SettingsIcon />}
-      LinkComponent={MyLink}
-      href="/shops/settings"
-    />
-  </BottomNavigation>
-);
+export const Navigation = () => <Base navigations={NAVIGATIONS} />;

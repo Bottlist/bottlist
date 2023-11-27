@@ -3,8 +3,6 @@ import {
   Box,
   Button,
   Container,
-  Modal,
-  Paper,
   Stack,
   Table,
   TableBody,
@@ -21,6 +19,7 @@ import { Navigation } from './components/Navigation';
 import { useDropzone } from 'react-dropzone';
 import { UpperLeftLogo } from '../../components/logo/UpperLeftLogo';
 import { PasswordResetButton } from '../../components/button/PasswordResetButton';
+import { Modal } from '../../components/Modal';
 
 const Td = (props: TableCellProps) => (
   <TableCell sx={{ borderColor: '#555555' }} {...props} />
@@ -111,76 +110,58 @@ export const Profile = () => {
       <Modal
         open={isConfirmModalOpen}
         onClose={() => setIsConfirmModalOpen(false)}
-        sx={{ top: '50%' }}
       >
-        <Container sx={{ transform: 'translate(0%, -50%)' }}>
-          <Paper>
-            <Stack
-              textAlign="center"
-              spacing={5}
-              paddingY="2rem"
-              alignItems="center"
+        <Stack
+          textAlign="center"
+          spacing={5}
+          paddingY="2rem"
+          alignItems="center"
+        >
+          <Typography>
+            下記の新しいメールアドレスに
+            <br />
+            情報を送信します
+          </Typography>
+          <Typography
+            sx={{ backgroundColor: '#EEEEEE' }}
+            width="fit-content"
+            paddingX="40px"
+            paddingY="16px"
+          >
+            {data?.email}
+          </Typography>
+          <Stack direction="row" justifyContent="space-evenly" width="100%">
+            <Button
+              onClick={() =>
+                request({
+                  url: '/auth/password/reset/link',
+                  method: 'post',
+                  data: { email: data?.email },
+                }).finally(
+                  () => (setIsConfirmModalOpen(false), setIsDoneModalOpen(true))
+                )
+              }
             >
-              <Typography>
-                下記の新しいメールアドレスに
-                <br />
-                情報を送信します
-              </Typography>
-              <Typography
-                sx={{ backgroundColor: '#EEEEEE' }}
-                width="fit-content"
-                paddingX="40px"
-                paddingY="16px"
-              >
-                {data?.email}
-              </Typography>
-              <Stack direction="row" justifyContent="space-evenly" width="100%">
-                <Button
-                  onClick={() =>
-                    request({
-                      url: '/auth/password/reset/link',
-                      method: 'post',
-                      data: { email: data?.email },
-                    }).finally(
-                      () => (
-                        setIsConfirmModalOpen(false), setIsDoneModalOpen(true)
-                      )
-                    )
-                  }
-                >
-                  はい
-                </Button>
-                <Button
-                  onClick={() => setIsConfirmModalOpen(false)}
-                  color="secondary"
-                >
-                  いいえ
-                </Button>
-              </Stack>
-            </Stack>
-          </Paper>
-        </Container>
+              はい
+            </Button>
+            <Button
+              onClick={() => setIsConfirmModalOpen(false)}
+              color="secondary"
+            >
+              いいえ
+            </Button>
+          </Stack>
+        </Stack>
       </Modal>
-      <Modal
-        open={isDoneModalOpen}
-        onClose={() => setIsDoneModalOpen(false)}
-        sx={{ top: '50%' }}
-      >
-        <Container sx={{ transform: 'translate(0%, -50%)' }}>
-          <Paper sx={{ padding: '42px' }}>
-            <Stack spacing={5}>
-              <Typography textAlign="center">メールを送信しました</Typography>
-              <Box textAlign="end">
-                <Button
-                  color="secondary"
-                  onClick={() => setIsDoneModalOpen(false)}
-                >
-                  戻る
-                </Button>
-              </Box>
-            </Stack>
-          </Paper>
-        </Container>
+      <Modal open={isDoneModalOpen} onClose={() => setIsDoneModalOpen(false)}>
+        <Stack spacing={5}>
+          <Typography textAlign="center">メールを送信しました</Typography>
+          <Box textAlign="end">
+            <Button color="secondary" onClick={() => setIsDoneModalOpen(false)}>
+              戻る
+            </Button>
+          </Box>
+        </Stack>
       </Modal>
     </>
   );

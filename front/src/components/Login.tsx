@@ -21,7 +21,7 @@ type FormType = yup.InferType<typeof schema>;
 
 const TextField = GrayTextField<FormType>;
 
-export const Login = () => {
+export const Login = (props: { hrefOnSuccess: string }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const methods = useForm<FormType>({
@@ -33,7 +33,7 @@ export const Login = () => {
       url: '/auth/login/user',
       method: 'post',
       data: { email, password },
-    }).then(() => navigate('/top'))
+    }).then(() => navigate(props.hrefOnSuccess))
   );
 
   return (

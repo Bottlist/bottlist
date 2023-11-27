@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { UpperLeftLogo } from '../../../components/logo/UpperLeftLogo';
 import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
+import { useNavigate } from 'react-router';
 
 const ORDER_KEYS = {
   name: '名前順',
@@ -33,6 +34,7 @@ export const Index = () => {
   });
   const [order, setOrder] = useState<Order>('birthday');
   const users = data?.sort((u1, u2) => (u1[order] < u2[order] ? 1 : -1)) ?? [];
+  const navigate = useNavigate();
   return (
     <>
       <UpperLeftLogo />
@@ -75,6 +77,7 @@ export const Index = () => {
                       borderRadius: '25px',
                       backgroundColor: '#EDE9DA',
                     }}
+                    onClick={() => navigate('/shops/users/' + user.id)}
                   >
                     <Stack direction="row" alignItems="center">
                       <CardMedia

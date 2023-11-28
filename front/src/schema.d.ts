@@ -5,14 +5,18 @@
 
 export interface paths {
   '/auth/login/user': {
-    /** @description 顧客のログイン用エンドポイント */
+    /** @description 顧客のログイン用エンドポイント(実装した) */
     post: operations['post-login'];
   };
   '/auth/signup/user': {
-    /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する */
+    /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した) */
     get: operations['get-auth-signup'];
-    /** @description 顧客の新規登録 */
+    /** @description 顧客の新規登録(実装した) */
     post: operations['post-auth-signup'];
+  };
+  '/auth/login/shop': {
+    /** @description お店のログイン用エンドポイント */
+    post: operations['post-api-auth-login-shop'];
   };
   '/auth/signup/shop': {
     /**
@@ -22,6 +26,10 @@ export interface paths {
     get: operations['get-auth-signup-shop'];
     /** @description 店の新規登録 */
     post: operations['post-auth-signup-shop'];
+  };
+  '/auth/logout': {
+    /** @description ログアウト用のエンドポイント */
+    post: operations['post-api-auth-logout'];
   };
   '/auth/password/reset/link': {
     get: operations['get-auth-password-reset-link'];
@@ -131,7 +139,7 @@ export type $defs = Record<string, never>;
 export type external = Record<string, never>;
 
 export interface operations {
-  /** @description 顧客のログイン用エンドポイント */
+  /** @description 顧客のログイン用エンドポイント(実装した) */
   'post-login': {
     requestBody?: {
       content: {
@@ -148,7 +156,7 @@ export interface operations {
       };
     };
   };
-  /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する */
+  /** @description 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した) */
   'get-auth-signup': {
     parameters: {
       query: {
@@ -162,7 +170,7 @@ export interface operations {
       };
     };
   };
-  /** @description 顧客の新規登録 */
+  /** @description 顧客の新規登録(実装した) */
   'post-auth-signup': {
     requestBody?: {
       content: {
@@ -171,6 +179,23 @@ export interface operations {
         } & {
           password: string;
           password_confirm: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  /** @description お店のログイン用エンドポイント */
+  'post-api-auth-login-shop': {
+    requestBody?: {
+      content: {
+        'application/json': {
+          email?: string;
+          password?: string;
         };
       };
     };
@@ -202,10 +227,27 @@ export interface operations {
   'post-auth-signup-shop': {
     requestBody?: {
       content: {
-        'application/json': components['schemas']['bottle'] & {
+        'application/json': components['schemas']['shop'] & {
           password?: string;
           password_confirm?: string;
+          opening_hours?: {
+            ''?: string;
+          };
         };
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: never;
+      };
+    };
+  };
+  /** @description ログアウト用のエンドポイント */
+  'post-api-auth-logout': {
+    parameters: {
+      cookie: {
+        session_id: string;
       };
     };
     responses: {
@@ -270,6 +312,11 @@ export interface operations {
    * @description ユーザが自分のキープボトル一覧を取得するときに使う
    */
   'get-bottles': {
+    parameters: {
+      cookie?: {
+        undefined?: string;
+      };
+    };
     responses: {
       /** @description OK */
       200: {

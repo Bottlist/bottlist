@@ -5,9 +5,9 @@ info:
   title: index
   version: '1.0'
 servers:
-  - url: 'http://localhost:4000'
+  - url: 'http://localhost:4000/api'
 paths:
-  /api/auth/login/user:
+  /auth/login/user:
     post:
       summary: ''
       operationId: post-login
@@ -38,7 +38,7 @@ paths:
         - auth
       description: 顧客のログイン用エンドポイント(実装した)
     parameters: []
-  /api/auth/signup/user:
+  /auth/signup/user:
     post:
       summary: ''
       operationId: post-auth-signup
@@ -95,7 +95,7 @@ paths:
         - auth
       description: 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した)
     parameters: []
-  /api/auth/login/shop:
+  /auth/login/shop:
     post:
       summary: ''
       operationId: post-api-auth-login-shop
@@ -115,7 +115,8 @@ paths:
                   type: string
       tags:
         - auth
-  /api/auth/signup/shop:
+    parameters: []
+  /auth/signup/shop:
     get:
       summary: Your GET endpoint
       tags:
@@ -158,7 +159,7 @@ paths:
                         '':
                           type: string
     parameters: []
-  /api/auth/logout:
+  /auth/logout:
     post:
       summary: ''
       operationId: post-api-auth-logout
@@ -172,7 +173,8 @@ paths:
           name: session_id
           required: true
       description: ログアウト用のエンドポイント
-  /api/auth/password/reset/link:
+    parameters: []
+  /auth/password/reset/link:
     post:
       summary: ''
       operationId: post-password-reset
@@ -208,7 +210,7 @@ paths:
           required: true
       tags:
         - auth
-  /api/users:
+  /users:
     get:
       summary: ''
       operationId: get-users
@@ -256,7 +258,7 @@ paths:
         id: lwp6rmgqvg7lt
       description: 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する
     parameters: []
-  /api/bottles:
+  /bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -397,7 +399,7 @@ paths:
         description: ''
       description: ボトル申請
     parameters: []
-  /api/shops/bottles:
+  /shops/bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -454,7 +456,7 @@ paths:
                   - bottles
       description: 店舗がキープボトル一覧を取得するときに使う
     parameters: []
-  /api/shops:
+  /shops:
     get:
       summary: Your GET endpoint
       tags: []
@@ -528,7 +530,7 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/shop'
     parameters: []
-  /api/me:
+  /me:
     get:
       summary: Your GET endpoint
       tags: []
@@ -580,7 +582,7 @@ paths:
                   description: dataURL
               required:
                 - img
-  '/api/bottles/{id}':
+  '/bottles/{id}':
     parameters:
       - schema:
           type: string
@@ -688,7 +690,7 @@ paths:
                       - shop
       x-stoplight:
         id: ybljwlancr5kn
-  '/api/users/{id}':
+  '/users/{id}':
     parameters:
       - schema:
           type: string

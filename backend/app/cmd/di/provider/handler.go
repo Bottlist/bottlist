@@ -7,4 +7,5 @@ import (
 
 var DefaultHandlerSet = wire.NewSet(
 	handler.NewAuthHandler,
+	handler.NewUserHandler,
 )

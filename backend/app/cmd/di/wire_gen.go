@@ -29,7 +29,11 @@ func InitializeApp() (*provider.App, error) {
 	mailClient := mail.NewMailClient()
 	authUsecase := usecase.NewAuthUsecase(authService, authRepository, mailClient)
 	authHandler := handler.NewAuthHandler(authUsecase)
+	userRepository := repository.NewUserRepository(db)
+	userService := service.NewUserService(userRepository)
+	userUsecase := usecase.NewUserUsecase(userService, userRepository)
+	userHandler := handler.NewUserHandler(userUsecase)
 	sessionMiddleware := middlewares.NewSessionMiddleware(sessionRepository)
-	app := provider.NewApp(authHandler, sessionMiddleware, db)
+	app := provider.NewApp(authHandler, userHandler, sessionMiddleware, db)
 	return app, nil
 }

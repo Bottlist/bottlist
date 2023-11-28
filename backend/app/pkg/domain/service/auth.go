@@ -21,7 +21,7 @@ type IFAuthService interface {
 	DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
-func NewAuthService(authRepository *repository.AuthRepository, sessionRepository repository.SessionRepository) *AuthService {
+func NewAuthService(authRepository *repository.AuthRepository, sessionRepository *repository.SessionRepository) *AuthService {
 	return &AuthService{
 		authRepository:    authRepository,
 		sessionRepository: sessionRepository,
@@ -30,7 +30,7 @@ func NewAuthService(authRepository *repository.AuthRepository, sessionRepository
 
 type AuthService struct {
 	authRepository    repository.IFAuthRepository
-	sessionRepository repository.SessionRepository
+	sessionRepository repository.IFSessionRepository
 }
 
 func (a *AuthService) ComparePassword(password, passWordCompare string) error {

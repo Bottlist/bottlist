@@ -18,17 +18,20 @@ var DefaultAppSet = wire.NewSet(
 
 type App struct {
 	AuthHandler *handler.AuthHandler
+	UserHandler *handler.UserHandler
 	Session     *middlewares.SessionMiddleware
 	Db          *sqlx.DB
 }
 
 func NewApp(
 	AuthHandler *handler.AuthHandler,
+	UserHandler *handler.UserHandler,
 	Session *middlewares.SessionMiddleware,
 	Db *sqlx.DB,
 ) *App {
 	return &App{
 		AuthHandler: AuthHandler,
+		UserHandler: UserHandler,
 		Session:     Session,
 		Db:          Db,
 	}

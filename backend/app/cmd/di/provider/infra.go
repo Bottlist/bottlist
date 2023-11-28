@@ -14,4 +14,5 @@ var DefaultInfraSet = wire.NewSet(
 	mail.NewMailClient,
 	repository.NewSessionRepository,
 	repository.NewAuthRepository,
+	repository.NewUserRepository,
 )

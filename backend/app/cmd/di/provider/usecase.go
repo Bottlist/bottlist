@@ -7,4 +7,5 @@ import (
 
 var DefaultUsecaseSet = wire.NewSet(
 	usecase.NewAuthUsecase,
+	usecase.NewUserUsecase,
 )

@@ -7,10 +7,10 @@ import (
 )
 
 type SessionMiddleware struct {
-	client repository.SessionRepository
+	client repository.IFSessionRepository
 }
 
-func NewSessionMiddleware(client repository.SessionRepository) *SessionMiddleware {
+func NewSessionMiddleware(client *repository.SessionRepository) *SessionMiddleware {
 	return &SessionMiddleware{
 		client: client,
 	}

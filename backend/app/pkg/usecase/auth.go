@@ -171,9 +171,9 @@ func (a *AuthUsecase) LoginUser(ctx context.Context, input *LoginInput) (*http.C
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "メールアドレスまたはパスワードが違います")
 	}
-	coolie, err := a.authService.CreateCookie(ctx, user.ID)
+	coolie, err := a.authService.CreateCookie(ctx, user.ID, types.Client)
 	if err != nil {
-		return nil, err
+		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
 	return coolie, nil
 }

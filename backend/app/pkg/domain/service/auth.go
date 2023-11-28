@@ -5,11 +5,11 @@ import (
 	"database/sql"
 	"github.com/Bottlist/bottlist/pkg/domain/model"
 	"github.com/Bottlist/bottlist/pkg/domain/repository"
+	"github.com/Bottlist/bottlist/pkg/types"
 	"github.com/Bottlist/bottlist/pkg/utils"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"net/mail"
-	"strconv"
 )
 
 type IFAuthService interface {
@@ -17,7 +17,7 @@ type IFAuthService interface {
 	EmailValidator(EmailAddress string) (string, error)
 	CheckEmailRegister(email string) error
 	CheckToken(token string) (*model.ProvisionalUser, error)
-	CreateCookie(ctx context.Context, userId int) (*http.Cookie, error)
+	CreateCookie(ctx context.Context, userId int, userType types.UserType) (*http.Cookie, error)
 	DeleteCookie(ctx context.Context, cookie *http.Cookie) (*http.Cookie, error)
 }
 
@@ -72,7 +72,8 @@ func (a *AuthService) CheckToken(token string) (*model.ProvisionalUser, error) {
 	return user, nil
 }
 
-func (a *AuthService) CreateCookie(ctx context.Context, userId int) (*http.Cookie, error) {
+func (a *AuthService) CreateCookie(ctx context.Context, userId int, userType types.UserType) (*http.Cookie, error) {
+	//
 	value := utils.NewUUID()
 	expires := utils.GetHourDuration(24)
 	cookie := new(http.Cookie)
@@ -83,7 +84,11 @@ func (a *AuthService) CreateCookie(ctx context.Context, userId int) (*http.Cooki
 	cookie.HttpOnly = true
 	cookie.Secure = false
 	cookie.SameSite = http.SameSiteLaxMode
-	err := a.sessionRepository.SetSession(ctx, value, strconv.Itoa(userId), expires)
+	user := types.User{
+		ID:       userId,
+		UserType: userType,
+	}
+	err := a.sessionRepository.SetSession(ctx, value, user, expires)
 	if err != nil {
 		return nil, echo.NewHTTPError(http.StatusInternalServerError, err)
 	}

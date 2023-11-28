@@ -27,11 +27,12 @@ func (s *SessionMiddleware) Session(next echo.HandlerFunc) echo.HandlerFunc {
 				return next(c)
 			}
 		} else {
-			userId, err := s.client.GetSession(ctx, cookie.Value)
+			user, err := s.client.GetSession(ctx, cookie.Value)
 			if err != nil {
 				return echo.NewHTTPError(http.StatusUnauthorized, err)
 			}
-			c.Set("user_id", userId)
+			c.Set("user_id", user.ID)
+			c.Set("user_type", user.UserType)
 		}
 		return next(c)
 	}

@@ -9,6 +9,6 @@ it('should render the title', () => {
       <Index />
     </BrowserRouter>
   );
-  const title = screen.getByText('Bottlist');
+  const title = screen.getByText('BOTTLIS');
   expect(title).toBeInTheDocument();
 });

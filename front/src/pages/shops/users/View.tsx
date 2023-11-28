@@ -7,11 +7,12 @@ import ForwardToInboxIcon from '@mui/icons-material/ForwardToInbox';
 import { UpperLeftLogo } from '../../../components/logo/UpperLeftLogo';
 import { BigBottleCard } from '../../../components/card/BigBottleCard';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 
 export const View = () => {
   const { id } = useParams();
   const { data } = useQuery({
-    queryKey: ['users'],
+    queryKey: [`users/${id}`],
     queryFn: () =>
       request({
         url: `/users/${id}` as '/users/{id}',
@@ -24,7 +25,9 @@ export const View = () => {
       <Container>
         <Stack marginTop="90px" spacing={3} alignItems="center">
           <Stack direction="row" justifyContent="space-between" width="100%">
-            <ArrowBackIosNewIcon />
+            <Link to="/shops/users">
+              <ArrowBackIosNewIcon />
+            </Link>
             <ForwardToInboxIcon />
           </Stack>
           <Grid container>

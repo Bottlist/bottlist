@@ -33,18 +33,13 @@ export const Index = () => {
       }).then((r) => r.data.users),
   });
   const [order, setOrder] = useState<Order>('birthday');
-  const users = data?.sort((u1, u2) => (u1[order] < u2[order] ? 1 : -1)) ?? [];
   const navigate = useNavigate();
+  const users = data?.sort((u1, u2) => (u1[order] < u2[order] ? 1 : -1)) ?? [];
   return (
     <>
       <UpperLeftLogo />
-      <Container>
-        <Typography
-          variant="h5"
-          textAlign="center"
-          marginTop="100px"
-          marginBottom="15px"
-        >
+      <Container sx={{ paddingTop: '100px' }}>
+        <Typography variant="h5" textAlign="center" marginBottom="15px">
           顧客様一覧
         </Typography>
         <Paper>

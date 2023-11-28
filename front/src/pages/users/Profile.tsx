@@ -6,9 +6,6 @@ import {
   Stack,
   Table,
   TableBody,
-  TableCell,
-  TableCellProps,
-  TableContainer,
   TableRow,
   Typography,
 } from '@mui/material';
@@ -20,13 +17,7 @@ import { useDropzone } from 'react-dropzone';
 import { UpperLeftLogo } from '../../components/logo/UpperLeftLogo';
 import { PasswordResetButton } from '../../components/button/PasswordResetButton';
 import { Modal } from '../../components/Modal';
-
-const Td = (props: TableCellProps) => (
-  <TableCell sx={{ borderColor: '#555555' }} {...props} />
-);
-const Th = (props: TableCellProps) => (
-  <TableCell {...props} component="th" scope="row" sx={{ border: 'none' }} />
-);
+import { TableContainer, Td, Th } from '../../components/table';
 
 export const Profile = () => {
   const queryClient = useQueryClient();
@@ -63,12 +54,7 @@ export const Profile = () => {
             />
           </Box>
           <Container>
-            <TableContainer
-              sx={{
-                borderTop: '1px solid #555555',
-                borderBottom: '1px solid #555555',
-              }}
-            >
+            <TableContainer>
               <Table>
                 <TableBody>
                   <TableRow>

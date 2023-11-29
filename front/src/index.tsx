@@ -48,7 +48,16 @@ const router = createBrowserRouter([
 
 const theme = createTheme({
   typography: {
-    fontFamily: 'Yu Gothic Medium',
+    fontFamily: [
+      'Yu Gothic',
+      '游ゴシック',
+      'YuGothic',
+      '游ゴシック体',
+      'ヒラギノ角ゴ Pro W3',
+      'メイリオ',
+      'sans-serif',
+    ].join(','),
+    fontWeightRegular: 500,
   },
   components: {
     MuiTextField: {

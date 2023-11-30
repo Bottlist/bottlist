@@ -5,9 +5,9 @@ info:
   title: index
   version: '1.0'
 servers:
-  - url: 'http://localhost:4000/api'
+  - url: 'http://localhost:4000'
 paths:
-  /auth/login/user:
+  /api/auth/login/user:
     post:
       summary: ''
       operationId: post-login
@@ -38,7 +38,7 @@ paths:
         - auth
       description: 顧客のログイン用エンドポイント(実装した)
     parameters: []
-  /auth/signup/user:
+  /api/auth/signup/user:
     post:
       summary: ''
       operationId: post-auth-signup
@@ -95,7 +95,7 @@ paths:
         - auth
       description: 顧客のメールアドレスのリンクのtokenを送り本登録する(実装した)
     parameters: []
-  /auth/login/shop:
+  /api/auth/login/shop:
     post:
       summary: ''
       operationId: post-api-auth-login-shop
@@ -115,8 +115,7 @@ paths:
                   type: string
       tags:
         - auth
-    parameters: []
-  /auth/signup/shop:
+  /api/auth/signup/shop:
     get:
       summary: Your GET endpoint
       tags:
@@ -146,20 +145,25 @@ paths:
           application/json:
             schema:
               allOf:
-                - $ref: '#/components/schemas/shop'
-                - type: object
+                - x-stoplight:
+                    id: jvj9ys8celly1
                   properties:
+                    '':
+                      $ref: '#/components/schemas/shop'
+                      x-stoplight:
+                        id: pk9p6xbx7klub
+                - properties:
                     password:
                       type: string
                     password_confirm:
                       type: string
-                    opening_hours:
-                      type: object
-                      properties:
-                        '':
-                          type: string
+                    opening_hourd:
+                      type: integer
+                      x-stoplight:
+                        id: 5wvhbiihfhuiw
+              type: object
     parameters: []
-  /auth/logout:
+  /api/auth/logout:
     post:
       summary: ''
       operationId: post-api-auth-logout
@@ -173,8 +177,7 @@ paths:
           name: session_id
           required: true
       description: ログアウト用のエンドポイント
-    parameters: []
-  /auth/password/reset/link:
+  /api/auth/password/reset/link:
     post:
       summary: ''
       operationId: post-password-reset
@@ -210,7 +213,7 @@ paths:
           required: true
       tags:
         - auth
-  /users:
+  /api/users:
     get:
       summary: ''
       operationId: get-users
@@ -258,7 +261,7 @@ paths:
         id: lwp6rmgqvg7lt
       description: 顧客様一覧。認証店舗に紐づいた全てのユーザを返却する
     parameters: []
-  /bottles:
+  /api/bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -399,7 +402,7 @@ paths:
         description: ''
       description: ボトル申請
     parameters: []
-  /shops/bottles:
+  /api/shops/bottles:
     get:
       summary: Your GET endpoint
       tags: []
@@ -456,7 +459,7 @@ paths:
                   - bottles
       description: 店舗がキープボトル一覧を取得するときに使う
     parameters: []
-  /shops:
+  /api/shops:
     get:
       summary: Your GET endpoint
       tags: []
@@ -530,7 +533,7 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/shop'
     parameters: []
-  /me:
+  /api/me:
     get:
       summary: Your GET endpoint
       tags: []
@@ -582,7 +585,7 @@ paths:
                   description: dataURL
               required:
                 - img
-  '/bottles/{id}':
+  '/api/bottles/{id}':
     parameters:
       - schema:
           type: string
@@ -690,7 +693,7 @@ paths:
                       - shop
       x-stoplight:
         id: ybljwlancr5kn
-  '/users/{id}':
+  '/api/users/{id}':
     parameters:
       - schema:
           type: string

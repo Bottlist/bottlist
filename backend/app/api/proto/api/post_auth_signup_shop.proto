@@ -24,7 +24,7 @@ message PostAuthProvisionalShopSignupRequest {
   Shop shop = 1 [(validate.rules).message.required = true];
   string password = 2 [(validate.rules).string.min_len = 8];
   string password_confirm = 3 [(validate.rules).string.min_len = 8];
-  uint64  opening_hourd = 4 [(validate.rules).int.gt = 0];
+  uint64  opening_hourd = 4 [(validate.rules).uint64.gt = 0];
 }
 
 message PostAuthProvisionalShopSignupResponse {

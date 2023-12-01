@@ -11,6 +11,9 @@ type IFAuthHandler interface {
 	GetProvisionalSignup(c echo.Context) error
 	PostProvisionalSignup(c echo.Context) error
 	PostAuthLoginUser(c echo.Context) error
+	//GetProvisionalShopSignup(c echo.Context) error
+	//PostProvisionalShopSignup(c echo.Context) error
+	//PostAuthLoginShop(c echo.Context) error
 	PostLogout(c echo.Context) error
 }
 

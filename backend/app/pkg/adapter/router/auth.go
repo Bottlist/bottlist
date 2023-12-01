@@ -30,5 +30,8 @@ func (h *authRouter) Router() {
 	h.e.GET("/signup/user", h.authHandler.GetProvisionalSignup)
 	h.e.POST("/signup/user", h.authHandler.PostProvisionalSignup)
 	h.e.POST("/login/user", h.authHandler.PostAuthLoginUser)
+	//h.e.GET("/signup/shop", h.authHandler.GetProvisionalSignup)
+	//h.e.POST("/signup/shop", h.authHandler.PostProvisionalSignup)
+	//h.e.POST("/login/shop", h.authHandler.PostAuthLoginUser)
 	h.reqAuth.POST("/logout", h.authHandler.PostLogout)
 }

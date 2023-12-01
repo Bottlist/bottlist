@@ -6,6 +6,7 @@ import (
 )
 
 func NewUserRouter(noAuth *echo.Group, reqAuth *echo.Group, userHandler handler.UserHandler) UserRouter {
+	reqAuth = reqAuth.Group("/users")
 	return &userRouter{
 		e:           noAuth,
 		eAuth:       reqAuth,
@@ -24,5 +25,5 @@ type userRouter struct {
 }
 
 func (u *userRouter) Router() {
-
+	u.eAuth.GET("", u.userHandler.GetUsers)
 }

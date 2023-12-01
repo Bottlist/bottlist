@@ -1,0 +1,16 @@
+syntax = "proto3";
+package api;
+
+option go_package = "/gen";
+
+
+import "validate/validate.proto";
+
+message PostAuthLoginShopRequest {
+  string email = 1 [(validate.rules).string.min_len = 1];
+  string password = 2 [(validate.rules).string.min_len = 1];
+}
+
+message PostAuthLoginShopResponse {
+
+}
